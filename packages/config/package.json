@@ -1,0 +1,85 @@
+{
+  "name": "@cbt-bo/config",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsdown",
+    "check:types": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write ."
+  },
+  "exports": {
+    "./eslint": {
+      "types": "./eslint/index.ts",
+      "import": "./dist/eslint/index.js",
+      "default": "./dist/eslint/index.js"
+    },
+    "./prettier": {
+      "types": "./prettier/index.ts",
+      "import": "./dist/prettier/index.js",
+      "default": "./dist/prettier/index.js"
+    },
+    "./vitest": {
+      "types": "./vitest/index.ts",
+      "import": "./dist/vitest/index.js",
+      "default": "./dist/vitest/index.js"
+    },
+    "./storybook/node": {
+      "types": "./storybook/node.ts",
+      "import": "./dist/storybook/node.js",
+      "default": "./dist/storybook/node.js"
+    },
+    "./storybook/browser": {
+      "types": "./storybook/browser.ts",
+      "import": "./dist/storybook/browser.js",
+      "default": "./dist/storybook/browser.js"
+    },
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/tanstack-start.json": "./typescript/tanstack-start.json",
+    "./typescript/react-library.json": "./typescript/react-library.json"
+  },
+  "dependencies": {
+    "@eslint/js": "catalog:",
+    "@storybook/addon-vitest": "catalog:",
+    "@tanstack/eslint-config": "catalog:",
+    "@tanstack/eslint-plugin-query": "catalog:",
+    "@tanstack/eslint-plugin-router": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import-x": "^4.17.1",
+    "eslint-plugin-jsdoc": "^64.3.10",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-unicorn": "^74.0.0",
+    "radash": "catalog:",
+    "storybook": "catalog:",
+    "typescript-eslint": "^8.70.0",
+    "vite": "catalog:"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "prettier": "^3.0.0",
+    "vitest": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "eslint": "catalog:",
+    "jiti": "^2.7.0",
+    "prettier": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
