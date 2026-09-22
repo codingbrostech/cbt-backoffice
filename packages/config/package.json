@@ -6,7 +6,7 @@
     "build": "tsdown",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "lint": "eslint .",
+    "lint": "eslint --max-warnings 0 .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write ."
   },
