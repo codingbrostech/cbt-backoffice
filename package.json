@@ -6,8 +6,8 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "pnpm --filter @cbt-bo/config build",
     "dev": "turbo run dev",
-    "dev:so": "turbo run dev --filter=so-backoffice",
-    "dev:fm": "turbo run dev --filter=fm-backoffice",
+    "dev:so": "pnpm --filter backoffice dev:so",
+    "dev:fm": "pnpm --filter backoffice dev:fm",
     "storybook": "turbo run storybook",
     "build": "turbo run build",
     "build:storybook": "turbo run build:storybook",
@@ -15,8 +15,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "tidy": "turbo run format lint:fix",
-    "tidy:so": "turbo run format lint:fix check:types --filter=so-backoffice",
-    "tidy:fm": "turbo run format lint:fix check:types --filter=fm-backoffice"
+    "tidy:app": "turbo run format lint:fix check:types --filter=backoffice"
   },
   "devDependencies": {
     "@types/node": "catalog:",

@@ -7,7 +7,7 @@ import { createStorybookProject } from './storybook';
 export interface ITanstackStartTestOptions {
   /** Directory of the vite config file (use `import.meta.dirname`) */
   dirname: string;
-  /** Project name for test reporting (e.g., "so-backoffice") */
+  /** Project name for test reporting (e.g., "backoffice") */
   name: string;
   /** Additional patterns to exclude from coverage */
   coverageExclude?: string[];
@@ -41,7 +41,7 @@ function createUnitTestProject(name: string): TestProjectConfiguration {
  * @example
  * export default defineConfig({
  *   plugins: [tanstackStart(), viteReact()],
- *   test: createTanstackStartTestConfig({ dirname: import.meta.dirname, name: 'so-backoffice' })
+ *   test: createTanstackStartTestConfig({ dirname: import.meta.dirname, name: 'backoffice' })
  * });
  */
 export function createTanstackStartTestConfig(options: ITanstackStartTestOptions): TestUserConfig {

@@ -1,0 +1,11 @@
+{
+  "extends": "@cbt-bo/config/typescript/tanstack-start.json",
+  "compilerOptions": {
+    "paths": {
+      "#/*": ["./src/*"],
+      "~/*": ["../../packages/portal/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", ".output", "dist"]
+}
