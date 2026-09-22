@@ -1,0 +1,29 @@
+import { useCallback, useState } from 'react';
+
+export interface IDisclosureHandlers {
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+}
+
+/**
+ * Boolean state with open, close and toggle handlers.
+ *
+ * @example
+ * const [isOpen, { open, close }] = useDisclosure();
+ */
+export const useDisclosure = (initialState = false): [boolean, IDisclosureHandlers] => {
+  const [isOpen, setIsOpen] = useState(initialState);
+
+  const open = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+  const close = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+  const toggle = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
+  return [isOpen, { open, close, toggle }];
+};

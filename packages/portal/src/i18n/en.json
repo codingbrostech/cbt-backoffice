@@ -1,0 +1,2814 @@
+{
+  "test": "Test text",
+  "header.nav.home": "Home",
+  "header.nav.player": "Player",
+  "header.nav.user": "User",
+  "header.nav.finance": "Reports",
+  "header.nav.game": "Games",
+  "header.nav.setting": "Setting",
+  "header.nav.promotion": "Promotion",
+  "nav.acctMgmt": "Account Management",
+  "nav.admins": "Admins",
+  "nav.adminSessions": "Admin Sessions",
+  "nav.adminOpsLogs": "Admin Ops Logs",
+  "nav.adminQuotaConfigs": "Admin Quota Configs",
+  "nav.adminQuotas": "Admin Quotas",
+  "nav.userMgmt": "User Management",
+  "nav.roleManagement": "Role Management",
+  "nav.roles": "Roles",
+  "nav.rolesPermission": "Roles Permission",
+  "nav.playerMgmt": "Player Management",
+  "nav.systemSetting": "System Setting",
+  "nav.users": "Users",
+  "nav.players": "Players",
+  "nav.playerSessions": "Player Sessions",
+  "nav.playerMobilePolicy": "Mobile Policy",
+  "nav.playerSelfLimits": "Self Limits",
+  "nav.userSessions": "User Sessions",
+  "nav.reports": "Reports",
+  "nav.betTrans": "Bet Trans",
+  "nav.depositTrans": "Deposit Trans",
+  "nav.withdrawTrans": "Withdraw Trans",
+  "nav.ledgertxns": "Ledger Trans",
+  "nav.wagerStats": "Wager Stats",
+  "nav.banners": "Banners",
+  "nav.promos": "Promotions",
+  "nav.promotionsTransaction": "Promotion Transactions",
+  "nav.tierTransactions": "Tier Transaction",
+  "nav.pages": "Pages",
+  "nav.pagedivs": "Page Divs",
+  "nav.home": "Home",
+  "nav.gameCategories": "Game Categories",
+  "nav.gameRanking": "Game Ranking",
+  "nav.games": "Games",
+  "nav.userlabels": "User Labels",
+  "nav.playerlabels": "Player Labels",
+  "nav.userrealms": "User Realms",
+  "nav.playerrealms": "Player Realms",
+  "nav.playergroups": "Player Groups",
+  "nav.viplevels": "Vip Levels",
+  "nav.vipRebates": "Rebate Setting",
+  "nav.bonuses": "Bonuses",
+  "nav.playerRebateBonus": "Rebate Trans",
+  "nav.bonusprizes": "Bonus Prize",
+  "nav.rewardsShop": "Rewards Shop",
+  "nav.rewardsShopCategories": "Rewards Shop Categories",
+  "nav.redemptionHistory": "Redemption History",
+  "nav.paymentTransaction": "Payment Transaction",
+  "nav.pointTransaction": "Point Transaction",
+  "nav.acsc": "ACSC",
+  "nav.acscRewardPushLogs": "Status Points Trans",
+  "nav.acscTransfers": "ACSC Transfer",
+  "nav.paymentChannelMgmt": "Payment Channel Management",
+  "nav.paymentChannels": "Payment Channels",
+  "header.logout": "Logout",
+  "header.changePw": "Change Password",
+  "header.switchColorMode": "Switch Color Mode",
+  "header.colorMode.dark": "Dark",
+  "header.colorMode.light": "Light",
+  "tabs": {
+    "menu": {
+      "closeSelected": "Close selected tab",
+      "closeOthers": "Close other tabs"
+    }
+  },
+  "admins": {
+    "id": "ID",
+    "name": "Name",
+    "code": "Login",
+    "state": "State",
+    "role": "Role",
+    "secret": "Password",
+    "form": {
+      "title": {
+        "create": "Create Admin",
+        "edit": "Edit Admin"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create admin success",
+        "fail": "Create admin fail"
+      },
+      "edit": {
+        "success": "Edit admin success",
+        "fail": "Edit admin fail"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "code": {
+        "required": "Login is required"
+      },
+      "secret": {
+        "required": "Password is required"
+      },
+      "role": {
+        "required": "Role is required"
+      },
+      "state": {
+        "required": "State is required"
+      }
+    }
+  },
+  "roles": {
+    "code": "Code",
+    "name": "Name",
+    "isSystem": "System Role",
+    "perms": {
+      "title": "Role Permissions",
+      "selectRole": "Role",
+      "loadingRoles": "Loading roles...",
+      "selectRolePlaceholder": "Select a role",
+      "pageKey": "Page / Action",
+      "create": "Create",
+      "read": "Read",
+      "update": "Update",
+      "delete": "Delete",
+      "canCreate": "Create",
+      "canRead": "Read",
+      "canUpdate": "Update",
+      "canDelete": "Delete",
+      "checkAll": "Check All",
+      "clearAll": "Clear All",
+      "save": "Save",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "saveSuccess": "Permissions saved successfully",
+      "saveFail": "Failed to save permissions",
+      "allow": "Allow"
+    },
+    "form": {
+      "title": {
+        "create": "Create Role",
+        "edit": "Edit Role"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create role success",
+        "fail": "Create role fail"
+      },
+      "edit": {
+        "success": "Edit role success",
+        "fail": "Edit role fail"
+      },
+      "delete": {
+        "title": "Delete Role",
+        "text": "Are you sure to delete this role?",
+        "success": "Delete role success",
+        "fail": "Delete role fail"
+      }
+    },
+    "rules": {
+      "code": {
+        "required": "Code is required"
+      },
+      "name": {
+        "required": "Name is required"
+      }
+    }
+  },
+  "adminSessions": {
+    "id": "Session ID",
+    "adminName": "Admin Name",
+    "adminCode": "Admin Login",
+    "operation": "Operation",
+    "crtTime": "Session Created Time",
+    "state": "State",
+    "tenantId": "Tenant ID",
+    "ip": "IP",
+    "cc": "Country",
+    "ua": "User Agent"
+  },
+  "adminOpsLogs": {
+    "id": "ID",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "tenantCode": "Tenant Code",
+    "adminId": "Admin ID",
+    "adminCode": "Admin",
+    "sessionId": "Session ID",
+    "opsAction": "Operation",
+    "timeFrom": "Created Time From",
+    "timeTo": "Created Time To",
+    "summary": "Summary",
+    "opsValues": "Details"
+  },
+  "playerAccountNotes": {
+    "id": "ID",
+    "crtTime": "Time",
+    "adminCode": "Admin",
+    "opsAction": "Action",
+    "summary": "Summary",
+    "remark": "Remarks",
+    "changes": "Changes",
+    "resource": "Resource",
+    "verb": "Verb",
+    "timeFrom": "Created From",
+    "timeTo": "Created To",
+    "addNote": "Add Note",
+    "expireTime": "Expires At"
+  },
+  "accountNoteForm": {
+    "title": "Add Note",
+    "action": "Action",
+    "remarks": "Remarks",
+    "expiryOn": "Expiry On",
+    "rules": {
+      "remark": {
+        "required": "Remarks is required",
+        "maxLength": "Remarks must not exceed {{max}} characters"
+      },
+      "expireTime": {
+        "pastTime": "Expiry date must be a future date"
+      }
+    },
+    "message": {
+      "createSuccess": "Note created"
+    }
+  },
+  "adminQuotaConfigs": {
+    "id": "ID",
+    "tenantCode": "Tenant Code",
+    "adminId": "Admin ID",
+    "adminCode": "Admin",
+    "adminState": "Admin State",
+    "quotaType": "Quota Type",
+    "limitAmt": "Limit Amount",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "form": {
+      "title": {
+        "update": "Update Admin Quota Config"
+      }
+    },
+    "message": {
+      "edit": {
+        "success": "Edit admin quota config success",
+        "fail": "Edit admin quota config fail"
+      }
+    }
+  },
+  "adminQuotas": {
+    "id": "ID",
+    "tenantCode": "Tenant Code",
+    "adminId": "Admin ID",
+    "adminCode": "Admin",
+    "playerId": "Player ID",
+    "quotaType": "Quota Type",
+    "quotaLimit": "Quota Limit",
+    "quotaUsed": "Quota Used",
+    "quotaRemain": "Quota Remain",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "message": {
+      "reset": {
+        "success": "Reset admin quota success",
+        "fail": "Reset admin quota fail",
+        "title": "Reset Admin Quota",
+        "text": "Confirm reset admin quota?"
+      }
+    }
+  },
+  "userSessions": {
+    "id": "Session ID",
+    "userNick": "User Nickname",
+    "userCode": "User Login",
+    "crtTime": "Session Created Time",
+    "userType": "User Type",
+    "domain": "Domain",
+    "ip": "IP",
+    "cc": "Country",
+    "ua": "User Agent",
+    "cabv": "Client version",
+    "state": "State",
+    "crtTimeFrom": "Session Created Time From",
+    "crtTimeTo": "Session Created Time To"
+  },
+  "playerSessions": {
+    "mobile": "Mobile No.",
+    "id": "Session ID",
+    "playerId": "Player ID",
+    "tenantId": "Tenant ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "crtTime": "Session Created Time",
+    "updTime": "Session Updated Time",
+    "domain": "Domain",
+    "ip": "IP",
+    "cc": "Country",
+    "ua": "Device",
+    "platform": "Platform",
+    "state": "State",
+    "crtTimeFrom": "Session Created Time From",
+    "crtTimeTo": "Session Created Time To"
+  },
+  "betTrans": {
+    "id": "Transaction ID",
+    "extTxnId": "External Transaction ID",
+    "userCode": "User Login",
+    "txnType": "Transaction Type",
+    "txnState": "Transaction State",
+    "gameCatId": "Game Cate",
+    "gameTypeId": "Game Type",
+    "gameId": "Game",
+    "roundId": "Round ID",
+    "gameResult": "Game Result",
+    "betTime": "Bet Time",
+    "settleTime": "Settle Time",
+    "betCode": "Bet Code",
+    "betAmt": "Bet Amount",
+    "betAdjAmt": "Valid bet",
+    "betRetAmt": "Payout",
+    "betResult": "Bet Result",
+    "betState": "Bet State",
+    "sessionId": "Session ID",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To"
+  },
+  "playerBetTrans": {
+    "id": "Transaction ID",
+    "extTxnId": "External Transaction ID",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "playerNick": "Player Nickname",
+    "playerType": "Player Type",
+    "parentCode": "Parent Code",
+    "txnType": "Transaction Type",
+    "txnState": "Transaction State",
+    "gameGenre": "Game Genre",
+    "gameGpId": "Game Provider ID",
+    "gameTypeId": "Game Type",
+    "gameId": "Game ID",
+    "extRoundId": "External Round ID",
+    "gameResult": "Game Result",
+    "currencyId": "Currency ID",
+    "betTime": "Bet Time",
+    "settleTime": "Settle Time",
+    "betCode": "Bet Code",
+    "betAmt": "Bet Amount",
+    "betAdjAmt": "Valid bet",
+    "betRetAmt": "W/L Amount",
+    "payout": "Payout Amount",
+    "betResult": "Bet Result",
+    "betState": "Bet State",
+    "betRemark": "Bet Remark",
+    "sessionId": "Session ID",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To",
+    "mobile": "Mobile No.",
+    "gameName": "Game Name",
+    "summary": {
+      "totalBetAmt": "Total Bet Amount",
+      "totalBetAmtTooltip": "Sum of bet amounts for all matching transactions.",
+      "totalPayoutAmt": "Total Payout Amount",
+      "totalPayoutAmtTooltip": "Sum of payout amounts for all matching transactions (Bet Amount + W/L Amount).",
+      "totalWl": "Total W/L (GGR)",
+      "totalWlTooltip": "Total Bet Amount minus Total Payout Amount. Positive means house win.",
+      "totalTransactions": "Total Transactions",
+      "totalTransactionsTooltip": "Total number of matching transactions.",
+      "winCount": "Win Count",
+      "winCountTooltip": "Number of settled bets where the player won (W/L Amount > 0).",
+      "lossCount": "Loss Count",
+      "lossCountTooltip": "Number of settled bets where the player lost (W/L Amount < 0).",
+      "tieCount": "Tie Count",
+      "tieCountTooltip": "Number of settled bets with no win or loss (W/L Amount = 0)."
+    }
+  },
+  "wagerStats": {
+    "groupBy": "Group By",
+    "usernameGame": "Username - Game",
+    "gameProvider": "Game Provider",
+    "gameProviderGame": "Game Provider - Game",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "gameProviderCode": "Game Provider",
+    "gameType": "Game Type",
+    "gameCode": "Game",
+    "type": "Type",
+    "statMonth": "State Month",
+    "betReal": "Bets Real",
+    "winReal": "Wins Real",
+    "winBonus": "Wins Bonus",
+    "betsBonus": "Bets Bonus",
+    "gcr": "GCR",
+    "ncr": "NCR",
+    "statMonthRequired": "Stat month is required",
+    "activePlayerCount": "Active Player",
+    "ggr": "GGR",
+    "ngr": "NGR",
+    "averageTurnover": "Average Turnover",
+    "mobile": "Mobile No.",
+    "groupByRequired": "Group By is required"
+  },
+  "ledgertxns": {
+    "crtTime": "Created Time",
+    "updTime": "Update Time",
+    "txnType": "Transaction Type",
+    "txnRefId": "Ref Trans ID",
+    "state": "State",
+    "remark": "Remark",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "playerId": "Player ID",
+    "currency": "Currency",
+    "chainType": "Chain Type",
+    "coinType": "Coin Type",
+    "coinDecimal": "Coin Decimal",
+    "coinAddress": "Coin Address",
+    "coinBalChange": "Coin Balance Change",
+    "coinBalBefore": "Coin Balance Before",
+    "coinBalAfter": "Coin Balance After",
+    "bonusChange": "Bonus Change",
+    "bonusBefore": "Bonus Before",
+    "bonusAfter": "Bonus After",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To",
+    "userId": "User ID",
+    "mobile": "Mobile No.",
+    "id": "Trans ID"
+  },
+  "acscRewardAccruals": {
+    "playerId": "Player ID",
+    "spPendingTheo": "SP Pending THEO",
+    "bpPendingTheo": "BP Pending THEO",
+    "spPointsTotal": "SP Points Total",
+    "bpPointsTotal": "BP Points Total",
+    "lastAccruedWatermark": "Last Accrued Watermark",
+    "updTime": "Updated Time",
+    "loadFailed": "Failed to load. Please refresh and try again."
+  },
+  "acscRewardPushLogs": {
+    "id": "Trans ID",
+    "crtTime": "Created Time",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "mobile": "Mobile No.",
+    "patronNumber": "Patron ID",
+    "cardLevel": "Card Level",
+    "pointType": "Point Type",
+    "points": "Points",
+    "theoDeducted": "THEO Deducted",
+    "theoDivisorCents": "THEO Divisor",
+    "pendingTheoBefore": "Pending THEO Before",
+    "pendingTheoAfter": "Pending THEO After",
+    "pointsTotalBefore": "Points Total Before",
+    "pointsTotalAfter": "Points Total After",
+    "accruedWatermark": "Accrued Watermark",
+    "extTxnId": "External Txn ID",
+    "ugOperation": "UG Operation",
+    "ugAmount": "UG Amount",
+    "ugRespCode": "UG Resp Code",
+    "ugRespMsg": "UG Resp Message",
+    "state": "State",
+    "failReason": "Fail Reason",
+    "source": "Source",
+    "operatedBy": "Operated By",
+    "retryCount": "Retry Count",
+    "taskId": "Task ID",
+    "updTime": "Update Time"
+  },
+  "acscRewardPointType": {
+    "sp": "SP",
+    "bp": "BP"
+  },
+  "acscRewardPushState": {
+    "success": "Success",
+    "failed": "Failed"
+  },
+  "acscTransfers": {
+    "id": "Trans ID",
+    "crtTime": "Created Time",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To",
+    "updTime": "Updated Time",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "mobile": "Mobile No.",
+    "patronNumber": "Patron ID",
+    "vipCardNumber": "VIP Card No.",
+    "direction": "Direction",
+    "wallet": "Wallet",
+    "currency": "Currency",
+    "amount": "Amount",
+    "balanceBefore": "Balance Before",
+    "balanceAfter": "Balance After",
+    "state": "State",
+    "acscTxnId": "ACSC Trans ID",
+    "middlewareTxnId": "Middleware Trans ID",
+    "clientRef": "Client Ref",
+    "source": "Source",
+    "operatedBy": "Operated By",
+    "remark": "Remark"
+  },
+  "acscTransferWallet": {
+    "cash": "Cash",
+    "solaire_peso": "Solaire Peso"
+  },
+  "acscTransferDirection": {
+    "in": "On-Prem to Online",
+    "out": "Online to On-Prem"
+  },
+  "acscTransferState": {
+    "pending": "Pending",
+    "processing": "Processing",
+    "completed": "Completed",
+    "reversed": "Reversed",
+    "failed": "Failed"
+  },
+  "paymentTxn": {
+    "id": "Transaction ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "playerId": "Player ID",
+    "mobile": "Mobile No.",
+    "txnType": "Transaction Type",
+    "state": "Transaction State",
+    "amount": "Amount",
+    "currency": "Currency",
+    "paymentEntryCode": "Payment Entry Code",
+    "paymentProviderCode": "Payment Provider Code",
+    "accountNumber": "Account Number",
+    "extRefId": "External Reference ID",
+    "remark": "Remark",
+    "failSource": "Failure Source",
+    "failReason": "Failure Reason",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "operatedBy": "Operated By",
+    "operatedAt": "Operated At",
+    "approvalStatus": "Approval Status",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To"
+  },
+  "pointTxn": {
+    "id": "Transaction ID",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "type": "Transaction Type",
+    "state": "Transaction State",
+    "xpBefore": "Point Before",
+    "xpChange": "Point Change",
+    "xpAfter": "Point After",
+    "xpRemain": "Point Remaining",
+    "approveStatus": "Approval Status",
+    "remark": "Remark",
+    "approvalRemark": "Approval Remark",
+    "expireTime": "Expire Time",
+    "refId": "Reference ID",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "operatedBy": "Operated By",
+    "operatedAt": "Operated At",
+    "approvedBy": "Approved By",
+    "approvedAt": "Approved At",
+    "crtTimeFrom": "Time From",
+    "crtTimeTo": "Time To"
+  },
+  "entryType": {
+    "e-wallet": "E-Wallet",
+    "local_bank": "Local Bank",
+    "partner_bank": "Partner Bank"
+  },
+  "paymentChannels": {
+    "providerCode": "Provider Code",
+    "code": "Channel Code",
+    "name": "Name",
+    "images": "Image",
+    "currency": "Currency",
+    "state": "State",
+    "isTest": "Test Channel",
+    "depositEnabled": "Deposit",
+    "withdrawEnabled": "Withdraw",
+    "entryType": "Entry Type",
+    "weight": "Weight",
+    "form": {
+      "title": {
+        "edit": "Edit Payment Channel"
+      },
+      "addImage": "Add Image"
+    },
+    "message": {
+      "update": {
+        "success": "Update successful",
+        "fail": "Update failed"
+      }
+    }
+  },
+  "banners": {
+    "bannerKind": "Banner Kind",
+    "bannerUrl": "Banner Image",
+    "bannerSort": "Banner Sort",
+    "gameCatId": "Game Cat",
+    "gameId": "Game",
+    "platform": "Platform",
+    "appId": "Site",
+    "descriptions": "Banner Descriptions",
+    "link": "Link",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "bannerMeta": "Banner Meta",
+    "bannerState": "Banner State",
+    "name": "Name",
+    "pageSurfaces": "Display Pages",
+    "pageSurfaces.home": "Home",
+    "pageSurfaces.promotion": "Promotion",
+    "weight": "Weight",
+    "state": "State",
+    "id": "ID",
+    "images": "Images",
+    "form": {
+      "title": {
+        "create": "Create Banner",
+        "edit": "Edit Banner"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      },
+      "position": {
+        "required": "Position is required"
+      },
+      "platform": {
+        "required": "Platform is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create banner success",
+        "fail": "Create banner fail"
+      },
+      "edit": {
+        "success": "Edit banner success",
+        "fail": "Edit banner fail"
+      },
+      "delete": {
+        "success": "Delete banner success",
+        "fail": "Delete banner fail",
+        "title": "Delete Banner",
+        "text": "Confirm delete banner?"
+      }
+    }
+  },
+  "rewardsShop": {
+    "id": "ID",
+    "code": "Code",
+    "name": "Name",
+    "type": "Type",
+    "descriptions": "Description",
+    "pointRequired": "Point Required",
+    "stockQty": "Stock Qty",
+    "itemRedeemed": "Redeemed Qty",
+    "isUnlimited": "Unlimited Stock",
+    "images": "Images",
+    "state": "State",
+    "weight": "Weight",
+    "rewardBalance": "Reward Balance",
+    "rewardCurrency": "Reward Currency",
+    "form": {
+      "title": {
+        "create": "Create Item",
+        "edit": "Edit XP Shop Item"
+      },
+      "addImage": "Add Image",
+      "addDescr": "Add Description"
+    },
+    "rules": {
+      "code": {
+        "required": "Code is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "type": {
+        "required": "Type is required"
+      },
+      "pointRequired": {
+        "required": "Point required is required",
+        "invalid": "Must be a whole number"
+      },
+      "rewardBalance": {
+        "required": "Reward balance is required"
+      },
+      "rewardCurrency": {
+        "required": "Reward currency is required"
+      },
+      "state": {
+        "required": "State is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create XP Shop item success",
+        "fail": "Create XP Shop item fail"
+      },
+      "edit": {
+        "success": "Edit XP Shop item success",
+        "fail": "Edit XP Shop item fail"
+      },
+      "delete": {
+        "success": "Delete XP Shop item success",
+        "fail": "Delete XP Shop item fail",
+        "title": "Delete XP Shop Item",
+        "text": "Confirm delete XP Shop item?"
+      }
+    }
+  },
+  "rewardsShopType": {
+    "physical": "Physical",
+    "reward": "Reward"
+  },
+  "redemptionState": {
+    "normal": "Normal",
+    "cancel": "Cancelled",
+    "completed": "Completed",
+    "failed": "Failed",
+    "expired": "Expired",
+    "delivered": "Delivered"
+  },
+  "redemptionHistory": {
+    "id": "Order ID",
+    "orderId": "Order ID",
+    "crtTime": "Created Time",
+    "crtTimeFrom": "Created Time From",
+    "crtTimeTo": "Created Time To",
+    "updTime": "Updated Time",
+    "playerId": "Player ID",
+    "mobile": "Mobile No.",
+    "playerMobile": "Mobile No.",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "itemId": "Item ID",
+    "itemCode": "Item Code",
+    "itemName": "Item Name",
+    "itemType": "Item Type",
+    "pointRequired": "Point Required",
+    "quantity": "Quantity",
+    "total": "Total Points",
+    "state": "State",
+    "remark": "Remark",
+    "message": {
+      "list": {
+        "fail": "Load redemption history fail"
+      },
+      "updateState": {
+        "success": "Update redemption state success",
+        "fail": "Update redemption state fail"
+      }
+    },
+    "editStateTitle": "Edit Order State"
+  },
+  "promos": {
+    "appId": "Site",
+    "descriptions": "Descriptions",
+    "prop": "Prop",
+    "name": "Name",
+    "code": "Promotion Code",
+    "promoDesc": "Deposit Bonus Description",
+    "position": "Position",
+    "weight": "Promotion Sort",
+    "state": "State",
+    "type": "Type",
+    "promoType": "Type",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "id": "ID",
+    "images": "Images",
+    "minDepositAmt": "Min Deposit Amount",
+    "bonusRate": "Bonus Rate",
+    "wageringRequirement": "Wagering Requirement",
+    "maxDepositAmt": "Max Deposit Amount",
+    "maxBonusAmt": "Max Bonus Amount",
+    "wageringMultiplier": "Wagering Multiplier",
+    "targetGameTypes": "Game Types",
+    "eligibility": "Eligibility",
+    "bonusAmt": "Bonus Amount",
+    "form": {
+      "title": {
+        "create": "Create Promotion",
+        "edit": "Edit Promotion"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image",
+      "addProp": "Add Prop",
+      "unlimited": "Unlimited",
+      "once_per_lifetime": "Once Per Lifetime",
+      "normal": "Normal",
+      "gig_migration": "GIG Migration",
+      "leaderboard": "Leaderboard",
+      "fasttrack": "Fast Track",
+      "daily": "Daily"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "minDepositAmt": {
+        "required": "Min deposit amount is required"
+      },
+      "bonusRate": {
+        "required": "Bonus rate is required",
+        "invalid": "Must be a number between 0 and 1"
+      },
+      "wageringRequirement": {
+        "required": "Wagering requirement is required",
+        "invalid": "Must be greater than 0"
+      },
+      "eligibility": {
+        "required": "Eligibility is required"
+      },
+      "promoType": {
+        "required": "Type is required"
+      },
+      "state": {
+        "required": "State is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create promotion success",
+        "fail": "Create promotion fail"
+      },
+      "edit": {
+        "success": "Edit promotion success",
+        "fail": "Edit promotion fail"
+      },
+      "delete": {
+        "success": "Delete promotion success",
+        "fail": "Delete promotion fail",
+        "title": "Delete Promotion",
+        "text": "Confirm delete promotion?"
+      }
+    }
+  },
+  "promotionTransactions": {
+    "loading": "Loading…",
+    "id": "Record ID",
+    "tenantId": "Tenant ID",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "promotionId": "Promotion",
+    "promotionName": "Promotion Name",
+    "promotionCode": "Promotion Code",
+    "promotionType": "Promotion Type",
+    "state": "State",
+    "currency": "Currency",
+    "balanceId": "Balance ID",
+    "depositTxnId": "Deposit Transaction",
+    "depositAmt": "Deposit Amount",
+    "bonusAmt": "Bonus Amount",
+    "bonusRemaining": "Bonus Remaining",
+    "wageringTarget": "Wagering Target",
+    "wageringProgress": "Wagering Progress",
+    "crtTime": "Created",
+    "updTime": "Updated",
+    "delTime": "Deleted At",
+    "completedAt": "Completed At",
+    "filters": {
+      "playerId": "Player ID",
+      "playerNickname": "Player Nickname",
+      "mobile": "Mobile No.",
+      "promotionId": "Promotion",
+      "promoType": "Promotion Type",
+      "state": "State",
+      "crtTimeFrom": "Created From",
+      "crtTimeTo": "Created To",
+      "includeDeleted": "Include Deleted"
+    },
+    "cols": {
+      "id": "Record ID",
+      "playerCode": "Player Nickname",
+      "playerId": "Player ID",
+      "promotion": "Promotion",
+      "state": "State",
+      "currency": "Currency",
+      "depositAmt": "Deposit Amount",
+      "bonusAmt": "Bonus Granted",
+      "bonusRemaining": "Bonus Remaining",
+      "wagering": "Wagering (Progress / Target)",
+      "crtTime": "Created"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "complete": "Complete"
+    },
+    "batch": {
+      "grantAction": "Batch grant",
+      "cancelAction": "Batch cancel",
+      "grantTitle": "Batch grant promotion",
+      "cancelTitle": "Batch cancel promotion",
+      "promotionId": "Fasttrack promotion",
+      "promotionPlaceholder": "Select a fasttrack promotion",
+      "mobiles": "Mobile No.",
+      "mobilesDescription": "Enter one mobile number per line. Empty and duplicate lines are ignored.",
+      "mobilesPlaceholder": "0912345678\n+639171234567",
+      "opsRemark": "Operations remark",
+      "previewTitle": "Preview results",
+      "resultTitle": "Execution results",
+      "total": "Total: {{count}}",
+      "succeeded": "Succeeded: {{count}}",
+      "failed": "Failed: {{count}}",
+      "status": "Status",
+      "reason": "Reason",
+      "success": "Success",
+      "failure": "Failed",
+      "noResults": "No item results returned.",
+      "editInput": "Edit input",
+      "executeGrant": "Confirm grant",
+      "executeCancel": "Confirm cancellation",
+      "loadPromotionsFail": "Failed to load fasttrack promotions",
+      "requestFail": "Batch operation failed",
+      "unexpectedError": "Unexpected error",
+      "completeTitle": "Batch operation completed",
+      "completeMessage": "Succeeded: {{succeeded}}, failed: {{failed}}.",
+      "promotionRequired": "Select a fasttrack promotion.",
+      "mobilesRequired": "Enter at least one mobile number."
+    },
+    "form": {
+      "titleCreate": "Create Promotion Transactions",
+      "titleEdit": "Edit Promotion Transactions",
+      "submit": "Save",
+      "tenantId": "Tenant ID",
+      "playerId": "Player ID",
+      "playerCode": "Player Nickname",
+      "promotionId": "Promotion",
+      "currency": "Currency",
+      "balanceId": "Balance ID",
+      "depositTxnId": "Deposit Transaction ID",
+      "depositAmt": "Deposit Amount",
+      "state": "State",
+      "bonusAmt": "Bonus Amount",
+      "wageringTarget": "Wagering Target",
+      "wageringProgress": "Wagering Progress",
+      "playerSearchHint": "Search player (mobile, nickname, or player ID)",
+      "playerSearchPlaceholder": "Enter mobile, nickname, or player ID",
+      "nickname": "Nickname",
+      "changePlayer": "Change"
+    },
+    "rules": {
+      "playerRequired": "Find a player with search before saving.",
+      "depositAmtRequired": "Deposit amount is required.",
+      "invalidAmount": "Enter a valid amount.",
+      "currencyRequired": "Currency is required."
+    },
+    "message": {
+      "loadFail": "Failed to load record",
+      "createSuccess": "Saved successfully",
+      "createFail": "Save failed",
+      "editSuccess": "Updated successfully",
+      "editFail": "Update failed",
+      "cancelTitle": "Cancel",
+      "cancelText": "Are you sure to cancel this promotion transaction?",
+      "cancelSuccess": "Cancelled successfully",
+      "deleteTitle": "Delete Player Promotion",
+      "deleteText": "Are you sure you want to delete this promotion transaction?",
+      "deleteSuccess": "Deleted successfully",
+      "completeTitle": "Complete",
+      "completeText": "Are you sure you want to complete this promotion transaction? This action settles the promotional bonus to the cash wallet (eligible balance moved to cash), clears the bonus where applicable, and sets this player promotion to completed. Only active enrollments can be completed.",
+      "completeSuccess": "Completed successfully",
+      "playerSearchNoResults": "No player matched this search."
+    }
+  },
+  "tierTransactions": {
+    "id": "Record ID",
+    "crtTime": "Created At",
+    "updTime": "Updated At",
+    "playerId": "Player ID",
+    "playerNickname": "Player Nickname",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "actionType": "Action Type",
+    "oldLevelIdx": "Previous Level",
+    "newLevelIdx": "New Level",
+    "turnoverAmt": "Turnover Amount",
+    "dailyDepositAmt": "Daily Deposit Amount",
+    "dailyBetAmt": "Daily Bet Amount",
+    "remark": "Remark",
+    "filters": {
+      "playerNickname": "Player Nickname",
+      "mobile": "Mobile No.",
+      "actionType": "Action Type",
+      "timeFrom": "Time From",
+      "timeTo": "Time To"
+    }
+  },
+  "vipLevelTxnActionType.upgrade": "Upgrade",
+  "vipLevelTxnActionType.downgrade": "Downgrade",
+  "vipLevelTxnActionType.retention": "Retention",
+  "playerPromotionState.unspecified": "Unspecified",
+  "playerPromotionState.active": "Active",
+  "playerPromotionState.queued": "Queued",
+  "playerPromotionState.completed": "Completed",
+  "playerPromotionState.completed_pending": "Completed (pending)",
+  "playerPromotionState.cancelled": "Cancelled",
+  "playerPromotionState.failed": "Failed",
+  "pages": {
+    "appId": "Site",
+    "name": "Name",
+    "state": "State",
+    "refId": "Ref ID",
+    "refType": "Ref Type",
+    "id": "ID",
+    "slug": "Slug",
+    "tenantId": "Tenant ID",
+    "form": {
+      "title": {
+        "create": "Create Page",
+        "edit": "Edit Page"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      },
+      "slug": {
+        "required": "Slug is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create page success",
+        "fail": "Create page fail"
+      },
+      "edit": {
+        "success": "Edit page success",
+        "fail": "Edit page fail"
+      },
+      "delete": {
+        "success": "Delete page success",
+        "fail": "Delete page fail",
+        "title": "Delete Page",
+        "text": "Confirm delete page?"
+      }
+    }
+  },
+  "pagedivs": {
+    "id": "ID",
+    "pageId": "Page",
+    "appId": "Site",
+    "descr": "Desc",
+    "prop": "Prop",
+    "weight": "Weight",
+    "lang": "Language",
+    "link": "Link",
+    "html": "HTML",
+    "image": "Image",
+    "form": {
+      "title": {
+        "create": "Create Page Div",
+        "edit": "Edit Page Div"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image",
+      "addProp": "Add Prop"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "pageId": {
+        "required": "Page is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create page div success",
+        "fail": "Create page div fail"
+      },
+      "edit": {
+        "success": "Edit page div success",
+        "fail": "Edit page div fail"
+      },
+      "delete": {
+        "success": "Delete page div success",
+        "fail": "Delete page div fail",
+        "title": "Delete Page Div",
+        "text": "Confirm delete page div?"
+      }
+    }
+  },
+  "users": {
+    "userCode": "User Login",
+    "userNick": "User Nickname",
+    "tgUserName": "TG Username",
+    "userState": "State",
+    "appId": "Site",
+    "crtTime": "Created Time",
+    "crtTimeFrom": "Created Time From",
+    "crtTimeTo": "Created Time To",
+    "detail": "Detail",
+    "form": {
+      "title": {
+        "updateState": "Update User State"
+      }
+    },
+    "message": {
+      "updateState": {
+        "success": "Update user state success",
+        "fail": "Update user state fail"
+      }
+    }
+  },
+  "players": {
+    "id": "Player ID",
+    "mobile": "Mobile No.",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "applicantId": "Applicant ID",
+    "labels": "Player Labels",
+    "crtTime": "Created Time",
+    "crtTimeFrom": "Created Time From",
+    "crtTimeTo": "Created Time To",
+    "kycState": "KYC State",
+    "lastAccessTime": "Last Access Time",
+    "detail": "Detail",
+    "playerState": "Player State",
+    "kycStates": {
+      "reminder": "Reminder",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "type": "Player Type",
+    "form": {
+      "title": {
+        "updateState": "Edit Player State"
+      }
+    },
+    "message": {
+      "updateState": {
+        "success": "Update player state success",
+        "fail": "Update player state fail"
+      }
+    },
+    "rules": {
+      "playerState": {
+        "required": "Player state is required"
+      }
+    }
+  },
+  "userdetail": {
+    "userCode": "User Login",
+    "userNick": "User Nickname",
+    "tgUserName": "TG Username",
+    "userState": "State",
+    "appId": "Site",
+    "crtTime": "Created Time",
+    "acctinfo": "Account Info",
+    "id": "ID",
+    "updTime": "Update Time",
+    "userType": "User Type",
+    "userFlag": "User Flag",
+    "currencyId": "Currency",
+    "languageId": "Language",
+    "parentId": "Parent",
+    "parentCode": "Parent Code",
+    "tgBotName": "TG Bot Name",
+    "userEmailVerified": "User Email Verified",
+    "userMobileVerified": "User Mobile Verified",
+    "lastSuccessTime": "Last Success Time",
+    "lastFailureTime": "Last Failure Time",
+    "userinfo": "User Info",
+    "userLabels": "User Labels",
+    "gamePvdId": "Game Provider",
+    "gameGenre": "Game Cat",
+    "info": {
+      "gender": "Gender",
+      "birthday": "Birthday",
+      "birthPlace": "Birthplace",
+      "idType": "ID Type",
+      "nationality": "Nationality",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "incomeSource": "Income Source"
+    },
+    "uservault": "User Vault",
+    "vault": {
+      "vipRank": "VIP Rank",
+      "vipLevel": "VIP Level",
+      "vipLevelVal": "VIP Level Value",
+      "weeklyCashbackRate": "Weekly Cashback Rate",
+      "monthlyCashbackRate": "Monthly Cashback Rate",
+      "liveCommRate": "Live Commission Rate",
+      "sportCommRate": "Sport Commission Rate",
+      "slotCommRate": "Slot Commission Rate"
+    },
+    "time": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "sevenDays": "7 Days",
+      "fifteenDays": "15 Days",
+      "thirtyDays": "30 Days",
+      "total": "Total"
+    },
+    "financeinfo": {
+      "title": "Financial Info",
+      "time": "Time",
+      "deposit": "Deposit",
+      "withdraw": "Withdraw",
+      "profit": "Profit"
+    },
+    "betinfo": {
+      "title": "Bet Info",
+      "time": "Time",
+      "bet": "Bet",
+      "win": "Win",
+      "profit": "Profit"
+    },
+    "form": {
+      "title": {
+        "updateState": "Update User State"
+      }
+    },
+    "message": {
+      "updateInfo": {
+        "success": "Update user info success",
+        "fail": "Update user info fail"
+      }
+    }
+  },
+  "playerdetail": {
+    "mobile": "Mobile No.",
+    "playerCode": "Player Nickname",
+    "playerNick": "Player Nickname",
+    "playerState": "State",
+    "appId": "Site",
+    "crtTime": "Created Time",
+    "acctinfo": "Account Info",
+    "id": "Player ID",
+    "patronNumber": "Patron ID",
+    "updTime": "Update Time",
+    "playerType": "Player Type",
+    "playerFlag": "Player Flag",
+    "tenantId": "Tenant ID",
+    "playerEmail": "Player Email",
+    "playerMobileVerified": "Player Mobile Verified",
+    "lastSuccessTime": "Last Success Time",
+    "lastFailureTime": "Last Failure Time",
+    "loginFailureCnt": "Login Failure Count",
+    "exclusionCode": "Exclusion Code",
+    "exclusionDate": "Exclusion Date",
+    "mobileFreeze": {
+      "alert": "This mobile is under a freeze policy. The player cannot log in regardless of account state.",
+      "badge": "Freeze"
+    },
+    "playerinfo": "Player Info",
+    "playerLabels": "Player Labels",
+    "playerRealmId": "Player Realm ID",
+    "gamePvdId": "Game Provider",
+    "gameGenre": "Game Cat",
+    "info": {
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "lastName": "Last Name",
+      "country": "Country",
+      "gender": "Gender",
+      "birthday": "Birthday",
+      "birthPlace": "Birthplace",
+      "idType": "ID Type",
+      "nationality": "Nationality",
+      "address": "Address",
+      "email": "Email",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "incomeSource": "Income Source",
+      "workNatureId": "Work Nature",
+      "rules": {
+        "opsRemark": {
+          "required": "Remark is required"
+        }
+      },
+      "remarkModal": {
+        "title": "Add Remarks",
+        "opsRemark": "Remarks"
+      }
+    },
+    "kycinfo": "KYC Info",
+    "kyc": {
+      "state": "State",
+      "editState": "Edit KYC State",
+      "opsRemark": "Remarks",
+      "syncInfo": "Sync KYC Info",
+      "idPicFrontUrl": "ID Front Image",
+      "idPicBackUrl": "ID Back Image",
+      "selfieUrl": "Selfie Image",
+      "applicantId": "Applicant ID",
+      "reviewStatus": "Review Status",
+      "verifiedAt": "Verified At",
+      "docType": "Document Type",
+      "docNumber": "Document Number",
+      "docExpiryDate": "Document Expiry Date",
+      "openImageLink": "Open in new tab"
+    },
+    "assignedPlayerLabels": "Player labels",
+    "assignedPlayerLabelsEmpty": "No labels assigned to this player.",
+    "assignedPlayerLabelsCols": {
+      "name": "Label name",
+      "remarks": "Remark",
+      "state": "State",
+      "assignedAt": "Assigned at",
+      "actions": "Actions"
+    },
+    "assignedPlayerLabelsRowRemove": {
+      "title": "Remove label from player",
+      "text": "Remove label \"{{name}}\" from this player?",
+      "remove": "Remove"
+    },
+    "assignedPlayerLabelsOpenAssignModal": "Assign labels",
+    "assignedPlayerLabelsAssignModalTitle": "Assign labels to player",
+    "assignedPlayerLabelsAssignHint": "Add labels to this player",
+    "assignedPlayerLabelsAssignPlaceholder": "Select one or more labels",
+    "assignedPlayerLabelsAssignButton": "Assign labels",
+    "assignedPlayerLabelsAssign": {
+      "success": "Labels assigned",
+      "fail": "Assign label failed"
+    },
+    "assignedPlayerLabelsRemove": {
+      "success": "Labels removed",
+      "fail": "Remove label failed"
+    },
+    "accountNotes": "Account Notes",
+    "accountNotesEmpty": "No account notes found for this player.",
+    "accountNotesCols": {
+      "crtTime": "Time",
+      "adminCode": "Admin",
+      "opsAction": "Action",
+      "summary": "Summary",
+      "remark": "Remark",
+      "changes": "Changes"
+    },
+    "time": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "sevenDays": "7 Days",
+      "fifteenDays": "15 Days",
+      "thirtyDays": "30 Days",
+      "total": "Total"
+    },
+    "vault": {
+      "title": "VIP Level Info",
+      "tier": "Tier",
+      "cashbackTitle": "Cashback",
+      "commissionTitle": "Commission",
+      "vipGrade": "VIP Grade",
+      "vipLevel": "VIP Level",
+      "vipLevelVal": "VIP Level Value",
+      "vipLevelNxt": "Turnover Needed",
+      "weeklyCashbackRate": "Weekly Rate",
+      "monthlyCashbackRate": "Monthly Rate",
+      "liveCommRate": "Live Rate",
+      "sportCommRate": "Sport Rate",
+      "slotCommRate": "Slot Rate"
+    },
+    "currentWalletBalance": {
+      "title": "Current Wallet Balance",
+      "normal": "Normal",
+      "bonus": "Bonus",
+      "point": "Point",
+      "solairePeso": "Solaire Peso"
+    },
+    "financeinfo": {
+      "title": "Financial Info",
+      "time": "Time",
+      "deposit": "Deposit",
+      "withdraw": "Withdraw",
+      "profit": "Profit"
+    },
+    "betinfo": {
+      "title": "Bet Info",
+      "time": "Time",
+      "bet": "Bet",
+      "win": "Win",
+      "profit": "Profit"
+    },
+    "form": {
+      "title": {
+        "updateState": "Update Player State"
+      }
+    },
+    "message": {
+      "updateInfo": {
+        "success": "Update player info success",
+        "fail": "Update player info fail"
+      },
+      "walletAdjustment": {
+        "success": "Wallet adjustment success",
+        "fail": "Wallet adjustment failed"
+      },
+      "pointAdjustment": {
+        "success": "Point adjustment success",
+        "fail": "Point adjustment failed"
+      },
+      "changeMobile": {
+        "success": "Change mobile success",
+        "fail": "Change mobile failed"
+      },
+      "messageSend": {
+        "success": "Message sent successfully",
+        "fail": "Failed to send message"
+      },
+      "updateKycStatus": {
+        "success": "KYC state updated successfully",
+        "fail": "Failed to update KYC state"
+      },
+      "syncKyc": {
+        "success": "KYC info synced successfully",
+        "fail": "Failed to sync KYC info"
+      },
+      "assignPromotion": {
+        "success": "Promotion assigned successfully",
+        "fail": "Failed to assign promotion"
+      },
+      "vipLevelSet": {
+        "success": "VIP level adjustment success",
+        "fail": "VIP level adjustment failed"
+      }
+    },
+    "accountActions": "Account Actions",
+    "actions": {
+      "deposit": "Deposit",
+      "withdraw": "Withdraw",
+      "otp": "Generate OTP",
+      "changeMobile": "Change Mobile",
+      "sendMessage": "Send Message",
+      "walletAdjustment": "Wallet Adjustment",
+      "pointAdjustment": "Point Adjustment",
+      "vipLevelAdjustment": "VIP Level Adjustment",
+      "assignPromotion": "Assign Promotion"
+    },
+    "walletAdjustment": {
+      "title": "Wallet Adjustment",
+      "amount": "Amount",
+      "currency": "Currency",
+      "remark": "Remark",
+      "rules": {
+        "amount": {
+          "required": "Amount is required",
+          "invalid": "Invalid amount",
+          "zero": "Amount cannot be zero"
+        },
+        "currency": {
+          "required": "Currency is required"
+        }
+      }
+    },
+    "pointAdjustment": {
+      "title": "Point Adjustment",
+      "amount": "Amount",
+      "remark": "Remark",
+      "rules": {
+        "amount": {
+          "required": "Amount is required",
+          "invalid": "Invalid amount",
+          "zero": "Amount cannot be zero"
+        }
+      }
+    },
+    "vipLevelAdjustment": {
+      "vipLevel": "VIP Level",
+      "opsRemark": "Remarks",
+      "rules": {
+        "vipLevel": {
+          "required": "VIP level is required"
+        }
+      }
+    },
+    "otp": {
+      "title": "Generate OTP",
+      "generating": "Generating OTP code...",
+      "validFor": "Valid for 24 hours",
+      "validUntil": "until {{time}}",
+      "generatedWithoutCode": "OTP code generated. Please check the player's device."
+    },
+    "changeMobile": {
+      "newMobile": "New mobile",
+      "opsRemark": "Remarks",
+      "rules": {
+        "newMobile": {
+          "required": "New mobile is required",
+          "invalid": "Invalid new mobile number"
+        },
+        "opsRemark": {
+          "required": "Remarks is required"
+        }
+      }
+    },
+    "messageSend": {
+      "title": "Title",
+      "content": "Content",
+      "rules": {
+        "title": {
+          "required": "Title is required"
+        },
+        "content": {
+          "required": "Content is required"
+        }
+      }
+    },
+    "betHistory": "Bet History",
+    "txnPayment": "Deposit/Withdrawal History",
+    "pointTxn": "Point Transaction",
+    "acscRewardAccrual": "ACSC Reward Accrual",
+    "redemptionHistory": "Redemption History",
+    "playerPromotionTransaction": "Player Promotion Transactions",
+    "assignPromotion": {
+      "promotionId": "Promotion",
+      "promotionIdPlaceholder": "Select A Fast Track Promotion",
+      "opsRemark": "Remarks",
+      "rules": {
+        "promotionId": {
+          "required": "Promotion is required"
+        }
+      }
+    }
+  },
+  "playerBetHistory": {
+    "id": "ID",
+    "dateTime": "Date Time",
+    "sessionId": "Session ID",
+    "extRoundId": "External Round ID",
+    "gameName": "Game Name",
+    "gameProvider": "Game Provider",
+    "betAmt": "Bet Amount",
+    "validBetAmt": "Valid bet",
+    "payout": "Payout",
+    "walletAmount": "Wallet Amount",
+    "bonusAmount": "Bonus Amount",
+    "walletBalance": "Wallet Balance",
+    "bonusBalance": "Bonus Balance",
+    "betState": "Bet State",
+    "remark": "Remark",
+    "coinType": "Coin Type"
+  },
+  "txnPayment": {
+    "id": "Transaction ID",
+    "referenceId": "Reference ID",
+    "paymentProviderCode": "Payment Provider Code",
+    "paymentEntryCode": "Payment Entry Code ",
+    "accountNumber": "Account Number",
+    "crtTime": "Created Time",
+    "updTime": "Update Time",
+    "txnType": "Transaction Type",
+    "walletAmount": "Wallet Amount",
+    "bonusAmount": "Bonus Amount",
+    "walletBalance": "Wallet Balance",
+    "bonusBalance": "Bonus Balance",
+    "remark": "Remark",
+    "state": "State",
+    "approvalStatus": "Approval Status"
+  },
+  "gameCategories": {
+    "loadTabsFail": "Failed to load category tabs",
+    "loadCategoriesFail": "Failed to load game categories layout",
+    "noData": "No Data found",
+    "order": "Sort",
+    "vector": "Vector Code",
+    "provider": "Provider",
+    "game": "Game",
+    "image": "Image",
+    "addGameVector": "Add vector",
+    "save": "Save",
+    "saveSuccess": "Saved successfully",
+    "saveFailed": "Save failed",
+    "validationSelectGameAllRows": "Please select game for all rows.",
+    "validationVectorProviderGameAllRows": "Please input vector code and select provider/game for all rows.",
+    "addGame": "+ Game",
+    "deleteVector": "Delete vector",
+    "upload": "Upload",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "readOnlyActionHint": "This action needs other APIs and is disabled here",
+    "id": "ID",
+    "name": "Name",
+    "appId": "Site",
+    "state": "State",
+    "weight": "Weight",
+    "descr": "Description",
+    "form": {
+      "title": {
+        "create": "Create Game Category",
+        "edit": "Edit Game Category"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create game category success",
+        "fail": "Create game category fail"
+      },
+      "edit": {
+        "success": "Edit game category success",
+        "fail": "Edit game category fail"
+      },
+      "delete": {
+        "success": "Delete game category success",
+        "fail": "Delete game category fail",
+        "title": "Delete game category",
+        "text": "Confirm delete game category?"
+      },
+      "deleteVector": {
+        "title": "Delete game vector",
+        "text": "Are you sure you want to delete vector \"{{code}}\"?\nThis cannot be undone.",
+        "success": "Vector deleted successfully",
+        "fail": "Failed to delete vector"
+      }
+    }
+  },
+  "gameRanking": {
+    "title": "Local Region Ranking",
+    "rank": "Rank",
+    "provider": "Provider",
+    "game": "Game",
+    "titles": "Titles",
+    "descriptions": "Descriptions",
+    "addGame": "Add Game",
+    "remove": "Remove",
+    "opsRemark": "Remark",
+    "overLimitWarning": "The list has more than {{limit}} games. Consider trimming it to the Top {{limit}}.",
+    "form": {
+      "title": {
+        "create": "Add Game Ranking",
+        "edit": "Edit Game Ranking"
+      },
+      "addTitle": "Add Title",
+      "addDescr": "Add Description"
+    },
+    "rules": {
+      "gameId": {
+        "required": "Game is required"
+      }
+    },
+    "message": {
+      "load": {
+        "fail": "Load game rankings fail"
+      },
+      "save": {
+        "success": "Save game rankings success",
+        "fail": "Save game rankings fail",
+        "title": "Save Game Rankings",
+        "text": "Games not listed will be removed from the ranking. Continue?"
+      }
+    }
+  },
+  "xpShopCategories": {
+    "order": "Sort",
+    "vector": "Category",
+    "item": "Reward Item",
+    "image": "Image",
+    "state": "State",
+    "noData": "No categories found",
+    "addVector": "Add Category",
+    "addItem": "+ Item",
+    "save": "Save",
+    "saveSuccess": "Saved successfully",
+    "saveFailed": "Save failed",
+    "validationSelectItemAllRows": "Please select item for all rows.",
+    "validationVectorItemAllRows": "Please input Category and select item for all rows.",
+    "deleteVector": "Delete Category",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "message": {
+      "deleteVector": {
+        "title": "Delete XP shop vector",
+        "text": "Are you sure you want to delete vector \"{{code}}\"?\nThis cannot be undone.",
+        "success": "Vector deleted successfully",
+        "fail": "Failed to delete vector"
+      }
+    }
+  },
+  "games": {
+    "id": "ID",
+    "name": "Name",
+    "descriptions": "Name",
+    "state": "State",
+    "isOpen": "Is Open",
+    "haveBuyBonus": "Have Buy Bonus",
+    "staffTestOnly": "Staff Test Only",
+    "isVipTable": "Is VIP Table",
+    "table": "Table",
+    "assetNumber": "Asset Number",
+    "rtpBps": "RTP(%)",
+    "genre": "Game Categories",
+    "developer": "Developer",
+    "type": "Game Type",
+    "weight": "Weight",
+    "providerCode": "Provider Code",
+    "code": "Game Code",
+    "images": "Images",
+    "sync": "Sync Games",
+    "syncTime": "Sync Time",
+    "form": {
+      "title": {
+        "create": "Create Game",
+        "edit": "Edit Game"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image",
+      "addTitle": "Add Title"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      },
+      "rtpBps": {
+        "range": "RTP must be between 0 and 100"
+      },
+      "type": {
+        "required": "Type is required"
+      },
+      "genre": {
+        "required": "Genre is required"
+      },
+      "code": {
+        "required": "Code is required"
+      },
+      "providerCode": {
+        "required": "Provider is required"
+      },
+      "descriptions": {
+        "required": "English description is required"
+      },
+      "images": {
+        "required": "Images are required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create game success",
+        "fail": "Create game fail"
+      },
+      "edit": {
+        "success": "Edit game success",
+        "fail": "Edit game fail"
+      },
+      "delete": {
+        "success": "Delete game success",
+        "fail": "Delete game fail",
+        "title": "Delete game",
+        "text": "Confirm delete game?"
+      },
+      "sync": {
+        "success": "Sync game success",
+        "fail": "Sync game fail"
+      }
+    }
+  },
+  "userlabels": {
+    "id": "ID",
+    "name": "Name",
+    "state": "State",
+    "remark": "Remark",
+    "permittedRoles": "Permitted roles",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "type": "Type",
+    "expr": "Expression",
+    "hooks": "Hooks",
+    "form": {
+      "title": {
+        "create": "Create User Label",
+        "edit": "Edit User Label"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create user label success",
+        "fail": "Create user label fail"
+      },
+      "edit": {
+        "success": "Edit user label success",
+        "fail": "Edit user label fail"
+      },
+      "delete": {
+        "success": "Delete user label success",
+        "fail": "Delete user label fail",
+        "title": "Delete user label",
+        "text": "Confirm delete user label?"
+      }
+    }
+  },
+  "playerlabels": {
+    "id": "ID",
+    "name": "Name",
+    "state": "State",
+    "remark": "Remark",
+    "type": "Type",
+    "expr": "Expression",
+    "hooks": "Hooks",
+    "tenantId": "Tenant ID",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "hint": "Hint",
+    "form": {
+      "title": {
+        "create": "Create Player Label",
+        "edit": "Edit Player Label"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create player label success",
+        "fail": "Create player label fail"
+      },
+      "edit": {
+        "success": "Edit player label success",
+        "fail": "Edit player label fail"
+      },
+      "delete": {
+        "success": "Delete player label success",
+        "fail": "Delete player label fail",
+        "title": "Delete player label",
+        "text": "Confirm delete player label?"
+      }
+    },
+    "labelPlayers": {
+      "open": "Players",
+      "modalTitle": "Players with label: {{name}}",
+      "empty": "No players are assigned to this label.",
+      "loadFail": "Failed to load players for this label",
+      "code": "Code",
+      "mobile": "Mobile No.",
+      "nickname": "Nickname",
+      "actions": "Actions",
+      "remove": "Remove",
+      "assignSearchMobile": "Mobile",
+      "assignSearchCode": "Nickname",
+      "assignSearchRequired": "Enter a mobile number and/or nickname).",
+      "assignSearch": "Search",
+      "clear": "Clear",
+      "assign": "Assign",
+      "alreadyAssigned": "Assigned",
+      "assignSectionTitle": "Assign players",
+      "back": "Back",
+      "assignedSectionTitle": "Players already in this label",
+      "searchEmpty": "No players match your search.",
+      "assignSuccess": "Label assigned to player",
+      "assignFail": "Failed to assign label",
+      "removeConfirmTitle": "Remove player from label",
+      "removeConfirmText": "Remove this player from label \"{{name}}\"?",
+      "removeSuccess": "Player removed from label",
+      "removeFail": "Failed to remove player from label"
+    },
+    "restrictions": {
+      "title": "Player Label Restriction",
+      "open": "Restrictions",
+      "apiPattern": "API pattern",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "empty": "No API restrictions for this label.",
+      "missingLabelId": "This label has no ID; restrictions cannot be edited.",
+      "addFormTitle": "Add restriction",
+      "editFormTitle": "Edit restriction",
+      "save": "Save",
+      "cancelEdit": "Cancel",
+      "loading": "Loading…",
+      "rules": {
+        "apiPattern": {
+          "required": "API pattern is required"
+        }
+      },
+      "message": {
+        "validationTitle": "Cannot save",
+        "loadFail": "Failed to load restrictions",
+        "save": {
+          "success": "Restriction saved",
+          "fail": "Failed to save restriction"
+        },
+        "delete": {
+          "success": "Restriction deleted",
+          "fail": "Failed to delete restriction",
+          "title": "Delete restriction",
+          "text": "Remove this API pattern restriction?"
+        }
+      }
+    }
+  },
+  "playermobilepolicy": {
+    "id": "ID",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "type": "Policy Type",
+    "reason": "Reason",
+    "crtTime": "Created",
+    "updTime": "Updated",
+    "form": {
+      "title": {
+        "create": "Create Mobile Policy",
+        "edit": "Edit Mobile Policy"
+      }
+    },
+    "rules": {
+      "mobile": {
+        "required": "Mobile number is required",
+        "numericOnly": "Should only be number"
+      },
+      "type": {
+        "required": "Type is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Policy created",
+        "fail": "Create policy failed"
+      },
+      "edit": {
+        "success": "Policy updated",
+        "fail": "Update policy failed"
+      },
+      "delete": {
+        "success": "Policy deleted",
+        "fail": "Delete policy failed",
+        "title": "Delete policy",
+        "text": "Delete this mobile policy? Player state will be restored."
+      }
+    }
+  },
+  "playerSelfLimits": {
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "limitType": "Limit Type",
+    "limitWagerValue": "Limit Wager Value",
+    "limitDuration": "Limit Duration (Day)",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "state": "State",
+    "requestTime": "Request Time",
+    "states": {
+      "pending": "Pending",
+      "active": "Active",
+      "removal_pending": "Removal Pending",
+      "expired": "Expired"
+    },
+    "login": "Login",
+    "wager": "Wager",
+    "actions": {
+      "update": "Update",
+      "delete": "Delete"
+    },
+    "form": {
+      "title": "Update player self limits"
+    },
+    "message": {
+      "edit": {
+        "success": "Edit player self limits success",
+        "fail": "Edit player self limits fail"
+      },
+      "delete": {
+        "success": "Delete player self limits success",
+        "fail": "Delete player self limits fail",
+        "title": "Delete player self limits",
+        "text": "Confirm delete player self limits?"
+      }
+    }
+  },
+  "userrealms": {
+    "id": "ID",
+    "name": "Name",
+    "state": "State",
+    "config": {
+      "label": "Config",
+      "gamePvdWhitelist": "Game Provider Whitelist",
+      "gamePvdBlacklist": "Game Provider Blacklist",
+      "gameIdWhitelist": "Game Whitelist",
+      "gameIdBlacklist": "Game Blacklist"
+    },
+    "form": {
+      "title": {
+        "create": "Create User Realm",
+        "edit": "Edit User Realm"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create user realm success",
+        "fail": "Create user realm fail"
+      },
+      "edit": {
+        "success": "Edit user realm success",
+        "fail": "Edit user realm fail"
+      },
+      "delete": {
+        "success": "Delete user realm success",
+        "fail": "Delete user realm fail",
+        "title": "Delete user realm",
+        "text": "Confirm delete user realm?"
+      }
+    }
+  },
+  "playergroups": {
+    "id": "ID",
+    "name": "Name",
+    "state": "State",
+    "expr": "Expression",
+    "tenantId": "Tenant ID",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "hint": "Hint",
+    "config": {
+      "label": "Config",
+      "gamePvdWhitelist": "Game Provider Whitelist",
+      "gamePvdBlacklist": "Game Provider Blacklist",
+      "gameIdWhitelist": "Game Whitelist",
+      "gameIdBlacklist": "Game Blacklist"
+    },
+    "form": {
+      "title": {
+        "create": "Create Player Group",
+        "edit": "Edit Player Group"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create player group success",
+        "fail": "Create player group fail"
+      },
+      "edit": {
+        "success": "Edit player group success",
+        "fail": "Edit player group fail"
+      },
+      "delete": {
+        "success": "Delete player group success",
+        "fail": "Delete player group fail",
+        "title": "Delete player group",
+        "text": "Confirm delete player group?"
+      }
+    }
+  },
+  "viplevels": {
+    "id": "ID",
+    "code": "Tier",
+    "name": "Casino Gangsters",
+    "idx": "Level",
+    "crtTime": "Created At",
+    "updTime": "Updated At",
+    "updCode": "Updated By",
+    "upgradeTurnoverThreshold": "Upgrade Turnover Threshold",
+    "upgradeDailyDepositTurnoverThreshold": "Upgrade Daily Deposit Turnover Threshold",
+    "upgradeDailyBetTurnoverThreshold": "Upgrade Daily Bet Turnover Threshold",
+    "retentionTurnoverThreshold": "Retention Turnover Threshold",
+    "levelUpReward": "Level Up Reward",
+    "downgradeProtectionMonths": "Downgrade Protection Months",
+    "fcToCashTurnoverThreshold": "FC to Cash Turnover Threshold",
+    "fcDailyLimit": "FC Daily Limit",
+    "fcFillDaysLimit": "FC Claim Days Limit",
+    "paydayReward": "15th Payday Reward",
+    "retentionReward": "Monthly Retention Reward",
+    "birthdayReward": "Birthday Reward",
+    "rewardShopDiscountBps": "Reward Shop Discount (%)",
+    "withdrawalPerk": "Withdrawal Perk",
+    "tournamentPerk": "Tournament Perk",
+    "vipHostPerk": "VIP Host Perk",
+    "travelLifestyleFundAmt": "Travel & Lifestyle Fund Amount",
+    "opsRemark": "Remarks",
+    "form": {
+      "title": {
+        "create": "Create VIP Level",
+        "edit": "Edit VIP Level"
+      },
+      "hint": {
+        "downgradeProtectionMonths": "-1 means this level will never be downgraded"
+      }
+    },
+    "rules": {
+      "code": {
+        "required": "Level code is required"
+      },
+      "idx": {
+        "required": "Sort order is required"
+      },
+      "downgradeProtectionMonths": {
+        "invalid": "Only -1 or a positive number is accepted"
+      },
+      "rewardShopDiscountBps": {
+        "max": "Discount cannot exceed 100%"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create VIP level success",
+        "fail": "Create VIP level fail"
+      },
+      "edit": {
+        "success": "Edit VIP level success",
+        "fail": "Edit VIP level fail"
+      },
+      "delete": {
+        "success": "Delete VIP level success",
+        "fail": "Delete VIP level fail",
+        "title": "Delete VIP level",
+        "text": "Confirm delete VIP level?"
+      }
+    }
+  },
+  "vipRebates": {
+    "id": "ID",
+    "name": "Name",
+    "vipRank": "Tier",
+    "idx": "Index",
+    "type": "Period Type",
+    "active": "State",
+    "peryaRate": "Perya Rate",
+    "slotRate": "Slot Rate",
+    "casinoRate": "Casino Rate",
+    "egameRate": "Egame Rate",
+    "sportRate": "Sport Rate",
+    "bingoRate": "Bingo Rate",
+    "peryaHouseEdge": "Perya House Edge",
+    "slotHouseEdge": "Slot House Edge",
+    "casinoHouseEdge": "Casino House Edge",
+    "egameHouseEdge": "Egame House Edge",
+    "sportHouseEdge": "Sport House Edge",
+    "bingoHouseEdge": "Bingo House Edge",
+    "peryaExchangeRate": "Perya Exchange Rate",
+    "slotExchangeRate": "Slot Exchange Rate",
+    "casinoExchangeRate": "Casino Exchange Rate",
+    "egameExchangeRate": "Egame Exchange Rate",
+    "sportExchangeRate": "Sport Exchange Rate",
+    "bingoExchangeRate": "Bingo Exchange Rate",
+    "perya": "Perya",
+    "slot": "Slot",
+    "casino": "Casino",
+    "egame": "Egame",
+    "sport": "Sport",
+    "bingo": "Bingo",
+    "rate": "Rate",
+    "houseEdge": "House Edge",
+    "exchangeRate": "Exchange Rate",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "form": {
+      "title": {
+        "create": "Create Rebate Setting",
+        "edit": "Edit Rebate Setting"
+      }
+    },
+    "rules": {
+      "peryaRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "slotRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "casinoRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "egameRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "sportRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "bingoRate": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "percent": {
+        "invalid": "Must be a number between 0 and 100"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "idx": {
+        "required": "Tier is required"
+      },
+      "type": {
+        "required": "Period Type is required"
+      },
+      "active": {
+        "required": "State is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create rebate setting success",
+        "fail": "Create rebate setting fail"
+      },
+      "edit": {
+        "success": "Edit rebate setting success",
+        "fail": "Edit rebate setting fail"
+      },
+      "delete": {
+        "success": "Delete rebate setting success",
+        "fail": "Delete rebate setting fail",
+        "title": "Delete Rebate Setting",
+        "text": "Confirm delete rebate setting?"
+      }
+    }
+  },
+  "bonuses": {
+    "id": "ID",
+    "name": "Name",
+    "state": "State",
+    "type": "Type",
+    "subType": "Sub Type",
+    "expr": "Expression",
+    "cycle": "Cycle",
+    "maxRun": "Max run time",
+    "descr": "Description",
+    "image": "Image",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "startTimeFromTime": "Start Time From",
+    "startTimeToTime": "Start Time To",
+    "endTimeFromTime": "End  Time From",
+    "endTimeToTime": "End  Time To",
+    "isTpl": "Template",
+    "cloneBonus": "Clone Bonus",
+    "form": {
+      "title": {
+        "create": "Create Bonus",
+        "edit": "Edit Bonus"
+      },
+      "hint": {
+        "maxRun": "-1 for unlimited"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "subType": {
+        "required": "Sub type is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create bonus success",
+        "fail": "Create bonus fail"
+      },
+      "edit": {
+        "success": "Edit bonus success",
+        "fail": "Edit bonus fail"
+      },
+      "delete": {
+        "success": "Delete bonus success",
+        "fail": "Delete bonus fail",
+        "title": "Delete bonus",
+        "text": "Confirm delete bonus?"
+      },
+      "clone": {
+        "success": "Clone bonus success",
+        "fail": "Clone bonus fail"
+      }
+    }
+  },
+  "playerRebateBonus": {
+    "id": "ID",
+    "playerId": "Player ID",
+    "playerCode": "Player Nickname",
+    "patronNumber": "Patron ID",
+    "playerMobile": "Mobile No.",
+    "bonusId": "Bonus ID",
+    "bonusName": "Bonus Name",
+    "bonusCycle": "Period Type",
+    "state": "State",
+    "prizeValue": "Prize Value",
+    "perya": "Perya",
+    "slot": "Slot",
+    "casino": "Casino",
+    "egame": "E-Game",
+    "sport": "Sport",
+    "bingo": "Bingo",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "crtTime": "Created Time",
+    "updTime": "Updated Time",
+    "periodTime": "Period Time",
+    "mobile": "Mobile No.",
+    "button.generate": "Generate",
+    "button.distribute": "Distribute",
+    "state.active": "Active",
+    "state.completed": "Completed",
+    "state.deleted": "Deleted",
+    "form": {
+      "title": {
+        "edit": "Generate Rebate Trans",
+        "generate": "Generate Rebate Trans"
+      }
+    },
+    "rules": {
+      "periodTime": {
+        "required": "Period Time is required"
+      }
+    },
+    "message": {
+      "edit": {
+        "success": "Edit player rebate bonus success",
+        "fail": "Edit player rebate bonus fail"
+      },
+      "generate": {
+        "success": "Generate player rebate bonus success",
+        "fail": "Generate player rebate bonus fail"
+      },
+      "delete": {
+        "success": "Delete player rebate bonus success",
+        "fail": "Delete player rebate bonus fail",
+        "title": "Delete player rebate bonus",
+        "text": "Confirm delete player rebate bonus?"
+      },
+      "distribute": {
+        "unable.title": "Unable to distribute",
+        "unable.message": "You have not selected any player rebate bonus",
+        "success": "Distribute player rebate bonus success",
+        "fail": "Distribute player rebate bonus fail",
+        "title": "Distribute player rebate bonus",
+        "text": "Confirm distribute player rebate bonus?"
+      }
+    }
+  },
+  "bonusprizes": {
+    "id": "ID",
+    "name": "Name",
+    "type": "Type",
+    "expr": "Expression",
+    "appId": "Site",
+    "bonusId": "Bonus ID",
+    "rank": "Rank",
+    "coinType": "Coin Type",
+    "coinVal": "Coin Value",
+    "coinMax": "Coin Max",
+    "threshold": "Threshold",
+    "descr": "Description",
+    "image": "Image",
+    "form": {
+      "title": {
+        "create": "Create Bonus Prize",
+        "edit": "Edit Bonus Prize"
+      },
+      "addDescr": "Add Description",
+      "addImage": "Add Image"
+    },
+    "rules": {
+      "id": {
+        "required": "ID is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "weight": {
+        "required": "Weight is required"
+      },
+      "state": {
+        "required": "State is required"
+      },
+      "appId": {
+        "required": "Site is required"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "Create bonus prize success",
+        "fail": "Create bonus prize fail"
+      },
+      "edit": {
+        "success": "Edit bonus prize success",
+        "fail": "Edit bonus prize fail"
+      },
+      "delete": {
+        "success": "Delete bonus prize success",
+        "fail": "Delete bonus prize fail",
+        "title": "Delete bonus prize",
+        "text": "Confirm delete bonus prize?"
+      }
+    }
+  },
+  "bonusType": {
+    "newbie": "Newbie",
+    "levelup": "Level Up",
+    "checkin": "Check In",
+    "deposit": "Deposit",
+    "lottery": "Lottery",
+    "referral": "Referral",
+    "cashback": "Cashback",
+    "quest": "Quest"
+  },
+  "bonusSubType": {
+    "bet": "Bet"
+  },
+  "bonusCycle": {
+    "once": "Once",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly"
+  },
+  "bonusPrizeType": {
+    "coin": "Coin",
+    "rate": "Rate",
+    "item": "Item"
+  },
+  "operationalStats": {
+    "title": "Title",
+    "income": "Income",
+    "registerUsersCnt": "Register User Count",
+    "firstDepositAmt": "First Deposit Amount",
+    "firstDepositUserCnt": "First Deposit User Count",
+    "secondDepositAmt": "Second Deposit Amount",
+    "secondDepositUserCnt": "Second Deposit User Count",
+    "thirdDepositAmt": "Third Deposit Amount",
+    "thirdDepositUserCnt": "Third Deposit User Count",
+    "totalDepositAmt": "Total Deposit Amount",
+    "totalDepositUserCnt": "Total Deposit User Count",
+    "totalWithdrawalAmt": "Total Withdraw Amount",
+    "totalWithdrawalUserCnt": "Total Withdraw User Count",
+    "totalWithdrawalCnt": "Total Withdraw Count",
+    "recentStats": "Recent Stats",
+    "todayStats": {
+      "title": "Today's operational stats",
+      "income": "Income",
+      "registerUsers": "Register User",
+      "firstDeposit": "First Deposit Amount/User",
+      "secondDeposit": "Second Deposit Amount/User",
+      "thirdDeposit": "Third Deposit Amount/User",
+      "depositAmt": "Deposit Amount/User",
+      "withdrawalAmt": "Withdraw Amount/User"
+    }
+  },
+  "statTitleType": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "week": "Week",
+    "month": "Month"
+  },
+  "gameGenre": {
+    "live": "Live",
+    "lottery": "Lottery",
+    "chain": "Chain",
+    "elec": "Elec",
+    "chess": "Chess",
+    "sport": "Sport",
+    "slot": "Slot",
+    "mini": "Mini",
+    "fish": "Fish",
+    "bingo": "Bingo"
+  },
+  "export": {
+    "exportJobCreateFailed": "Create export job failed",
+    "exportJobTimedOut": "Export timed out",
+    "exportJobGetFailed": "Get export job failed",
+    "exportJobDownloadUrlMissing": "Export completed but download URL is missing",
+    "exportJobFailed": "Export failed",
+    "exportFailed": "Export failed"
+  },
+  "platform.desktop": "Desktop",
+  "platform.mobile": "Mobile",
+  "state.active": "Active",
+  "state.inactive": "Inactive",
+  "state.freeze": "Freeze",
+  "state.pre_delete": "Pre-delete",
+  "state.delete": "Delete",
+  "state.disable": "Disable",
+  "state.logout": "Logout",
+  "state.revoke": "Revoke",
+  "state.expire": "Expire",
+  "state.approve": "Approve",
+  "state.rejected": "Rejected",
+  "state.processing": "Processing",
+  "state.completed": "Completed",
+  "state.failed": "Failed",
+  "state.pending": "Pending",
+  "state.complete": "Completed",
+  "state.canceled": "Canceled",
+  "playerMobilePolicyType.freeze": "Freeze",
+  "playerMobilePolicyType.staff": "Staff",
+  "topicState.active": "Active",
+  "topicState.disable": "Disabled",
+  "bannerState.active": "Active",
+  "bannerState.inactive": "Disabled",
+  "bannerKind.splash": "Splash",
+  "bannerKind.lobby": "Lobby",
+  "txnState.normal": "Success",
+  "txnState.result": "Settled",
+  "txnState.cancel": "Cancel",
+  "txnState.error": "Error",
+  "txnState.completed": "Completed",
+  "txnState.processing": "Processing",
+  "txnState.pending": "Pending",
+  "txnState.rejected": "Rejected",
+  "txnState.expired": "Expired",
+  "txnState.failed": "Failed",
+  "txnState.canceled": "Canceled",
+  "failSource.solairepay": "SolairePay",
+  "failSource.dragonpay": "DragonPay",
+  "failSource.platform": "Platform",
+  "approvalStatus.not_required": "Not Required",
+  "approvalStatus.required": "Required",
+  "approvalStatus.approved": "Approved",
+  "approvalStatus.rejected": "Rejected",
+  "txnType.bet": "Bet",
+  "txnType.free_bet": "Free Bet",
+  "txnType.tip": "Tip",
+  "betResult.win": "Win",
+  "betResult.lose": "Lose",
+  "betResult.tie": "Tie",
+  "playerType.player": "Player",
+  "playerType.guest": "Guest",
+  "playerType.agent": "Agent",
+  "playerType.staff": "Staff",
+  "txnType.deposit": "Deposit",
+  "txnType.withdraw": "Withdraw",
+  "txnType.settle": "Settle",
+  "txnType.bet_cancel": "Bet Cancel",
+  "txnType.promo_payout": "Promo Payout",
+  "txnType.bonus": "Bonus",
+  "txnType.fc_to_cash": "Bonus to Cash",
+  "txnType.withdraw_failed": "Withdraw Fail",
+  "txnType.withdraw_lock": "Withdraw Lock",
+  "txnType.bet_and_settle": "Bet and Settle",
+  "txnType.game_wallet_deposit": "Game Wallet Deposit",
+  "txnType.game_wallet_deposit_refund": "Game Wallet Deposit Refund",
+  "txnType.game_wallet_withdraw": "Game Wallet Withdraw",
+  "txnType.transfer_in": "Transfer In",
+  "txnType.transfer_out": "Transfer Out",
+  "txnType.transfer_reversal": "Transfer Reversal",
+  "pointTxnType.dailyEarn": "Daily Earn",
+  "pointTxnType.redeem": "Redeem",
+  "pointTxnType.credit": "Credit",
+  "pointTxnType.deduct": "Deduct",
+  "pointTxnType.expiry": "Expiry",
+  "role.admin": "Admin",
+  "gameCat.live": "Live",
+  "gameCat.slot": "Slot",
+  "gameCat.sport": "Sport",
+  "error.loginFail": "Login Fail",
+  "error.sessionExpired": "Session expired",
+  "header.logout.confirm": "Confirm logout?",
+  "common.confirm": "OK",
+  "common.cancel": "Cancel",
+  "common.copy": "Copy",
+  "common.copied": "Copied",
+  "common.show": "Show",
+  "common.hide": "Hide",
+  "common.subtotal": "Subtotal",
+  "common.total": "Total",
+  "common.approve": "Approve",
+  "common.reject": "Reject",
+  "common.detail": "Detail",
+  "common.edit": "Edit",
+  "common.create": "Create",
+  "common.save": "Save",
+  "common.update": "Update",
+  "common.delete": "Delete",
+  "common.key": "Key",
+  "common.value": "Value",
+  "common.isLike": "Like",
+  "common.search": "Search",
+  "common.nothingFound": "No game found",
+  "common.reset": "Reset",
+  "common.all": "All",
+  "common.required": "This field is required",
+  "common.version": "ver",
+  "common.uploadImage": "Upload Image",
+  "common.preview": "Preview",
+  "common.expr.hint": "Type @ for hint",
+  "common.close": "Close",
+  "timeRangePreset.label": "Time Range",
+  "timeRangePreset.lastMonth": "Last Month",
+  "timeRangePreset.thisMonth": "This Month",
+  "timeRangePreset.lastWeek": "Last Week",
+  "timeRangePreset.thisWeek": "This Week",
+  "timeRangePreset.yesterday": "Yesterday",
+  "timeRangePreset.today": "Today",
+  "timeRangePreset.custom": "Custom",
+  "richTextLocale.en": "English",
+  "richTextLocale.zh": "Traditional Chinese",
+  "richTextLocale.zh-TW": "Traditional Chinese",
+  "richTextLocale.ko": "Korean",
+  "boolean.true": "Yes",
+  "boolean.false": "No",
+  "login": "Login",
+  "login.name": "Login",
+  "login.password": "Password",
+  "login.name.required": "Login is required",
+  "login.password.required": "Password is required",
+  "changePw.oldPwd": "Old Password",
+  "changePw.newPwd": "New Password",
+  "changePw.confirmPwd": "Confirm Password",
+  "changePw.oldPwd.required": "Old Password is required",
+  "changePw.newPwd.required": "New Password is required",
+  "changePw.confirmPwd.required": "Confirm Password is required",
+  "changePw.confirmPwd.notEqual": "Confirm Password is not the same as New Password",
+  "protectedPage.title": "Access denied",
+  "protectedPage.description": "You don't have permission to view this page.",
+  "notFound.title": "Page not found",
+  "notFound.description": "The page you are looking for does not exist or has moved.",
+  "notFound.backHome": "Back to home",
+  "revokeSession.title": "Revoke User Session",
+  "revokeSession.text": "Confirm revoke session {{sessionId}}?",
+  "revokeSession.success": "Revoke Session success",
+  "revokeSession.fail": "Revoke Session fail",
+  "paymentApprove.form.title": "Approve Withdrawal",
+  "paymentApprove.remark": "Remark",
+  "paymentApprove.success": "Payment approve success",
+  "paymentApprove.fail": "Payment approve fail",
+  "paymentReject.form.title": "Reject Withdrawal",
+  "paymentReject.remark": "Reject Reason",
+  "paymentReject.remark.required": "Reject Reason is required",
+  "paymentReject.success": "Payment reject success",
+  "paymentReject.fail": "Payment reject fail",
+  "pointApprove.form.title": "Approve Point Transaction",
+  "pointApprove.remark": "Remark",
+  "pointApprove.success": "Point transaction approve success",
+  "pointApprove.fail": "Point transaction approve fail",
+  "pointReject.form.title": "Reject Point Transaction",
+  "pointReject.remark": "Reject Reason",
+  "pointReject.remark.required": "Reject Reason is required",
+  "pointReject.success": "Point transaction reject success",
+  "pointReject.fail": "Point transaction reject fail",
+  "error.changePwFail": "Change Password Fail",
+  "exportExcel": "Export Excel",
+  "eligibility.unlimited": "Unlimited",
+  "eligibility.once_per_lifetime": "Once Per Lifetime",
+  "promoType.normal": "Normal",
+  "promoType.gig_migration": "GIG Migration",
+  "promoType.leaderboard": "Leaderboard",
+  "promoType.fasttrack": "Fast Track",
+  "promoType.daily": "Daily",
+  "periodType.daily": "Daily",
+  "periodType.weekly": "Weekly",
+  "periodType.monthly": "Monthly",
+  "vipRebateState.active": "Active",
+  "vipRebateState.disable": "Disabled",
+  "quotaType.deposit": "Deposit",
+  "withdrawalPerk.standard": "Standard",
+  "withdrawalPerk.faster": "Faster",
+  "withdrawalPerk.priority": "Priority",
+  "withdrawalPerk.instant": "Instant",
+  "table.rowsPerPage": "Rows per page",
+  "table.pageOf": "Page {{page}} of {{pageCount}}",
+  "table.total": "Total {{count}}",
+  "table.noData": "No records",
+  "table.loading": "Loading",
+  "table.loadFailed": "Failed to load records",
+  "table.firstPage": "First page",
+  "table.previousPage": "Previous page",
+  "table.nextPage": "Next page",
+  "table.lastPage": "Last page",
+  "table.actions": "Actions",
+  "table.selectAll": "Select all",
+  "table.selectRow": "Select row"
+}

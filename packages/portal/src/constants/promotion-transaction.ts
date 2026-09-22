@@ -1,0 +1,23 @@
+export const PROMOTION_TRANSACTION_STATES = {
+  UNSPECIFIED: 'unspecified',
+  ACTIVE: 'active',
+  QUEUED: 'queued',
+  COMPLETED: 'completed',
+  COMPLETED_PENDING: 'completed_pending',
+  CANCELLED: 'cancelled',
+  FAILED: 'failed'
+} as const;
+
+export type TPromotionTransactionState =
+  (typeof PROMOTION_TRANSACTION_STATES)[keyof typeof PROMOTION_TRANSACTION_STATES];
+
+/** Stable order for filters and form selects. */
+export const PROMOTION_TRANSACTION_STATE_LIST = [
+  PROMOTION_TRANSACTION_STATES.UNSPECIFIED,
+  PROMOTION_TRANSACTION_STATES.ACTIVE,
+  PROMOTION_TRANSACTION_STATES.QUEUED,
+  PROMOTION_TRANSACTION_STATES.COMPLETED,
+  PROMOTION_TRANSACTION_STATES.COMPLETED_PENDING,
+  PROMOTION_TRANSACTION_STATES.CANCELLED,
+  PROMOTION_TRANSACTION_STATES.FAILED
+] as const satisfies readonly TPromotionTransactionState[];

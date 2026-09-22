@@ -1,0 +1,2787 @@
+{
+  "test": "中文",
+  "header.nav.home": "首頁",
+  "header.nav.player": "玩家",
+  "header.nav.user": "用戶",
+  "header.nav.finance": "報告",
+  "header.nav.game": "遊戲",
+  "header.nav.setting": "設置",
+  "header.nav.promotion": "推廣",
+  "nav.acctMgmt": "帳號管理",
+  "nav.admins": "管理員",
+  "nav.adminSessions": "管理員登入時段",
+  "nav.adminOpsLogs": "管理員操作日誌",
+  "nav.adminQuotaConfigs": "管理員額度配置",
+  "nav.adminQuotas": "管理員充值額度",
+  "nav.userMgmt": "用戶管理",
+  "nav.roleManagement": "角色管理",
+  "nav.roles": "角色",
+  "nav.rolesPermission": "角色權限",
+  "nav.playerMgmt": "玩家管理",
+  "nav.systemSetting": "系統設定",
+  "nav.users": "用戶",
+  "nav.userSessions": "用戶時段",
+  "nav.players": "玩家",
+  "nav.playerSessions": "玩家時段",
+  "nav.playerMobilePolicy": "手機號策略",
+  "nav.playerSelfLimits": "自我控管",
+  "nav.reports": "報表",
+  "nav.betTrans": "投注記錄",
+  "nav.depositTrans": "用戶入金記錄",
+  "nav.withdrawTrans": "用戶出金記錄",
+  "nav.ledgertxns": "帳戶交易",
+  "nav.wagerStats": "投注統計",
+  "nav.banners": "橫幅",
+  "nav.promos": "推廣",
+  "nav.promotionsTransaction": "推廣交易",
+  "nav.tierTransactions": "等級交易",
+  "nav.pages": "頁面",
+  "nav.pagedivs": "頁面分區",
+  "nav.home": "首頁",
+  "nav.gameCategories": "遊戲分類",
+  "nav.gameRanking": "遊戲排行榜",
+  "nav.games": "遊戲",
+  "nav.userlabels": "用戶標籤",
+  "nav.playerlabels": "玩家標籤",
+  "nav.userrealms": "用戶域",
+  "nav.playerrealms": "玩家域",
+  "nav.playergroups": "玩家群組",
+  "nav.viplevels": "貴賓等級",
+  "nav.vipRebates": "貴賓返水",
+  "nav.bonuses": "獎勵",
+  "nav.playerRebateBonus": "玩家返水獎勵",
+  "nav.bonusprizes": "獎勵獎品",
+  "nav.rewardsShop": "獎勵商城",
+  "nav.rewardsShopCategories": "獎勵商城分類",
+  "nav.redemptionHistory": "兌換紀錄",
+  "nav.paymentTransaction": "支付記錄",
+  "nav.pointTransaction": "積分交易",
+  "nav.acsc": "ACSC",
+  "nav.acscRewardPushLogs": "積分回饋交易",
+  "nav.acscTransfers": "ACSC 轉帳交易",
+  "nav.paymentChannelMgmt": "金流通道管理",
+  "nav.paymentChannels": "金流通道",
+  "header.logout": "登出",
+  "header.changePw": "更改密碼",
+  "header.switchColorMode": "切換主題",
+  "header.colorMode.dark": "暗色",
+  "header.colorMode.light": "亮色",
+  "tabs": {
+    "menu": {
+      "closeSelected": "關閉當前分頁",
+      "closeOthers": "關閉其它分頁"
+    }
+  },
+  "admins": {
+    "id": "編號",
+    "name": "名稱",
+    "code": "登入",
+    "state": "狀態",
+    "role": "身份",
+    "secret": "密碼",
+    "form": {
+      "title": {
+        "create": "新增管理員",
+        "edit": "修改管理員"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增管理員成功",
+        "fail": "新增管理員失敗"
+      },
+      "edit": {
+        "success": "修改管理員成功",
+        "fail": "修改管理員失敗"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "code": {
+        "required": "請輸入登入"
+      },
+      "secret": {
+        "required": "請輸入密碼"
+      },
+      "role": {
+        "required": "請輸入身份"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      }
+    }
+  },
+  "roles": {
+    "code": "代碼",
+    "name": "名稱",
+    "isSystem": "系統角色",
+    "perms": {
+      "title": "角色權限",
+      "selectRole": "角色",
+      "loadingRoles": "載入角色中...",
+      "selectRolePlaceholder": "選擇角色",
+      "pageKey": "頁面 / 操作",
+      "create": "新增",
+      "read": "讀取",
+      "update": "更新",
+      "delete": "刪除",
+      "canCreate": "新增",
+      "canRead": "讀取",
+      "canUpdate": "更新",
+      "canDelete": "刪除",
+      "checkAll": "全選",
+      "clearAll": "全不選",
+      "save": "儲存",
+      "edit": "編輯",
+      "cancel": "取消",
+      "saveSuccess": "權限已儲存",
+      "saveFail": "儲存權限失敗",
+      "allow": "允許"
+    }
+  },
+  "adminSessions": {
+    "id": "登入時段編號",
+    "adminName": "名稱",
+    "adminCode": "登入",
+    "operation": "操作",
+    "crtTime": "時段創建時間",
+    "state": "狀態",
+    "tenantId": "代理商編號",
+    "ip": "IP",
+    "cc": "國別",
+    "ua": "使用者代理"
+  },
+  "adminOpsLogs": {
+    "id": "編號",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "tenantCode": "租戶代碼",
+    "adminId": "管理員編號",
+    "adminCode": "管理員",
+    "sessionId": "登入時段編號",
+    "opsAction": "操作",
+    "timeFrom": "建立時間起",
+    "timeTo": "建立時間迄",
+    "summary": "摘要",
+    "opsValues": "詳情"
+  },
+  "playerAccountNotes": {
+    "id": "編號",
+    "crtTime": "時間",
+    "adminCode": "管理員",
+    "opsAction": "操作",
+    "summary": "摘要",
+    "remark": "備註",
+    "changes": "變更內容",
+    "resource": "資源",
+    "verb": "動作",
+    "timeFrom": "建立時間起",
+    "timeTo": "建立時間迄",
+    "addNote": "新增備註",
+    "expireTime": "過期時間"
+  },
+  "accountNoteForm": {
+    "title": "新增備註",
+    "action": "動作",
+    "remarks": "備註內容",
+    "expiryOn": "到期時間",
+    "rules": {
+      "remark": {
+        "required": "備註內容為必填",
+        "maxLength": "備註內容不可超過 {{max}} 字"
+      },
+      "expireTime": {
+        "pastTime": "到期日期必須為未來日期"
+      }
+    },
+    "message": {
+      "createSuccess": "備註已新增"
+    }
+  },
+  "adminQuotaConfigs": {
+    "id": "編號",
+    "tenantCode": "租戶代碼",
+    "adminId": "管理員編號",
+    "adminCode": "管理員",
+    "adminState": "管理員狀態",
+    "quotaType": "額度類型",
+    "limitAmt": "上限金額",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "form": {
+      "title": {
+        "update": "更新管理員額度配置"
+      }
+    },
+    "message": {
+      "edit": {
+        "success": "更新管理員額度配置成功",
+        "fail": "更新管理員額度配置失敗"
+      }
+    }
+  },
+  "adminQuotas": {
+    "id": "編號",
+    "tenantCode": "租戶代碼",
+    "adminId": "管理員編號",
+    "adminCode": "管理員",
+    "playerId": "玩家 ID",
+    "quotaType": "額度類型",
+    "quotaLimit": "額度上限",
+    "quotaUsed": "已使用額度",
+    "quotaRemain": "剩餘額度",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "message": {
+      "reset": {
+        "success": "重置管理員充值額度成功",
+        "fail": "重置管理員充值額度失敗",
+        "title": "重置管理員充值額度",
+        "text": "確認重置管理員充值額度?"
+      }
+    }
+  },
+  "userSessions": {
+    "id": "登入時段編號",
+    "userNick": "用戶名稱",
+    "userCode": "用戶登入",
+    "crtTime": "時段創建時間",
+    "userType": "用戶類型",
+    "domain": "網域",
+    "ip": "IP",
+    "cc": "登入時段國家",
+    "ua": "使用者代理",
+    "cabv": "登入客戶端版本",
+    "crtTimeFrom": "時段創建時間由",
+    "crtTimeTo": "時段創建時間至",
+    "state": "狀態"
+  },
+  "playerSessions": {
+    "mobile": "手機號碼",
+    "id": "登入時段編號",
+    "playerId": "玩家 ID",
+    "tenantId": "代理商編號",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "crtTime": "時段創建時間",
+    "updTime": "時段更新時間",
+    "domain": "網域",
+    "ip": "IP",
+    "cc": "國別",
+    "ua": "使用者代理",
+    "platform": "平台",
+    "state": "狀態",
+    "crtTimeFrom": "時段創建時間由",
+    "crtTimeTo": "時段創建時間至"
+  },
+  "betTrans": {
+    "id": "下注編號",
+    "extTxnId": "外部下注編號",
+    "userCode": "用戶登入",
+    "txnType": "交易種類",
+    "txnState": "交易狀態",
+    "gameCatId": "遊戲系列",
+    "gameTypeId": "遊戲類型",
+    "gameId": "遊戲",
+    "roundId": "遊戲局數編號",
+    "gameResult": "遊戲結果",
+    "betTime": "投注時間",
+    "settleTime": "結算時間",
+    "betCode": "投注代碼",
+    "betAmt": "投注金額",
+    "betAdjAmt": "有效投注",
+    "betRetAmt": "贏輸金額",
+    "betResult": "投注結果",
+    "betState": "投注狀態",
+    "sessionId": "登入時段編號",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至"
+  },
+  "playerBetTrans": {
+    "id": "下注編號",
+    "extTxnId": "外部下注編號",
+    "playerId": "玩家 ID",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "playerNick": "玩家暱稱",
+    "playerType": "玩家類型",
+    "parentCode": "父代碼",
+    "txnType": "交易種類",
+    "txnState": "交易狀態",
+    "gameCatId": "遊戲系列",
+    "gameGpId": "遊戲供應商編號",
+    "gameTypeId": "遊戲類型",
+    "gameId": "遊戲編號",
+    "extRoundId": "外部遊戲局數編號",
+    "gameResult": "遊戲結果",
+    "currencyId": "貨幣編號",
+    "betTime": "投注時間",
+    "settleTime": "結算時間",
+    "betCode": "投注代碼",
+    "betAmt": "投注金額",
+    "betAdjAmt": "有效投注",
+    "betRetAmt": "贏輸金額",
+    "payout": "派彩金額",
+    "betResult": "投注結果",
+    "betState": "投注狀態",
+    "betRemark": "投注備註",
+    "sessionId": "登入時段編號",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至",
+    "mobile": "手機號碼",
+    "gameName": "遊戲名稱",
+    "summary": {
+      "totalBetAmt": "總投注金額",
+      "totalBetAmtTooltip": "符合條件的所有交易投注金額總和。",
+      "totalPayoutAmt": "總派彩金額",
+      "totalPayoutAmtTooltip": "符合條件的所有交易派彩金額總和（投注金額 + 輸贏金額）。",
+      "totalWl": "總輸贏 (GGR)",
+      "totalWlTooltip": "總投注金額減去總派彩金額，正值代表莊家贏。",
+      "totalTransactions": "總交易筆數",
+      "totalTransactionsTooltip": "符合條件的交易總筆數。",
+      "winCount": "贏注數",
+      "winCountTooltip": "已結算且玩家贏的注單數（輸贏金額 > 0）。",
+      "lossCount": "輸注數",
+      "lossCountTooltip": "已結算且玩家輸的注單數（輸贏金額 < 0）。",
+      "tieCount": "和局數",
+      "tieCountTooltip": "已結算且無輸贏的注單數（輸贏金額 = 0）。"
+    }
+  },
+  "wagerStats": {
+    "groupBy": "分組方式",
+    "usernameGame": "玩家暱稱 - 遊戲",
+    "gameProvider": "遊戲供應商",
+    "gameProviderGame": "遊戲供應商 - 遊戲",
+    "playerId": "玩家 ID",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "gameProviderCode": "遊戲供應商",
+    "gameType": "遊戲類型",
+    "gameCode": "遊戲",
+    "type": "類型",
+    "statMonth": "月份",
+    "betReal": "總投注次數",
+    "winReal": "總投注金額",
+    "winBonus": "總贏金額",
+    "betsBonus": "總獎勵金額",
+    "gcr": "投注回報率",
+    "ncr": "淨贏率",
+    "statMonthRequired": "月份是必填的",
+    "activePlayerCount": "活躍玩家數",
+    "ggr": "毛營收 (GGR)",
+    "ngr": "淨營收 (NGR)",
+    "averageTurnover": "平均投注額",
+    "mobile": "手機號碼",
+    "groupByRequired": "分組方式是必填的"
+  },
+  "ledgertxns": {
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "txnType": "交易種類",
+    "txnRefId": "Ref交易編號",
+    "state": "狀態",
+    "remark": "備註",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "playerId": "玩家編號",
+    "currency": "貨幣",
+    "chainType": "區塊鍵類型",
+    "coinType": "貨幣類型",
+    "coinDecimal": "貨幣小數",
+    "coinAddress": "貨幣地址",
+    "coinBalChange": "硬幣餘額變化",
+    "coinBalBefore": "硬幣餘額變化前",
+    "coinBalAfter": "硬幣餘額變化後",
+    "bonusChange": "獎勵金額變化",
+    "bonusBefore": "獎勵金額變化前",
+    "bonusAfter": "獎勵金額變化後",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至",
+    "userId": "用戶編號",
+    "mobile": "手機號碼",
+    "id": "交易編號"
+  },
+  "acscRewardAccruals": {
+    "playerId": "玩家編號",
+    "spPendingTheo": "SP 待轉換 THEO",
+    "bpPendingTheo": "BP 待轉換 THEO",
+    "spPointsTotal": "SP 累計點數",
+    "bpPointsTotal": "BP 累計點數",
+    "lastAccruedWatermark": "累加水位時間",
+    "updTime": "更新時間",
+    "loadFailed": "載入失敗，請重新整理後再試"
+  },
+  "acscRewardPushLogs": {
+    "id": "交易編號",
+    "crtTime": "創建時間",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至",
+    "playerId": "玩家編號",
+    "playerCode": "玩家暱稱",
+    "mobile": "手機號碼",
+    "patronNumber": "玩家編號",
+    "cardLevel": "卡等",
+    "pointType": "點數類型",
+    "points": "點數",
+    "theoDeducted": "扣除 THEO",
+    "theoDivisorCents": "THEO 除數",
+    "pendingTheoBefore": "推送前殘量 THEO",
+    "pendingTheoAfter": "推送後殘量 THEO",
+    "pointsTotalBefore": "推送前累計點數",
+    "pointsTotalAfter": "推送後累計點數",
+    "accruedWatermark": "累加水位時間",
+    "extTxnId": "UG 交易編號",
+    "ugOperation": "UG 操作",
+    "ugAmount": "UG 送出值",
+    "ugRespCode": "UG 回應碼",
+    "ugRespMsg": "UG 回應訊息",
+    "state": "狀態",
+    "failReason": "失敗原因",
+    "source": "來源",
+    "operatedBy": "操作者",
+    "retryCount": "重試次數",
+    "taskId": "任務編號",
+    "updTime": "更新時間"
+  },
+  "acscRewardPointType": {
+    "sp": "SP",
+    "bp": "BP"
+  },
+  "acscRewardPushState": {
+    "success": "成功",
+    "failed": "失敗"
+  },
+  "acscTransfers": {
+    "id": "交易編號",
+    "crtTime": "創建時間",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至",
+    "updTime": "更新時間",
+    "playerId": "玩家編號",
+    "playerCode": "玩家暱稱",
+    "mobile": "手機號碼",
+    "patronNumber": "玩家編號",
+    "vipCardNumber": "VIP 卡號",
+    "direction": "方向",
+    "wallet": "錢包",
+    "currency": "貨幣",
+    "amount": "金額",
+    "balanceBefore": "轉帳前餘額",
+    "balanceAfter": "轉帳後餘額",
+    "state": "狀態",
+    "acscTxnId": "ACSC 交易編號",
+    "middlewareTxnId": "中介層交易編號",
+    "clientRef": "客戶端參考碼",
+    "source": "來源",
+    "operatedBy": "操作者",
+    "remark": "備註"
+  },
+  "acscTransferWallet": {
+    "cash": "現金",
+    "solaire_peso": "Solaire Peso"
+  },
+  "acscTransferDirection": {
+    "in": "On-Prem 轉入 Online",
+    "out": "Online 轉出至 On-Prem"
+  },
+  "acscTransferState": {
+    "pending": "待處理",
+    "processing": "處理中",
+    "completed": "已完成",
+    "reversed": "已退回",
+    "failed": "失敗"
+  },
+  "paymentTxn": {
+    "id": "交易編號",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "playerId": "玩家編號",
+    "mobile": "手機號碼",
+    "txnType": "交易種類",
+    "state": "交易狀態",
+    "amount": "金額",
+    "currency": "貨幣",
+    "paymentEntryCode": "支付通道代碼",
+    "paymentProviderCode": "支付供應商代碼",
+    "accountNumber": "帳戶號碼",
+    "extRefId": "外部參考編號",
+    "remark": "備註",
+    "failSource": "失敗來源",
+    "failReason": "失敗原因",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "operatedBy": "操作人",
+    "operatedAt": "操作時間",
+    "approvalStatus": "審核狀態",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至"
+  },
+  "pointTxn": {
+    "id": "交易編號",
+    "playerId": "玩家編號",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "mobile": "手機號碼",
+    "type": "交易種類",
+    "state": "交易狀態",
+    "xpBefore": "交易前積分",
+    "xpChange": "積分變動",
+    "xpAfter": "交易後積分",
+    "xpRemain": "剩餘積分",
+    "approveStatus": "審核狀態",
+    "remark": "備註",
+    "approvalRemark": "審核備註",
+    "expireTime": "到期時間",
+    "refId": "參考編號",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "operatedBy": "操作人",
+    "operatedAt": "操作時間",
+    "approvedBy": "審核人",
+    "approvedAt": "審核時間",
+    "crtTimeFrom": "時間由",
+    "crtTimeTo": "時間至"
+  },
+  "entryType": {
+    "e-wallet": "電子錢包",
+    "local_bank": "本地銀行",
+    "partner_bank": "合作銀行"
+  },
+  "paymentChannels": {
+    "providerCode": "供應商代碼",
+    "code": "通道代碼",
+    "name": "名稱",
+    "images": "圖片",
+    "currency": "幣別",
+    "state": "狀態",
+    "isTest": "測試通道",
+    "depositEnabled": "存款",
+    "withdrawEnabled": "提款",
+    "entryType": "入口類型",
+    "weight": "排序",
+    "form": {
+      "title": {
+        "edit": "編輯支付通道"
+      },
+      "addImage": "新增圖片"
+    },
+    "message": {
+      "update": {
+        "success": "更新成功",
+        "fail": "更新失敗"
+      }
+    }
+  },
+  "banners": {
+    "bannerKind": "橫幅種類",
+    "bannerUrl": "橫幅圖片",
+    "bannerSort": "橫幅排序",
+    "gameCatId": "遊戲分類",
+    "gameId": "遊戲",
+    "platform": "平台",
+    "appId": "網站",
+    "descriptions": "橫幅描述",
+    "link": "連結",
+    "startTime": "開始時間",
+    "endTime": "結束時間",
+    "bannerMeta": "橫幅元資料",
+    "bannerState": "狀態",
+    "name": "名稱",
+    "pageSurfaces": "顯示頁面",
+    "pageSurfaces.home": "首頁",
+    "pageSurfaces.promotion": "推廣頁",
+    "weight": "比重",
+    "state": "狀態",
+    "id": "編號",
+    "images": "圖片",
+    "form": {
+      "title": {
+        "create": "新增橫幅",
+        "edit": "修改橫幅"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      },
+      "position": {
+        "required": "請輸入位置"
+      },
+      "platform": {
+        "required": "請輸入平台"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增橫幅成功",
+        "fail": "新增橫幅失敗"
+      },
+      "edit": {
+        "success": "修改橫幅成功",
+        "fail": "修改橫幅失敗"
+      },
+      "delete": {
+        "success": "刪除橫幅成功",
+        "fail": "刪除橫幅失敗",
+        "title": "刪除橫幅",
+        "text": "刪除橫幅?"
+      }
+    }
+  },
+  "rewardsShop": {
+    "id": "編號",
+    "code": "代碼",
+    "name": "名稱",
+    "type": "類型",
+    "descriptions": "描述",
+    "pointRequired": "所需積分",
+    "stockQty": "庫存數量",
+    "itemRedeemed": "已兌換數量",
+    "isUnlimited": "是否無限庫存",
+    "images": "圖片",
+    "state": "狀態",
+    "weight": "排序",
+    "rewardBalance": "獎勵金額",
+    "rewardCurrency": "獎勵幣別",
+    "form": {
+      "title": {
+        "create": "新增商品",
+        "edit": "編輯商品"
+      },
+      "addImage": "新增圖片",
+      "addDescr": "新增描述"
+    },
+    "rules": {
+      "code": {
+        "required": "請輸入代碼"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "numericOnly": "只能輸入數字",
+      "type": {
+        "required": "請選擇類型"
+      },
+      "pointRequired": {
+        "required": "請輸入所需積分",
+        "invalid": "請輸入整數"
+      },
+      "rewardBalance": {
+        "required": "請輸入獎勵金額"
+      },
+      "rewardCurrency": {
+        "required": "請輸入獎勵幣別"
+      },
+      "state": {
+        "required": "請選擇狀態"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增積分商城品項成功",
+        "fail": "新增積分商城品項失敗"
+      },
+      "edit": {
+        "success": "編輯積分商城品項成功",
+        "fail": "編輯積分商城品項失敗"
+      },
+      "delete": {
+        "success": "刪除積分商城品項成功",
+        "fail": "刪除積分商城品項失敗",
+        "title": "刪除積分商城品項",
+        "text": "確認刪除積分商城品項？"
+      }
+    }
+  },
+  "rewardsShopType": {
+    "physical": "實體商品",
+    "reward": "獎勵"
+  },
+  "redemptionState": {
+    "normal": "正常",
+    "cancel": "已取消",
+    "completed": "已完成",
+    "failed": "失敗",
+    "expired": "已過期",
+    "delivered": "已派發"
+  },
+  "redemptionHistory": {
+    "id": "交易編號",
+    "orderId": "交易編號",
+    "crtTime": "建立時間",
+    "crtTimeFrom": "建立時間由",
+    "crtTimeTo": "建立時間至",
+    "updTime": "更新時間",
+    "playerId": "玩家 ID",
+    "mobile": "手機號碼",
+    "playerMobile": "手機號碼",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "itemId": "品項 ID",
+    "itemCode": "品項代碼",
+    "itemName": "品項名稱",
+    "itemType": "類型",
+    "pointRequired": "所需積分",
+    "quantity": "數量",
+    "total": "小計積分",
+    "state": "狀態",
+    "remark": "備註",
+    "message": {
+      "list": {
+        "fail": "載入兌換紀錄失敗"
+      },
+      "updateState": {
+        "success": "更新兌換狀態成功",
+        "fail": "更新兌換狀態失敗"
+      }
+    },
+    "editStateTitle": "修改訂單狀態"
+  },
+  "promos": {
+    "appId": "網站",
+    "descr": "推廣描述",
+    "prop": "屬性",
+    "name": "名稱",
+    "code": "方案代碼",
+    "promoDesc": "存款紅利描述",
+    "position": "位置",
+    "weight": "推廣排序",
+    "state": "狀態",
+    "type": "類型",
+    "promoType": "類型",
+    "startTime": "開始時間",
+    "endTime": "完結時間",
+    "id": "編號",
+    "images": "圖片",
+    "descriptions": "描述",
+    "minDepositAmt": "最低存款金額",
+    "bonusRate": "獎勵比例",
+    "wageringRequirement": "投注要求",
+    "maxDepositAmt": "最高存款金額",
+    "maxBonusAmt": "最高獎勵金額",
+    "wageringMultiplier": "流水倍率",
+    "targetGameTypes": "遊戲類型",
+    "eligibility": "資格限制",
+    "bonusAmt": "獎勵金額",
+    "form": {
+      "title": {
+        "create": "新增推廣",
+        "edit": "修改推廣"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片",
+      "addProp": "新增屬性",
+      "unlimited": "無限制",
+      "once_per_lifetime": "限領一次",
+      "normal": "Normal",
+      "gig_migration": "GIG Migration",
+      "leaderboard": "Leaderboard",
+      "fasttrack": "Fast Track",
+      "daily": "Daily"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入編號"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "minDepositAmt": {
+        "required": "請輸入最低存款金額"
+      },
+      "bonusRate": {
+        "required": "請輸入獎勵比例",
+        "invalid": "請輸入 0 至 1 之間的數值"
+      },
+      "wageringRequirement": {
+        "required": "請輸入投注要求",
+        "invalid": "請輸入大於 0 的數值"
+      },
+      "eligibility": {
+        "required": "請輸入資格限制"
+      },
+      "promoType": {
+        "required": "請選擇類型"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增推廣成功",
+        "fail": "新增推廣失敗"
+      },
+      "edit": {
+        "success": "修改推廣成功",
+        "fail": "修改推廣失敗"
+      },
+      "delete": {
+        "success": "刪除推廣成功",
+        "fail": "刪除推廣失敗",
+        "title": "刪除推廣",
+        "text": "刪除推廣?"
+      }
+    }
+  },
+  "promotionTransactions": {
+    "loading": "載入中…",
+    "id": "紀錄 ID",
+    "tenantId": "租戶 ID",
+    "playerId": "玩家 ID",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "mobile": "手機號碼",
+    "promotionId": "方案",
+    "promotionName": "方案名稱",
+    "promotionCode": "方案代碼",
+    "promotionType": "方案類型",
+    "state": "狀態",
+    "currency": "幣別",
+    "balanceId": "餘額 ID",
+    "depositTxnId": "存款交易",
+    "depositAmt": "存款金額",
+    "bonusAmt": "發放紅利金額",
+    "bonusRemaining": "紅利餘額",
+    "wageringTarget": "流水目標",
+    "wageringProgress": "流水進度",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "delTime": "刪除時間",
+    "completedAt": "完成時間",
+    "filters": {
+      "playerId": "玩家 ID",
+      "playerNickname": "玩家暱稱",
+      "mobile": "手機號碼",
+      "promotionId": "方案",
+      "promoType": "方案類型",
+      "state": "狀態",
+      "crtTimeFrom": "建立時間起",
+      "crtTimeTo": "建立時間迄",
+      "includeDeleted": "含已刪除"
+    },
+    "cols": {
+      "id": "紀錄 ID",
+      "playerCode": "玩家暱稱",
+      "playerId": "玩家 ID",
+      "promotion": "方案",
+      "state": "狀態",
+      "currency": "幣別",
+      "depositAmt": "存款金額",
+      "bonusAmt": "發放紅利",
+      "bonusRemaining": "紅利餘額",
+      "wagering": "流水（進度／目標）",
+      "crtTime": "建立時間"
+    },
+    "actions": {
+      "cancel": "取消",
+      "complete": "結清"
+    },
+    "batch": {
+      "grantAction": "批次發放",
+      "cancelAction": "批次取消",
+      "grantTitle": "批次發放推廣",
+      "cancelTitle": "批次取消推廣",
+      "promotionId": "Fasttrack 推廣",
+      "promotionPlaceholder": "選擇 Fasttrack 推廣",
+      "mobiles": "手機號碼",
+      "mobilesDescription": "請逐行輸入手機號碼；空白與重複項目會自動忽略。",
+      "mobilesPlaceholder": "0912345678\n+639171234567",
+      "opsRemark": "操作備註",
+      "previewTitle": "預覽結果",
+      "resultTitle": "執行結果",
+      "total": "總計：{{count}}",
+      "succeeded": "成功：{{count}}",
+      "failed": "失敗：{{count}}",
+      "status": "狀態",
+      "reason": "原因",
+      "success": "成功",
+      "failure": "失敗",
+      "noResults": "後端未回傳逐筆結果。",
+      "editInput": "返回編輯",
+      "executeGrant": "確認發放",
+      "executeCancel": "確認取消",
+      "loadPromotionsFail": "載入 Fasttrack 推廣失敗",
+      "requestFail": "批次操作失敗",
+      "unexpectedError": "發生未預期的錯誤",
+      "completeTitle": "批次操作完成",
+      "completeMessage": "成功 {{succeeded}} 筆，失敗 {{failed}} 筆。",
+      "promotionRequired": "請選擇 Fasttrack 推廣。",
+      "mobilesRequired": "請至少輸入一筆手機號碼。"
+    },
+    "form": {
+      "titleCreate": "新增推廣交易",
+      "titleEdit": "編輯推廣交易",
+      "submit": "儲存",
+      "tenantId": "租戶 ID",
+      "playerId": "玩家 ID",
+      "playerCode": "玩家暱稱",
+      "promotionId": "方案",
+      "currency": "幣別",
+      "balanceId": "餘額 ID",
+      "depositTxnId": "存款交易 ID",
+      "depositAmt": "存款金額",
+      "state": "狀態",
+      "bonusAmt": "紅利金額",
+      "wageringTarget": "流水目標",
+      "wageringProgress": "流水進度",
+      "playerSearchHint": "搜尋玩家（手機、暱稱或玩家 ID）",
+      "playerSearchPlaceholder": "輸入手機、暱稱或玩家 ID",
+      "nickname": "暱稱",
+      "changePlayer": "重新選擇"
+    },
+    "rules": {
+      "playerRequired": "請先以手機或暱稱搜尋並選定玩家後再儲存。",
+      "depositAmtRequired": "請輸入存款金額。",
+      "invalidAmount": "請輸入有效金額。",
+      "currencyRequired": "請選擇幣別。"
+    },
+    "message": {
+      "loadFail": "載入失敗",
+      "createSuccess": "儲存成功",
+      "createFail": "儲存失敗",
+      "editSuccess": "更新成功",
+      "editFail": "更新失敗",
+      "cancelTitle": "取消",
+      "cancelText": "確定要取消此優惠交易嗎？",
+      "cancelSuccess": "已取消",
+      "deleteTitle": "刪除玩家方案",
+      "deleteText": "確定要刪除此優惠交易嗎？",
+      "deleteSuccess": "已刪除",
+      "completeTitle": "結清",
+      "completeText": "確定要完成此優惠交易？此操作會結清紅利至現金錢包（合資格餘額轉入現金）、依規則清除紅利，並將此筆優惠交易狀態設為已完成。僅限進行中（active）的優惠交易可以完成。",
+      "completeSuccess": "結清成功",
+      "playerSearchNoResults": "查無符合的玩家。"
+    }
+  },
+  "tierTransactions": {
+    "id": "紀錄 ID",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "playerId": "玩家 ID",
+    "playerNickname": "玩家暱稱",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "mobile": "手機號碼",
+    "actionType": "異動類型",
+    "oldLevelIdx": "原等級",
+    "newLevelIdx": "新等級",
+    "turnoverAmt": "流水金額",
+    "dailyDepositAmt": "日存款金額",
+    "dailyBetAmt": "日投注金額",
+    "remark": "備註",
+    "filters": {
+      "playerNickname": "玩家暱稱",
+      "mobile": "手機號碼",
+      "actionType": "異動類型",
+      "timeFrom": "時間起",
+      "timeTo": "時間迄"
+    }
+  },
+  "vipLevelTxnActionType.upgrade": "升級",
+  "vipLevelTxnActionType.downgrade": "降級",
+  "vipLevelTxnActionType.retention": "保級",
+  "playerPromotionState.unspecified": "未指定",
+  "playerPromotionState.active": "進行中",
+  "playerPromotionState.queued": "排隊中",
+  "playerPromotionState.completed": "已完成",
+  "playerPromotionState.completed_pending": "完成處理中",
+  "playerPromotionState.cancelled": "已取消",
+  "playerPromotionState.failed": "失敗",
+  "pages": {
+    "appId": "網站",
+    "name": "名稱",
+    "state": "狀態",
+    "refId": "參考編號",
+    "refType": "參考類型",
+    "id": "編號",
+    "slug": "Slug",
+    "tenantId": "租戶 ID",
+    "form": {
+      "title": {
+        "create": "新增頁面",
+        "edit": "修改頁面"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入編號"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      },
+      "slug": {
+        "required": "請輸入 Slug"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增頁面成功",
+        "fail": "新增頁面失敗"
+      },
+      "edit": {
+        "success": "修改頁面成功",
+        "fail": "修改頁面失敗"
+      },
+      "delete": {
+        "success": "刪除頁面成功",
+        "fail": "刪除頁面失敗",
+        "title": "刪除頁面",
+        "text": "刪除頁面?"
+      }
+    }
+  },
+  "pagedivs": {
+    "id": "編號",
+    "pageId": "頁面",
+    "appId": "網站",
+    "descr": "描述",
+    "prop": "屬性",
+    "weight": "比重",
+    "lang": "語言",
+    "link": "連結",
+    "html": "HTML",
+    "image": "圖片",
+    "form": {
+      "title": {
+        "create": "新增頁面分區",
+        "edit": "修改頁面分區"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片",
+      "addProp": "新增屬性"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入編號"
+      },
+      "pageId": {
+        "required": "請選擇頁面"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增頁面分區成功",
+        "fail": "新增頁面分區失敗"
+      },
+      "edit": {
+        "success": "修改頁面分區成功",
+        "fail": "修改頁面分區失敗"
+      },
+      "delete": {
+        "success": "刪除頁面分區成功",
+        "fail": "刪除頁面分區失敗",
+        "title": "刪除頁面分區",
+        "text": "刪除頁面分區?"
+      }
+    }
+  },
+  "users": {
+    "userCode": "用戶登入",
+    "userNick": "用戶名稱",
+    "tgUserName": "TG用戶名稱",
+    "userState": "狀態",
+    "appId": "網站",
+    "crtTime": "創建時間",
+    "crtTimeFrom": "創建時間由",
+    "crtTimeTo": "創建時間至",
+    "detail": "詳細",
+    "form": {
+      "title": {
+        "updateState": "更新用戶狀態"
+      }
+    },
+    "message": {
+      "updateState": {
+        "success": "更新用戶狀態成功",
+        "fail": "更新用戶狀態失敗"
+      }
+    }
+  },
+  "players": {
+    "id": "玩家編號",
+    "mobile": "手機號碼",
+    "email": "電郵",
+    "firstName": "名稱",
+    "lastName": "姓氏",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "Patron ID",
+    "applicantId": "申請人 ID",
+    "labels": "玩家標籤",
+    "crtTime": "創建時間",
+    "crtTimeFrom": "創建時間由",
+    "crtTimeTo": "創建時間至",
+    "kycState": "KYC狀態",
+    "lastAccessTime": "最後訪問時間",
+    "detail": "詳細",
+    "playerState": "玩家狀態",
+    "kycStates": {
+      "reminder": "提醒",
+      "pending": "待審核",
+      "approved": "已審核",
+      "rejected": "已拒絕"
+    },
+    "type": "玩家類型",
+    "form": {
+      "title": {
+        "updateState": "更新玩家狀態"
+      }
+    },
+    "message": {
+      "updateState": {
+        "success": "更新玩家狀態成功",
+        "fail": "更新玩家狀態失敗"
+      }
+    },
+    "rules": {
+      "playerState": {
+        "required": "玩家狀態是必填的"
+      }
+    }
+  },
+  "userdetail": {
+    "userCode": "用戶登入",
+    "userNick": "用戶名稱",
+    "tgUserName": "TG用戶名稱",
+    "userState": "狀態",
+    "appId": "網站",
+    "crtTime": "創建時間",
+    "acctinfo": "帳戶資料",
+    "id": "編號",
+    "updTime": "更新時間",
+    "userType": "用戶類型",
+    "userFlag": "用戶旗",
+    "currencyId": "貨幣",
+    "languageId": "語言",
+    "parentId": "上線",
+    "parentCode": "上線登入",
+    "tgBotName": "TG Bot名稱",
+    "userEmailVerified": "用戶電郵認證",
+    "userMobileVerified": "用戶電話認證",
+    "lastSuccessTime": "最後成功時間",
+    "lastFailureTime": "最後失敗時間",
+    "userinfo": "用戶資料",
+    "userLabels": "用戶標籤",
+    "gamePvdId": "遊戲供應商",
+    "gameGenre": "遊戲分類",
+    "info": {
+      "gender": "性別",
+      "birthday": "出生日期",
+      "birthPlace": "出生地點",
+      "idType": "身份證明類別",
+      "nationality": "國藉",
+      "city": "城市",
+      "postalCode": "郵政編號",
+      "incomeSource": "收入來源"
+    },
+    "uservault": "用戶金庫",
+    "vault": {
+      "vipRank": "貴賓級別",
+      "vipLevel": "目前等級",
+      "vipLevelVal": "貴賓等級數值",
+      "vipLevelNxt": "升級所需流水",
+      "weeklyCashbackRate": "每週現金回贈率",
+      "monthlyCashbackRate": "每月現金回贈率",
+      "liveCommRate": "現場佣金率",
+      "sportCommRate": "體育佣金率",
+      "slotCommRate": "電子佣金率"
+    },
+    "time": {
+      "today": "今日",
+      "yesterday": "昨日",
+      "sevenDays": "7日",
+      "fifteenDays": "15日",
+      "thirtyDays": "30日",
+      "total": "總和"
+    },
+    "financeinfo": {
+      "title": "財務資料",
+      "time": "時間",
+      "deposit": "入金",
+      "withdraw": "出金",
+      "profit": "收益"
+    },
+    "betinfo": {
+      "title": "投注資料",
+      "time": "時間",
+      "bet": "投注",
+      "win": "贏",
+      "profit": "收益"
+    },
+    "form": {
+      "title": {
+        "updateState": "更新用戶狀態"
+      }
+    },
+    "message": {
+      "updateInfo": {
+        "success": "更新用戶資料成功",
+        "fail": "更新用戶資料失敗"
+      }
+    }
+  },
+  "playerdetail": {
+    "mobile": "手機號碼",
+    "userCode": "用戶登入",
+    "playerNick": "玩家暱稱",
+    "playerState": "狀態",
+    "appId": "網站",
+    "crtTime": "創建時間",
+    "acctinfo": "帳戶資料",
+    "id": "玩家編號",
+    "patronNumber": "玩家編號",
+    "updTime": "更新時間",
+    "playerType": "玩家類型",
+    "playerFlag": "玩家旗",
+    "tenantId": "代理商編號",
+    "playerEmail": "玩家電郵",
+    "playerMobileVerified": "玩家手機驗證",
+    "lastSuccessTime": "最後成功時間",
+    "lastFailureTime": "最後失敗時間",
+    "loginFailureCnt": "登入失敗次數",
+    "exclusionCode": "排除代碼",
+    "exclusionDate": "排除日期",
+    "mobileFreeze": {
+      "alert": "此手機號碼依手機政策已凍結。無論帳戶狀態為何，玩家皆無法登入。",
+      "badge": "凍結"
+    },
+    "playerinfo": "玩家資料",
+    "playerLabels": "玩家標籤",
+    "playerRealmId": "玩家群組ID",
+    "gamePvdId": "遊戲供應商",
+    "gameGenre": "遊戲分類",
+    "info": {
+      "firstName": "名",
+      "middleName": "中間名",
+      "lastName": "姓",
+      "country": "國家",
+      "gender": "性別",
+      "birthday": "出生日期",
+      "birthPlace": "出生地點",
+      "idType": "身份證明類別",
+      "nationality": "國藉",
+      "address": "地址",
+      "email": "電郵",
+      "city": "城市",
+      "postalCode": "郵政編號",
+      "incomeSource": "收入來源",
+      "workNatureId": "工作性質",
+      "rules": {
+        "opsRemark": {
+          "required": "請輸入備註"
+        }
+      },
+      "remarkModal": {
+        "title": "新增備註",
+        "opsRemark": "備註"
+      }
+    },
+    "kycinfo": "KYC資料",
+    "kyc": {
+      "state": "狀態",
+      "editState": "修改 KYC 狀態",
+      "opsRemark": "備註",
+      "syncInfo": "同步 KYC 資料",
+      "idPicFrontUrl": "證件正面圖片",
+      "idPicBackUrl": "證件背面圖片",
+      "selfieUrl": "自拍照",
+      "applicantId": "申請人 ID",
+      "reviewStatus": "審核狀態",
+      "verifiedAt": "驗證時間",
+      "docType": "證件類型",
+      "docNumber": "證件號碼",
+      "docExpiryDate": "證件有效期限",
+      "openImageLink": "在新分頁開啟"
+    },
+    "assignedPlayerLabels": "玩家標籤",
+    "assignedPlayerLabelsEmpty": "此玩家尚未指派任何標籤。",
+    "assignedPlayerLabelsCols": {
+      "name": "標籤名稱",
+      "remarks": "備註",
+      "state": "狀態",
+      "assignedAt": "指派時間",
+      "actions": "操作"
+    },
+    "assignedPlayerLabelsRowRemove": {
+      "title": "移除此玩家的標籤",
+      "text": "確定要從此玩家移除標籤「{{name}}」？",
+      "remove": "移除"
+    },
+    "assignedPlayerLabelsOpenAssignModal": "指派標籤",
+    "assignedPlayerLabelsAssignModalTitle": "指派標籤給玩家",
+    "assignedPlayerLabelsAssignHint": "為此玩家新增標籤",
+    "assignedPlayerLabelsAssignPlaceholder": "選擇一個或多個標籤",
+    "assignedPlayerLabelsAssignButton": "指派標籤",
+    "assignedPlayerLabelsAssign": {
+      "success": "已指派標籤",
+      "fail": "指派標籤失敗"
+    },
+    "assignedPlayerLabelsRemove": {
+      "success": "已移除標籤",
+      "fail": "移除標籤失敗"
+    },
+    "accountNotes": "帳戶備註記錄",
+    "accountNotesEmpty": "此玩家尚無帳戶備註記錄。",
+    "accountNotesCols": {
+      "crtTime": "時間",
+      "adminCode": "管理員",
+      "opsAction": "操作",
+      "summary": "摘要",
+      "remark": "備註",
+      "changes": "變更內容"
+    },
+    "time": {
+      "today": "今日",
+      "yesterday": "昨日",
+      "sevenDays": "7日",
+      "fifteenDays": "15日",
+      "thirtyDays": "30日",
+      "total": "總和"
+    },
+    "vault": {
+      "title": "貴賓等級資料",
+      "tier": "會籍等級",
+      "cashbackTitle": "現金回贈",
+      "commissionTitle": "佣金",
+      "vipGrade": "貴賓級別",
+      "vipLevel": "目前等級",
+      "vipLevelVal": "貴賓等級數值",
+      "vipLevelNxt": "升級所需流水",
+      "weeklyCashbackRate": "每週現金回贈率",
+      "monthlyCashbackRate": "每月現金回贈率",
+      "liveCommRate": "現場佣金率",
+      "sportCommRate": "體育佣金率",
+      "slotCommRate": "電子佣金率"
+    },
+    "currentWalletBalance": {
+      "title": "當前錢包餘額",
+      "normal": "正常",
+      "bonus": "獎勵",
+      "point": "積分",
+      "solairePeso": "Solaire Peso"
+    },
+    "financeinfo": {
+      "title": "財務資料",
+      "time": "時間",
+      "deposit": "入金",
+      "withdraw": "出金",
+      "profit": "收益"
+    },
+    "betinfo": {
+      "title": "投注資料",
+      "time": "時間",
+      "bet": "投注",
+      "win": "贏",
+      "profit": "收益"
+    },
+    "form": {
+      "title": {
+        "updateState": "更新玩家狀態"
+      }
+    },
+    "message": {
+      "updateInfo": {
+        "success": "更新玩家資料成功",
+        "fail": "更新玩家資料失敗"
+      },
+      "walletAdjustment": {
+        "success": "錢包餘額調整成功",
+        "fail": "錢包餘額調整失敗"
+      },
+      "pointAdjustment": {
+        "success": "積分調整成功",
+        "fail": "積分調整失敗"
+      },
+      "changeMobile": {
+        "success": "變更手機成功",
+        "fail": "變更手機失敗"
+      },
+      "messageSend": {
+        "success": "訊息發送成功",
+        "fail": "訊息發送失敗"
+      },
+      "updateKycStatus": {
+        "success": "更新 KYC 狀態成功",
+        "fail": "更新 KYC 狀態失敗"
+      },
+      "syncKyc": {
+        "success": "KYC 資料同步成功",
+        "fail": "KYC 資料同步失敗"
+      },
+      "assignPromotion": {
+        "success": "指派優惠方案成功",
+        "fail": "指派優惠方案失敗"
+      },
+      "vipLevelSet": {
+        "success": "VIP 等級調整成功",
+        "fail": "VIP 等級調整失敗"
+      }
+    },
+    "accountActions": "帳戶操作",
+    "actions": {
+      "deposit": "入金",
+      "withdraw": "出金",
+      "otp": "發送 OTP",
+      "changeMobile": "變更手機",
+      "sendMessage": "發送訊息",
+      "walletAdjustment": "錢包餘額調整",
+      "pointAdjustment": "積分調整",
+      "vipLevelAdjustment": "VIP 等級調整",
+      "assignPromotion": "指派優惠方案"
+    },
+    "walletAdjustment": {
+      "title": "錢包餘額調整",
+      "amount": "金額",
+      "currency": "貨幣",
+      "remark": "備註",
+      "rules": {
+        "amount": {
+          "required": "請輸入金額",
+          "invalid": "無效的金額",
+          "zero": "金額不能為 0"
+        },
+        "currency": {
+          "required": "請輸入貨幣"
+        }
+      }
+    },
+    "pointAdjustment": {
+      "title": "積分調整",
+      "amount": "金額",
+      "remark": "備註",
+      "rules": {
+        "amount": {
+          "required": "請輸入金額",
+          "invalid": "無效的金額",
+          "zero": "金額不能為 0"
+        }
+      }
+    },
+    "vipLevelAdjustment": {
+      "vipLevel": "VIP 等級",
+      "opsRemark": "備註",
+      "rules": {
+        "vipLevel": {
+          "required": "請選擇 VIP 等級"
+        }
+      }
+    },
+    "otp": {
+      "title": "發送 OTP",
+      "generating": "生成 OTP 代碼...",
+      "validFor": "有效期 24 小時",
+      "validUntil": "至 {{time}}",
+      "generatedWithoutCode": "OTP 已發送。請檢查玩家裝置。"
+    },
+    "changeMobile": {
+      "newMobile": "新手機號碼",
+      "opsRemark": "備註",
+      "rules": {
+        "newMobile": {
+          "required": "請輸入新手機號碼",
+          "invalid": "無效的新手機號碼"
+        },
+        "opsRemark": {
+          "required": "請輸入備註"
+        }
+      }
+    },
+    "messageSend": {
+      "title": "標題",
+      "content": "內容",
+      "rules": {
+        "title": {
+          "required": "請輸入標題"
+        },
+        "content": {
+          "required": "請輸入內容"
+        }
+      }
+    },
+    "betHistory": "投注記錄",
+    "txnPayment": "入金/出金紀錄",
+    "pointTxn": "積分交易紀錄",
+    "acscRewardAccrual": "積分回饋累計",
+    "redemptionHistory": "積分商城兌換紀錄",
+    "playerPromotionTransaction": "玩家優惠交易",
+    "assignPromotion": {
+      "promotionId": "優惠方案",
+      "promotionIdPlaceholder": "選擇快速通關方案",
+      "opsRemark": "備註",
+      "rules": {
+        "promotionId": {
+          "required": "請選擇優惠方案"
+        }
+      }
+    }
+  },
+  "playerBetHistory": {
+    "id": "編號",
+    "dateTime": "日期時間",
+    "sessionId": "登入時段編號",
+    "extRoundId": "外部遊戲局數編號",
+    "gameName": "遊戲名稱",
+    "gameProvider": "遊戲供應商",
+    "betAmt": "投注金額",
+    "validBetAmt": "有效投注",
+    "payout": "派彩",
+    "walletAmount": "錢包金額",
+    "bonusAmount": "獎勵金額",
+    "walletBalance": "錢包餘額",
+    "bonusBalance": "獎勵餘額",
+    "betState": "投注狀態",
+    "remark": "備註",
+    "coinType": "貨幣類型"
+  },
+  "txnPayment": {
+    "id": "交易編號",
+    "referenceId": "參考編號",
+    "paymentProviderCode": "支付供應商代碼",
+    "paymentEntryCode": "支付通道代碼",
+    "accountNumber": "帳戶號碼",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "txnType": "交易種類",
+    "walletAmount": "錢包金額",
+    "bonusAmount": "獎勵金額",
+    "walletBalance": "錢包餘額",
+    "bonusBalance": "獎勵餘額",
+    "remark": "備註",
+    "state": "狀態",
+    "approvalStatus": "審核狀態"
+  },
+  "gameCategories": {
+    "loadTabsFail": "載入分類分頁失敗",
+    "loadCategoriesFail": "載入遊戲分類版面資料失敗",
+    "noData": "找不到資料",
+    "order": "排序",
+    "vector": "遊戲分類代碼",
+    "provider": "遊戲商",
+    "game": "遊戲",
+    "addGameVector": "新增遊戲分類",
+    "save": "儲存",
+    "saveSuccess": "儲存成功",
+    "saveFailed": "儲存失敗",
+    "validationSelectGameAllRows": "請為所有列選擇遊戲。",
+    "validationVectorProviderGameAllRows": "請輸入分類代碼，並為所有列選擇遊戲商與遊戲。",
+    "addGame": "+ 遊戲",
+    "deleteVector": "刪除分類",
+    "upload": "上傳",
+    "confirm": "確認",
+    "cancel": "取消",
+    "remove": "移除",
+    "readOnlyActionHint": "此操作需其他 API，此頁已停用",
+    "id": "ID",
+    "name": "名稱",
+    "appId": "網站",
+    "state": "狀態",
+    "weight": "比重",
+    "descr": "描述",
+    "image": "圖片",
+    "form": {
+      "title": {
+        "create": "新增遊戲分類",
+        "edit": "修改遊戲分類"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增遊戲分類成功",
+        "fail": "新增遊戲分類失敗"
+      },
+      "edit": {
+        "success": "修改遊戲分類成功",
+        "fail": "修改遊戲分類失敗"
+      },
+      "delete": {
+        "success": "刪除遊戲分類成功",
+        "fail": "刪除遊戲分類失敗",
+        "title": "刪除遊戲分類",
+        "text": "刪除遊戲分類?"
+      },
+      "deleteVector": {
+        "title": "刪除遊戲分類向量",
+        "text": "確定要刪除「{{code}}」嗎？\n此操作無法復原。",
+        "success": "已刪除遊戲分類向量",
+        "fail": "刪除遊戲分類向量失敗"
+      }
+    }
+  },
+  "gameRanking": {
+    "title": "地區遊戲排行榜",
+    "rank": "排名",
+    "provider": "遊戲商",
+    "game": "遊戲",
+    "titles": "標題",
+    "descriptions": "描述",
+    "addGame": "新增遊戲",
+    "remove": "移除",
+    "opsRemark": "備註",
+    "overLimitWarning": "目前榜單已超過 {{limit}} 筆，建議調整為 Top {{limit}}。",
+    "form": {
+      "title": {
+        "create": "新增排行榜遊戲",
+        "edit": "修改排行榜遊戲"
+      },
+      "addTitle": "新增標題",
+      "addDescr": "新增描述"
+    },
+    "rules": {
+      "gameId": {
+        "required": "請選擇遊戲"
+      }
+    },
+    "message": {
+      "load": {
+        "fail": "讀取遊戲排行榜失敗"
+      },
+      "save": {
+        "success": "儲存遊戲排行榜成功",
+        "fail": "儲存遊戲排行榜失敗",
+        "title": "儲存遊戲排行榜",
+        "text": "未列出的遊戲將被移除，確定要儲存嗎？"
+      }
+    }
+  },
+  "xpShopCategories": {
+    "order": "排序",
+    "vector": "分類代碼",
+    "item": "品項",
+    "image": "圖片",
+    "state": "狀態",
+    "noData": "找不到分類資料",
+    "addVector": "新增分類",
+    "addItem": "+ 品項",
+    "save": "儲存",
+    "saveSuccess": "儲存成功",
+    "saveFailed": "儲存失敗",
+    "validationSelectItemAllRows": "請為所有列選擇品項。",
+    "validationVectorItemAllRows": "請輸入分類代碼，並為所有列選擇品項。",
+    "deleteVector": "刪除分類",
+    "confirm": "確認",
+    "cancel": "取消",
+    "remove": "移除",
+    "message": {
+      "deleteVector": {
+        "title": "刪除積分商城分類",
+        "text": "確定要刪除「{{code}}」嗎？\n此操作無法復原。",
+        "success": "已刪除分類",
+        "fail": "刪除分類失敗"
+      }
+    }
+  },
+  "games": {
+    "id": "ID",
+    "name": "名稱",
+    "descriptions": "描述",
+    "state": "狀態",
+    "isOpen": "是否開啟",
+    "haveBuyBonus": "是否支援購買獎勵",
+    "staffTestOnly": "僅限員工測試",
+    "isVipTable": "是否VIP桌台",
+    "table": "桌號",
+    "assetNumber": "資產編號",
+    "rtpBps": "玩家回報率(%)",
+    "genre": "遊戲分類",
+    "developer": "開發商",
+    "type": "遊戲類型",
+    "weight": "比重",
+    "providerCode": "供應商代碼",
+    "code": "遊戲代碼",
+    "images": "圖片",
+    "sync": "同步遊戲",
+    "syncTime": "同步時間",
+    "form": {
+      "title": {
+        "create": "新增遊戲",
+        "edit": "修改遊戲"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片",
+      "addTitle": "新增名稱"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      },
+      "rtpBps": {
+        "range": "玩家回報率須介於0至100之間"
+      },
+      "type": {
+        "required": "請輸入遊戲類型"
+      },
+      "genre": {
+        "required": "請輸入遊戲分類"
+      },
+      "code": {
+        "required": "請輸入遊戲代碼"
+      },
+      "providerCode": {
+        "required": "請輸入遊戲供應商代碼"
+      },
+      "descriptions": {
+        "required": "請至少輸入英文描述"
+      },
+      "images": {
+        "required": "請輸入圖片"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增遊戲成功",
+        "fail": "新增遊戲失敗"
+      },
+      "edit": {
+        "success": "修改遊戲成功",
+        "fail": "修改遊戲失敗"
+      },
+      "delete": {
+        "success": "刪除遊戲成功",
+        "fail": "刪除遊戲失敗",
+        "title": "刪除遊戲",
+        "text": "刪除遊戲?"
+      },
+      "sync": {
+        "success": "同步遊戲成功",
+        "fail": "同步遊戲失敗"
+      }
+    }
+  },
+  "userlabels": {
+    "id": "ID",
+    "name": "名稱",
+    "state": "狀態",
+    "remark": "備註",
+    "permittedRoles": "允許角色",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "type": "類型",
+    "expr": "表達式",
+    "hooks": "鉤子",
+    "form": {
+      "title": {
+        "create": "新增用戶標籤",
+        "edit": "修改用戶標籤"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增用戶標籤成功",
+        "fail": "新增用戶標籤失敗"
+      },
+      "edit": {
+        "success": "修改用戶標籤成功",
+        "fail": "修改用戶標籤失敗"
+      },
+      "delete": {
+        "success": "刪除用戶標籤成功",
+        "fail": "刪除用戶標籤失敗",
+        "title": "刪除用戶標籤",
+        "text": "刪除用戶標籤?"
+      }
+    }
+  },
+  "playerlabels": {
+    "id": "ID",
+    "name": "名稱",
+    "state": "狀態",
+    "remark": "備註",
+    "type": "類型",
+    "expr": "表達式",
+    "hooks": "鉤子",
+    "tenantId": "代理商編號",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "hint": "提示",
+    "form": {
+      "title": {
+        "create": "新增玩家標籤",
+        "edit": "修改玩家標籤"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增玩家標籤成功",
+        "fail": "新增玩家標籤失敗"
+      },
+      "edit": {
+        "success": "修改玩家標籤成功",
+        "fail": "修改玩家標籤失敗"
+      },
+      "delete": {
+        "success": "刪除玩家標籤成功",
+        "fail": "刪除玩家標籤失敗",
+        "title": "刪除玩家標籤",
+        "text": "刪除玩家標籤?"
+      }
+    },
+    "labelPlayers": {
+      "open": "玩家",
+      "modalTitle": "標籤「{{name}}」的玩家",
+      "empty": "尚無玩家使用此標籤。",
+      "loadFail": "載入此標籤的玩家失敗",
+      "code": "代碼",
+      "mobile": "手機",
+      "nickname": "暱稱",
+      "actions": "操作",
+      "remove": "移除",
+      "assignSearchMobile": "手機",
+      "assignSearchCode": "暱稱",
+      "assignSearchRequired": "請輸入手機或暱稱。",
+      "assignSearch": "搜尋",
+      "clear": "清除",
+      "assign": "指派",
+      "alreadyAssigned": "已指派",
+      "assignSectionTitle": "指派玩家",
+      "back": "返回",
+      "assignedSectionTitle": "此標籤已指派的玩家",
+      "searchEmpty": "查無符合的玩家。",
+      "assignSuccess": "已將標籤指派給玩家",
+      "assignFail": "指派標籤失敗",
+      "removeConfirmTitle": "從標籤移除玩家",
+      "removeConfirmText": "要從標籤「{{name}}」移除此玩家？",
+      "removeSuccess": "已從標籤移除玩家",
+      "removeFail": "從標籤移除玩家失敗"
+    },
+    "restrictions": {
+      "title": "玩家標籤限制",
+      "open": "標籤限制",
+      "apiPattern": "API 路徑樣式",
+      "actions": "操作",
+      "edit": "修改",
+      "delete": "刪除",
+      "empty": "此標籤尚無 API 限制。",
+      "missingLabelId": "此標籤無 ID，無法編輯限制。",
+      "addFormTitle": "新增限制",
+      "editFormTitle": "編輯限制",
+      "save": "儲存",
+      "cancelEdit": "取消",
+      "loading": "載入中…",
+      "rules": {
+        "apiPattern": {
+          "required": "請輸入 API 路徑樣式"
+        }
+      },
+      "message": {
+        "validationTitle": "無法儲存",
+        "loadFail": "載入限制失敗",
+        "save": {
+          "success": "已儲存限制",
+          "fail": "儲存限制失敗"
+        },
+        "delete": {
+          "success": "已刪除限制",
+          "fail": "刪除限制失敗",
+          "title": "刪除限制",
+          "text": "確定移除此 API 路徑限制？"
+        }
+      }
+    }
+  },
+  "playermobilepolicy": {
+    "id": "ID",
+    "playerId": "玩家編號",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "mobile": "手機號碼",
+    "firstName": "名稱",
+    "lastName": "姓氏",
+    "type": "政策類型",
+    "reason": "原因",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "form": {
+      "title": {
+        "create": "新增手機號政策",
+        "edit": "編輯手機號政策"
+      }
+    },
+    "rules": {
+      "mobile": {
+        "required": "請輸入手機號碼",
+        "numericOnly": "只能輸入數字"
+      },
+      "type": {
+        "required": "請選擇類型"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增成功",
+        "fail": "新增失敗"
+      },
+      "edit": {
+        "success": "更新成功",
+        "fail": "更新失敗"
+      },
+      "delete": {
+        "success": "刪除成功",
+        "fail": "刪除失敗",
+        "title": "刪除手機號政策",
+        "text": "確定刪除此政策？刪除後該手機對應的玩家狀態將還原。"
+      }
+    }
+  },
+  "playerSelfLimits": {
+    "playerId": "玩家 ID",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "mobile": "手機號碼",
+    "limitType": "限制類型",
+    "limitWagerValue": "投注限制數值",
+    "limitDuration": "持續時間 (天)",
+    "startTime": "開始時間",
+    "endTime": "完結時間",
+    "state": "狀態",
+    "requestTime": "申請時間",
+    "states": {
+      "pending": "待生效",
+      "active": "生效中",
+      "removal_pending": "待移除",
+      "expired": "已過期"
+    },
+    "login": "登入",
+    "wager": "投注",
+    "actions": {
+      "update": "更新",
+      "delete": "刪除"
+    },
+    "form": {
+      "title": "更新玩家自我控管"
+    },
+    "message": {
+      "edit": {
+        "success": "更新成功",
+        "fail": "更新失敗"
+      },
+      "delete": {
+        "success": "刪除成功",
+        "fail": "刪除失敗",
+        "title": "刪除玩家自我控管",
+        "text": "確定刪除?"
+      }
+    }
+  },
+  "userrealms": {
+    "id": "ID",
+    "name": "名稱",
+    "state": "狀態",
+    "config": {
+      "label": "配置",
+      "gamePvdWhitelist": "遊戲供應商白名單",
+      "gamePvdBlacklist": "遊戲供應商黑名單",
+      "gameIdWhitelist": "遊戲白名單",
+      "gameIdBlacklist": "遊戲黑名單"
+    },
+    "form": {
+      "title": {
+        "create": "新增用戶域",
+        "edit": "修改用戶域"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增用戶域成功",
+        "fail": "新增用戶域失敗"
+      },
+      "edit": {
+        "success": "修改用戶域成功",
+        "fail": "修改用戶域失敗"
+      },
+      "delete": {
+        "success": "刪除用戶域成功",
+        "fail": "刪除用戶域失敗",
+        "title": "刪除用戶域",
+        "text": "刪除用戶域?"
+      }
+    }
+  },
+  "playergroups": {
+    "id": "ID",
+    "name": "名稱",
+    "state": "狀態",
+    "expr": "表達式",
+    "tenantId": "代理商編號",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "hint": "提示",
+    "config": {
+      "label": "配置",
+      "gamePvdWhitelist": "遊戲供應商白名單",
+      "gamePvdBlacklist": "遊戲供應商黑名單",
+      "gameIdWhitelist": "遊戲白名單",
+      "gameIdBlacklist": "遊戲黑名單"
+    },
+    "form": {
+      "title": {
+        "create": "新增玩家群組",
+        "edit": "修改玩家群組"
+      }
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增玩家群組成功",
+        "fail": "新增玩家群組失敗"
+      },
+      "edit": {
+        "success": "修改玩家群組成功",
+        "fail": "修改玩家群組失敗"
+      },
+      "delete": {
+        "success": "刪除玩家群組成功",
+        "fail": "刪除玩家群組失敗",
+        "title": "刪除玩家群組",
+        "text": "刪除玩家群組?"
+      }
+    }
+  },
+  "viplevels": {
+    "id": "ID",
+    "code": "等級",
+    "name": "角色名稱",
+    "idx": "等級",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "updCode": "更新人",
+    "upgradeTurnoverThreshold": "升級流水門檻",
+    "upgradeDailyDepositTurnoverThreshold": "升級日存款流水門檻",
+    "upgradeDailyBetTurnoverThreshold": "升級日投注流水門檻",
+    "retentionTurnoverThreshold": "保級流水門檻",
+    "levelUpReward": "升級獎勵",
+    "downgradeProtectionMonths": "降級保護月數",
+    "fcToCashTurnoverThreshold": "FC轉現金流水門檻",
+    "fcDailyLimit": "FC每日上限",
+    "fcFillDaysLimit": "FC領取天數限制",
+    "paydayReward": "15號發薪日獎勵",
+    "retentionReward": "每月保級獎勵",
+    "birthdayReward": "生日獎勵",
+    "rewardShopDiscountBps": "獎勵商店折扣(%)",
+    "withdrawalPerk": "提款特權",
+    "tournamentPerk": "錦標賽特權",
+    "vipHostPerk": "VIP專屬客服特權",
+    "travelLifestyleFundAmt": "旅遊生活基金金額",
+    "opsRemark": "備註",
+    "form": {
+      "title": {
+        "create": "新增貴賓等級",
+        "edit": "修改貴賓等級"
+      },
+      "hint": {
+        "downgradeProtectionMonths": "-1 表示不會被降級"
+      }
+    },
+    "rules": {
+      "code": {
+        "required": "請輸入等級代碼"
+      },
+      "idx": {
+        "required": "請輸入排序序號"
+      },
+      "downgradeProtectionMonths": {
+        "invalid": "只接受 -1 或正數"
+      },
+      "rewardShopDiscountBps": {
+        "max": "折扣不能超過 100%"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增貴賓等級成功",
+        "fail": "新增貴賓等級失敗"
+      },
+      "edit": {
+        "success": "修改貴賓等級成功",
+        "fail": "修改貴賓等級失敗"
+      },
+      "delete": {
+        "success": "刪除貴賓等級成功",
+        "fail": "刪除貴賓等級失敗",
+        "title": "刪除貴賓等級",
+        "text": "確認刪除貴賓等級？"
+      }
+    }
+  },
+  "vipRebates": {
+    "id": "編號",
+    "name": "名稱",
+    "vipRank": "等級",
+    "idx": "索引",
+    "type": "週期類型",
+    "active": "狀態",
+    "peryaRate": "Perya 比率",
+    "slotRate": "Slot 比率",
+    "casinoRate": "Casino 比率",
+    "egameRate": "EGame 比率",
+    "sportRate": "Sport 比率",
+    "bingoRate": "Bingo 比率",
+    "peryaHouseEdge": "Perya 抽水比例",
+    "slotHouseEdge": "Slot 抽水比例",
+    "casinoHouseEdge": "Casino 抽水比例",
+    "egameHouseEdge": "EGame 抽水比例",
+    "sportHouseEdge": "Sport 抽水比例",
+    "bingoHouseEdge": "Bingo 抽水比例",
+    "peryaExchangeRate": "Perya 匯率",
+    "slotExchangeRate": "Slot 匯率",
+    "casinoExchangeRate": "Casino 匯率",
+    "egameExchangeRate": "EGame 匯率",
+    "sportExchangeRate": "Sport 匯率",
+    "bingoExchangeRate": "Bingo 匯率",
+    "perya": "Perya",
+    "slot": "Slot",
+    "casino": "Casino",
+    "egame": "EGame",
+    "sport": "Sport",
+    "bingo": "Bingo",
+    "rate": "比率",
+    "houseEdge": "抽水比例",
+    "exchangeRate": "匯率",
+    "crtTime": "創建時間",
+    "updTime": "更新時間",
+    "form": {
+      "title": {
+        "create": "新增 VIP 返水",
+        "edit": "修改 VIP 返水"
+      }
+    },
+    "rules": {
+      "peryaRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "slotRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "casinoRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "egameRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "sportRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "bingoRate": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "percent": {
+        "invalid": "請輸入 0 至 100 之間的數值"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "idx": {
+        "required": "請選擇等級"
+      },
+      "type": {
+        "required": "請選擇週期類型"
+      },
+      "active": {
+        "required": "請選擇狀態"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增 VIP 返水成功",
+        "fail": "新增 VIP 返水失敗"
+      },
+      "edit": {
+        "success": "修改 VIP 返水成功",
+        "fail": "修改 VIP 返水失敗"
+      },
+      "delete": {
+        "success": "刪除 VIP 返水成功",
+        "fail": "刪除 VIP 返水失敗",
+        "title": "刪除 VIP 返水",
+        "text": "確認刪除 VIP 返水？"
+      }
+    }
+  },
+  "playerRebateBonus": {
+    "id": "ID",
+    "playerId": "玩家 ID",
+    "playerCode": "玩家暱稱",
+    "patronNumber": "玩家編號",
+    "playerMobile": "手機號碼",
+    "bonusId": "獎勵 ID",
+    "bonusName": "獎勵名稱",
+    "bonusCycle": "週期類型",
+    "state": "狀態",
+    "prizeValue": "獎勵金額",
+    "perya": "Perya",
+    "slot": "Slot",
+    "casino": "Casino",
+    "egame": "電子遊戲",
+    "sport": "體育",
+    "bingo": "賓果",
+    "startTime": "開始時間",
+    "endTime": "結束時間",
+    "crtTime": "建立時間",
+    "updTime": "更新時間",
+    "periodTime": "週期時間",
+    "mobile": "手機號碼",
+    "button.generate": "產生",
+    "button.distribute": "派發",
+    "state.active": "啟用",
+    "state.completed": "已完成",
+    "state.deleted": "已刪除",
+    "form": {
+      "title": {
+        "edit": "產生玩家返水獎勵",
+        "generate": "產生玩家返水獎勵"
+      }
+    },
+    "rules": {
+      "periodTime": {
+        "required": "請選擇週期時間"
+      }
+    },
+    "message": {
+      "edit": {
+        "success": "修改玩家返水獎勵成功",
+        "fail": "修改玩家返水獎勵失敗"
+      },
+      "generate": {
+        "success": "產生玩家返水獎勵成功",
+        "fail": "產生玩家返水獎勵失敗"
+      },
+      "delete": {
+        "success": "刪除玩家返水獎勵成功",
+        "fail": "刪除玩家返水獎勵失敗",
+        "title": "刪除玩家返水獎勵",
+        "text": "確認刪除玩家返水獎勵？"
+      },
+      "distribute": {
+        "unable.title": "無法派發",
+        "unable.message": "您尚未選取任何玩家返水獎勵",
+        "success": "派發玩家返水獎勵成功",
+        "fail": "派發玩家返水獎勵失敗",
+        "title": "派發玩家返水獎勵",
+        "text": "確認派發玩家返水獎勵？"
+      }
+    }
+  },
+  "bonuses": {
+    "id": "ID",
+    "name": "名稱",
+    "state": "狀態",
+    "type": "類型",
+    "subType": "子類型",
+    "expr": "表達式",
+    "cycle": "週期",
+    "maxRun": "最大執行次數",
+    "descr": "描述",
+    "image": "圖片",
+    "startTime": "開始時間",
+    "endTime": "完結時間",
+    "startTimeFromTime": "開始時間由",
+    "startTimeToTime": "開始時間至",
+    "endTimeFromTime": "完結時間由",
+    "endTimeToTime": "完結時間至",
+    "isTpl": "範本",
+    "cloneBonus": "複製獎勵",
+    "form": {
+      "title": {
+        "create": "新增獎勵",
+        "edit": "修改獎勵"
+      },
+      "hint": {
+        "maxRun": "-1 表示無限制"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "subType": {
+        "required": "請選擇子類型"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增獎勵成功",
+        "fail": "新增獎勵失敗"
+      },
+      "edit": {
+        "success": "修改獎勵成功",
+        "fail": "修改獎勵失敗"
+      },
+      "delete": {
+        "success": "刪除獎勵成功",
+        "fail": "刪除獎勵失敗",
+        "title": "刪除獎勵",
+        "text": "刪除獎勵?"
+      },
+      "clone": {
+        "success": "複製獎勵成功",
+        "fail": "複製獎勵失敗"
+      }
+    }
+  },
+  "bonusprizes": {
+    "id": "ID",
+    "name": "名稱",
+    "type": "類型",
+    "expr": "表達式",
+    "appId": "網站",
+    "bonusId": "獎勵",
+    "rank": "等級",
+    "coinType": "貨幣類型",
+    "coinVal": "貨幣數量",
+    "coinMax": "貨幣上限",
+    "threshold": "門檻",
+    "descr": "描述",
+    "image": "圖片",
+    "form": {
+      "title": {
+        "create": "新增獎勵獎品",
+        "edit": "修改獎勵獎品"
+      },
+      "addDescr": "新增描述",
+      "addImage": "新增圖片"
+    },
+    "rules": {
+      "id": {
+        "required": "請輸入ID"
+      },
+      "name": {
+        "required": "請輸入名稱"
+      },
+      "weight": {
+        "required": "請輸入比重"
+      },
+      "state": {
+        "required": "請輸入狀態"
+      },
+      "appId": {
+        "required": "請輸入網站"
+      }
+    },
+    "message": {
+      "create": {
+        "success": "新增獎勵獎品成功",
+        "fail": "新增獎勵獎品失敗"
+      },
+      "edit": {
+        "success": "修改獎勵獎品成功",
+        "fail": "修改獎勵獎品失敗"
+      },
+      "delete": {
+        "success": "刪除獎勵獎品成功",
+        "fail": "刪除獎勵獎品失敗",
+        "title": "刪除獎勵獎品",
+        "text": "刪除獎勵獎品?"
+      }
+    }
+  },
+  "bonusType": {
+    "newbie": "新手",
+    "levelup": "升級",
+    "checkin": "簽到",
+    "deposit": "入金",
+    "lottery": "抽獎",
+    "referral": "邀請",
+    "cashback": "返水",
+    "quest": "任務"
+  },
+  "bonusSubType": {
+    "bet": "下注"
+  },
+  "bonusCycle": {
+    "once": "一次性",
+    "daily": "每日",
+    "weekly": "每週",
+    "monthly": "每月"
+  },
+  "bonusPrizeType": {
+    "coin": "貨幣",
+    "rate": "比率",
+    "item": "道具"
+  },
+  "operationalStats": {
+    "title": "標題",
+    "income": "收入",
+    "registerUsersCnt": "註冊用戶人數",
+    "firstDepositAmt": "首次入金量",
+    "firstDepositUserCnt": "首次入金人數",
+    "secondDepositAmt": "第二次入金量",
+    "secondDepositUserCnt": "第二次入金人數",
+    "thirdDepositAmt": "第三次入金量",
+    "thirdDepositUserCnt": "第三次入金人數",
+    "totalDepositAmt": "總入金量",
+    "totalDepositUserCnt": "總入金用戶人數",
+    "totalWithdrawalAmt": "總出金量",
+    "totalWithdrawalUserCnt": "總出金用戶人數",
+    "totalWithdrawalCnt": "總出金數",
+    "recentStats": "近期統計",
+    "todayStats": {
+      "title": "今天營運統計",
+      "income": "收入",
+      "registerUsers": "註冊用戶",
+      "firstDeposit": "首次入金量/人數",
+      "secondDeposit": "第二次入金量/人數",
+      "thirdDeposit": "第三次入金量/人數",
+      "depositAmt": "總入金量/人數",
+      "withdrawalAmt": "總出金數/人數"
+    }
+  },
+  "statTitleType": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "week": "本週",
+    "month": "本月"
+  },
+  "gameGenre": {
+    "live": "真人",
+    "lottery": "彩票",
+    "chain": "鏈遊",
+    "elec": "電子",
+    "chess": "棋牌",
+    "sport": "體育",
+    "slot": "老虎機",
+    "mini": "迷你",
+    "fish": "補魚",
+    "bingo": "賓果"
+  },
+  "export": {
+    "exportJobCreateFailed": "建立匯出任務失敗",
+    "exportJobTimedOut": "匯出逾時",
+    "exportJobGetFailed": "取得匯出任務狀態失敗",
+    "exportJobDownloadUrlMissing": "匯出已完成，但下載連結不存在",
+    "exportJobFailed": "匯出失敗",
+    "exportFailed": "匯出失敗"
+  },
+  "platform.desktop": "桌面",
+  "platform.mobile": "手機",
+  "state.active": "活躍",
+  "state.inactive": "非活躍",
+  "state.freeze": "凍結",
+  "state.pre_delete": "預刪除",
+  "state.delete": "刪除",
+  "state.disable": "停用",
+  "state.logout": "登出",
+  "state.revoke": "撤銷",
+  "state.expire": "過期",
+  "state.approve": "批準",
+  "state.rejected": "拒絕",
+  "state.completed": "完成",
+  "state.processing": "處理中",
+  "state.pending": "處理中",
+  "state.failed": "失敗",
+  "state.complete": "完成",
+  "state.canceled": "取消",
+  "playerMobilePolicyType.freeze": "凍結",
+  "playerMobilePolicyType.staff": "員工",
+  "topicState.active": "生效",
+  "topicState.disable": "停用",
+  "bannerState.active": "生效",
+  "bannerState.inactive": "停用",
+  "bannerKind.splash": "啟動畫面",
+  "bannerKind.lobby": "大堂",
+  "playerType.player": "玩家",
+  "playerType.guest": "訪客",
+  "playerType.agent": "代理",
+  "playerType.staff": "員工",
+  "txnType.deposit": "入金",
+  "txnType.withdraw": "出金",
+  "txnType.settle": "結算",
+  "txnType.bet_cancel": "下注取消",
+  "txnType.promo_payout": "推廣派彩",
+  "txnType.bonus": "獎金",
+  "txnType.fc_to_cash": "獎金轉現金",
+  "txnType.withdraw_failed": "出金失敗",
+  "txnType.withdraw_lock": "出金鎖定",
+  "txnType.bet_and_settle": "下注並結算",
+  "txnType.game_wallet_deposit": "遊戲錢包入金",
+  "txnType.game_wallet_deposit_refund": "遊戲錢包入金退款",
+  "txnType.game_wallet_withdraw": "遊戲錢包出金",
+  "txnType.transfer_in": "轉入",
+  "txnType.transfer_out": "轉出",
+  "txnType.transfer_reversal": "轉帳退回",
+  "pointTxnType.dailyEarn": "每日獲得",
+  "pointTxnType.redeem": "兌換",
+  "pointTxnType.credit": "增加",
+  "pointTxnType.deduct": "扣除",
+  "pointTxnType.expiry": "過期",
+  "txnState.normal": "成功",
+  "txnState.result": "已結算",
+  "txnState.cancel": "取消",
+  "txnState.error": "錯誤",
+  "txnState.completed": "已完成",
+  "txnState.processing": "處理中",
+  "txnState.failed": "失敗",
+  "txnState.canceled": "已取消",
+  "txnState.pending": "處理中",
+  "txnState.rejected": "已拒絕",
+  "txnState.expired": "已過期",
+  "failSource.solairepay": "SolairePay",
+  "failSource.dragonpay": "DragonPay",
+  "failSource.platform": "平台",
+  "approvalStatus.not_required": "無需審核",
+  "approvalStatus.required": "待審核",
+  "approvalStatus.approved": "已通過",
+  "approvalStatus.rejected": "已拒絕",
+  "txnType.bet": "下注",
+  "txnType.free_bet": "免費下注",
+  "txnType.tip": "打賞",
+  "betResult.win": "贏",
+  "betResult.lose": "輸",
+  "betResult.tie": "和",
+  "role.admin": "管理員",
+  "gameCat.live": "真人",
+  "gameCat.slot": "老虎機",
+  "gameCat.sport": "體育",
+  "error.loginFail": "登入失敗",
+  "error.sessionExpired": "登入時段失效",
+  "header.logout.confirm": "確認登出?",
+  "common.confirm": "確定",
+  "common.cancel": "取消",
+  "common.copy": "複製",
+  "common.copied": "已複製",
+  "common.show": "顯示",
+  "common.hide": "隱藏",
+  "common.subtotal": "小計",
+  "common.total": "總計",
+  "common.approve": "批準",
+  "common.reject": "拒絕",
+  "common.detail": "詳細",
+  "common.edit": "修改",
+  "common.create": "新增",
+  "common.save": "儲存",
+  "common.update": "更新",
+  "common.delete": "刪除",
+  "common.key": "鍵",
+  "common.value": "值",
+  "common.isLike": "模糊",
+  "common.search": "搜尋",
+  "common.nothingFound": "找不到遊戲",
+  "common.reset": "重置",
+  "common.all": "全部",
+  "common.required": "此欄必需輸入",
+  "common.version": "版本",
+  "common.uploadImage": "上載圖片",
+  "common.preview": "預覽",
+  "common.expr.hint": "按＠查看提示",
+  "common.close": "關閉",
+  "timeRangePreset.label": "時間範圍",
+  "timeRangePreset.lastMonth": "上個月",
+  "timeRangePreset.thisMonth": "今個月",
+  "timeRangePreset.lastWeek": "上週",
+  "timeRangePreset.thisWeek": "今週",
+  "timeRangePreset.yesterday": "昨日",
+  "timeRangePreset.today": "今日",
+  "timeRangePreset.custom": "自訂",
+  "richTextLocale.en": "英文",
+  "richTextLocale.zh": "繁體中文",
+  "richTextLocale.zh-TW": "繁體中文",
+  "richTextLocale.ko": "韓文",
+  "boolean.true": "是",
+  "boolean.false": "否",
+  "login": "登入",
+  "login.name": "登入名稱",
+  "login.password": "密碼",
+  "login.name.required": "請輸入登入名稱",
+  "login.password.required": "請輸入登入名稱密碼",
+  "changePw.oldPwd": "舊密碼",
+  "changePw.newPwd": "新密碼",
+  "changePw.confirmPwd": "確認密碼",
+  "changePw.oldPwd.required": "請輸入舊密碼",
+  "changePw.newPwd.required": "請輸入新密碼",
+  "changePw.confirmPwd.required": "請輸入確認密碼",
+  "changePw.confirmPwd.notEqual": "確認密碼與新密碼不一樣",
+  "revokeSession.title": "撤銷登入時段",
+  "revokeSession.text": "撤銷 {{userLogin}} 的登入時段 ？",
+  "revokeSession.success": "撤銷登入時段成功",
+  "revokeSession.fail": "撤銷登入時段失敗",
+  "paymentApprove.form.title": "批准出金",
+  "paymentApprove.remark": "備註",
+  "paymentApprove.success": "批准出金成功",
+  "paymentApprove.fail": "批准出金失敗",
+  "paymentReject.form.title": "拒絕出金",
+  "paymentReject.remark": "拒絕原因",
+  "paymentReject.remark.required": "請輸入拒絕原因",
+  "paymentReject.success": "拒絕出金成功",
+  "paymentReject.fail": "拒絕出金失敗",
+  "pointApprove.form.title": "批准積分交易",
+  "pointApprove.remark": "備註",
+  "pointApprove.success": "積分交易批准成功",
+  "pointApprove.fail": "積分交易批准失敗",
+  "pointReject.form.title": "拒絕積分交易",
+  "pointReject.remark": "拒絕原因",
+  "pointReject.remark.required": "請輸入拒絕原因",
+  "pointReject.success": "積分交易拒絕成功",
+  "pointReject.fail": "積分交易拒絕失敗",
+  "error.changePwFail": "更改密碼失敗",
+  "protectedPage.title": "無權限",
+  "protectedPage.description": "您沒有權限檢視此頁面。",
+  "notFound.title": "找不到頁面",
+  "notFound.description": "您要找的頁面不存在或已移動。",
+  "notFound.backHome": "回到首頁",
+  "exportExcel": "輸出 Excel",
+  "eligibility.unlimited": "無限制",
+  "eligibility.once_per_lifetime": "限領一次",
+  "promoType.normal": "Normal",
+  "promoType.gig_migration": "GIG Migration",
+  "promoType.leaderboard": "Leaderboard",
+  "promoType.fasttrack": "Fast Track",
+  "promoType.daily": "Daily",
+  "periodType.daily": "每日",
+  "periodType.weekly": "每週",
+  "periodType.monthly": "每月",
+  "vipRebateState.active": "生效",
+  "vipRebateState.disable": "停用",
+  "quotaType.deposit": "入金",
+  "withdrawalPerk.standard": "標準",
+  "withdrawalPerk.faster": "加速",
+  "withdrawalPerk.priority": "優先",
+  "withdrawalPerk.instant": "即時",
+  "table.rowsPerPage": "每頁筆數",
+  "table.pageOf": "第 {{page}} / {{pageCount}} 頁",
+  "table.total": "共 {{count}} 筆",
+  "table.noData": "沒有資料",
+  "table.loading": "載入中",
+  "table.loadFailed": "資料載入失敗",
+  "table.firstPage": "第一頁",
+  "table.previousPage": "上一頁",
+  "table.nextPage": "下一頁",
+  "table.lastPage": "最後一頁",
+  "table.actions": "操作",
+  "table.selectAll": "全選",
+  "table.selectRow": "選取此列"
+}
