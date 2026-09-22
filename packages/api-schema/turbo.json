@@ -1,0 +1,23 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "format": {
+      "dependsOn": ["build", "^build"]
+    },
+    "lint": {
+      "dependsOn": ["build", "^build", "^lint"]
+    },
+    "gen:api:build": {
+      "cache": false
+    },
+    "gen:api:build:bo-fm": {
+      "cache": false
+    },
+    "gen:api:build:bo-so": {
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@cbt-bo/api-schema",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./fetcher": {
+      "types": "./dist/fetcher.d.ts",
+      "import": "./dist/fetcher.js"
+    },
+    "./bo-fm/*": {
+      "types": "./dist/bo-fm/*/index.d.ts",
+      "import": "./dist/bo-fm/*/index.js"
+    },
+    "./bo-so/*": {
+      "types": "./dist/bo-so/*/index.d.ts",
+      "import": "./dist/bo-so/*/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf dist",
+    "gen:api": "orval --clean",
+    "gen:api:bo-fm": "orval --clean -p bo-fm",
+    "gen:api:bo-so": "orval --clean -p bo-so",
+    "gen:api:build": "pnpm gen:api && pnpm build",
+    "gen:api:build:bo-fm": "pnpm gen:api:bo-fm && pnpm build",
+    "gen:api:build:bo-so": "pnpm gen:api:bo-so && pnpm build",
+    "check:types": "tsc --noEmit",
+    "lint": "eslint --max-warnings 0 .",
+    "lint:fix": "eslint --fix .",
+    "test": "vitest run",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@cbt-bo/config": "workspace:*",
+    "@types/node": "catalog:",
+    "dotenv": "catalog:",
+    "eslint": "catalog:",
+    "orval": "catalog:",
+    "prettier": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
