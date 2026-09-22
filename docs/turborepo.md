@@ -6,11 +6,11 @@ Turborepo is a build system for JavaScript and TypeScript monorepos. Instead of 
 
 Three concepts to know:
 
-| Concept          | Plain-language explanation                                                        |
-| ---------------- | --------------------------------------------------------------------------------- |
-| **Tasks**        | Named scripts (`build`, `lint`, `dev`) that Turborepo runs across every package.  |
-| **Dependency graph** | Turborepo knows which packages depend on which, so it builds them in the right order. |
-| **Caching**      | If the source files haven't changed, Turborepo replays the previous output instantly instead of re-running the task. |
+| Concept              | Plain-language explanation                                                                                           |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **Tasks**            | Named scripts (`build`, `lint`, `dev`) that Turborepo runs across every package.                                     |
+| **Dependency graph** | Turborepo knows which packages depend on which, so it builds them in the right order.                                |
+| **Caching**          | If the source files haven't changed, Turborepo replays the previous output instantly instead of re-running the task. |
 
 ---
 
@@ -21,11 +21,12 @@ Three concepts to know:
 ```
 cbt-backoffice/
 ├── apps/
-│   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3000
-│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3001
+│   └── backoffice/      # The admin portal app, TanStack Start, brand from BRAND at runtime
 │
 ├── packages/
-│   └── config/          # Shared ESLint, TypeScript, Prettier, Vitest, and Storybook configs
+│   ├── api-schema/      # orval-generated MGT API clients
+│   ├── config/          # Shared ESLint, TypeScript, Prettier, Vitest, and Storybook configs
+│   └── portal/          # The portal itself: pages, layouts, hooks, stores, i18n
 │
 ├── turbo.json           # Root task definitions
 ├── pnpm-workspace.yaml  # Declares apps/* and packages/* as workspaces
@@ -35,12 +36,12 @@ cbt-backoffice/
 ### Dependency graph
 
 ```
-apps/so-backoffice ──┐
-                     ├──▶ packages/config
-apps/fm-backoffice ──┘
+apps/backoffice ──▶ packages/portal ──▶ packages/api-schema
+       │                   │
+       └───────────────────┴──▶ packages/config
 ```
 
-Both apps depend on `packages/config` via `devDependencies` for shared ESLint, TypeScript, Prettier, Vitest, and Storybook presets. The apps do not depend on each other.
+The app depends on `packages/portal` (consumed as source) and, through it, on `packages/api-schema` (built by tsdown). Every workspace depends on `packages/config` via `devDependencies` for the shared ESLint, TypeScript, Prettier, Vitest, and Storybook presets.
 
 ### How `workspace:*` works
 
@@ -67,28 +68,28 @@ Every task our repo can run is defined in the root `turbo.json`. Here's a simpli
 {
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],              // 1. Build dependencies first
+      "dependsOn": ["^build"], // 1. Build dependencies first
       "inputs": ["$TURBO_DEFAULT$", "!**/*.md"], // 2. Ignore markdown for caching
-      "outputs": [".output/**", "dist/**"]           // 3. What to store in cache
+      "outputs": [".output/**", "dist/**"], // 3. What to store in cache
     },
     "dev": {
-      "cache": false,   // 4. Never cache (long-running process)
-      "persistent": true // 5. Keeps running until you stop it
-    }
-  }
+      "cache": false, // 4. Never cache (long-running process)
+      "persistent": true, // 5. Keeps running until you stop it
+    },
+  },
 }
 ```
 
 ### Key fields explained
 
-| Field         | What it does                                                                              |
-| ------------- | ----------------------------------------------------------------------------------------- |
-| `dependsOn`   | Tasks that must finish **before** this one starts.                                        |
-| `^build`      | The `^` prefix means "run `build` in my **dependencies** first" (not in the same package). |
-| `inputs`      | Files Turborepo watches to decide if the cache is still valid.                            |
-| `outputs`     | Files/folders Turborepo saves into the cache after the task succeeds.                     |
-| `cache`       | Set to `false` to skip caching entirely (useful for `dev` servers and code generators).   |
-| `persistent`  | Set to `true` for long-running processes like dev servers that don't exit on their own.   |
+| Field        | What it does                                                                               |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| `dependsOn`  | Tasks that must finish **before** this one starts.                                         |
+| `^build`     | The `^` prefix means "run `build` in my **dependencies** first" (not in the same package). |
+| `inputs`     | Files Turborepo watches to decide if the cache is still valid.                             |
+| `outputs`    | Files/folders Turborepo saves into the cache after the task succeeds.                      |
+| `cache`      | Set to `false` to skip caching entirely (useful for `dev` servers and code generators).    |
+| `persistent` | Set to `true` for long-running processes like dev servers that don't exit on their own.    |
 
 ### What happens when you run `pnpm build`
 
@@ -97,21 +98,21 @@ Every task our repo can run is defined in the root `turbo.json`. Here's a simpli
 3. It **topologically sorts** the packages — dependencies come first.
 4. `packages/config` has no workspace deps, so it builds first.
 5. Both apps build last (they depend on config). TanStack Start's Vite build writes `.output/` per app.
-7. At each step, Turborepo checks the cache. If `inputs` haven't changed, it **replays the cached `outputs`** instead of running the script — often finishing in milliseconds.
+6. At each step, Turborepo checks the cache. If `inputs` haven't changed, it **replays the cached `outputs`** instead of running the script — often finishing in milliseconds.
 
 ### All our tasks
 
-| Task           | `dependsOn`              | Cached? | Persistent? | Notes                          |
-| -------------- | ------------------------ | ------- | ----------- | ------------------------------ |
-| `build`        | `^build`                 | Yes     | No          | Outputs: `.output/**`, `dist/**` |
-| `lint`         | `^build`, `^lint`        | Yes     | No          |                                |
-| `lint:fix`     | `^build`                 | No      | No          | Mutates files, can't cache     |
-| `check:types`  | `^check:types`           | Yes     | No          |                                |
-| `dev`          | —                        | No      | Yes         | Long-running dev servers       |
-| `test`         | `^build`                 | No      | No          | Outputs: `coverage/**`         |
-| `format`       | `^build`                 | No      | No          | Mutates files, can't cache     |
-| `storybook`    | —                        | No      | Yes         | Long-running Storybook servers |
-| `build:storybook` | `^build`              | Yes     | No          | Outputs: `storybook-static/**` |
+| Task              | `dependsOn`       | Cached? | Persistent? | Notes                            |
+| ----------------- | ----------------- | ------- | ----------- | -------------------------------- |
+| `build`           | `^build`          | Yes     | No          | Outputs: `.output/**`, `dist/**` |
+| `lint`            | `^build`, `^lint` | Yes     | No          |                                  |
+| `lint:fix`        | `^build`          | No      | No          | Mutates files, can't cache       |
+| `check:types`     | `^check:types`    | Yes     | No          |                                  |
+| `dev`             | —                 | No      | Yes         | Long-running dev servers         |
+| `test`            | `^build`          | No      | No          | Outputs: `coverage/**`           |
+| `format`          | `^build`          | No      | No          | Mutates files, can't cache       |
+| `storybook`       | —                 | No      | Yes         | Long-running Storybook servers   |
+| `build:storybook` | `^build`          | Yes     | No          | Outputs: `storybook-static/**`   |
 
 ---
 
@@ -137,19 +138,19 @@ Turborepo decides whether to use a cached result by computing a **fingerprint** 
    - Values of environment variables listed in `env` (none configured in our repo)
    - The task definition itself from `turbo.json` (changing `dependsOn`, `outputs`, etc. triggers a miss)
 
-Turborepo is **content-addressed** — it hashes file *contents*, not timestamps. Touching a file without changing its content won't invalidate the cache.
+Turborepo is **content-addressed** — it hashes file _contents_, not timestamps. Touching a file without changing its content won't invalidate the cache.
 
 ### What invalidates the cache
 
 Here are concrete examples grounded in our repo:
 
-| Change | Cache effect | Why |
-| ------ | ------------ | --- |
-| Edit a `.ts` file in `packages/config/` | Cache miss for `config`'s `build` **and** every app task | App tasks depend on `^build`, so when `config` rebuilds, both apps must re-run. |
-| Update `pnpm-lock.yaml` (add or upgrade a dep) | **All** cached tasks miss | The lockfile is part of the global hash — any change invalidates every task. |
-| Edit root `turbo.json` | **All** cached tasks miss | `turbo.json` is part of the global hash. |
-| Change a `.md` file | **No** cache miss for `build`, `lint`, or `check:types` | All three tasks exclude markdown via `"inputs": ["$TURBO_DEFAULT$", "!**/*.md"]`. |
-| Change a `.env` file | **No** cache miss | `.env` is gitignored (excluded from default inputs) and not listed in `globalDependencies`. **Note:** this is a current gap — if env vars affect build output, the cache won't know. See below. |
+| Change                                         | Cache effect                                             | Why                                                                                                                                                                                             |
+| ---------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Edit a `.ts` file in `packages/config/`        | Cache miss for `config`'s `build` **and** every app task | App tasks depend on `^build`, so when `config` rebuilds, both apps must re-run.                                                                                                                 |
+| Update `pnpm-lock.yaml` (add or upgrade a dep) | **All** cached tasks miss                                | The lockfile is part of the global hash — any change invalidates every task.                                                                                                                    |
+| Edit root `turbo.json`                         | **All** cached tasks miss                                | `turbo.json` is part of the global hash.                                                                                                                                                        |
+| Change a `.md` file                            | **No** cache miss for `build`, `lint`, or `check:types`  | All three tasks exclude markdown via `"inputs": ["$TURBO_DEFAULT$", "!**/*.md"]`.                                                                                                               |
+| Change a `.env` file                           | **No** cache miss                                        | `.env` is gitignored (excluded from default inputs) and not listed in `globalDependencies`. **Note:** this is a current gap — if env vars affect build output, the cache won't know. See below. |
 
 ### Environment variables and caching
 
@@ -165,9 +166,9 @@ Example of how you'd configure them:
   "globalEnv": ["CI", "NODE_ENV"],
   "tasks": {
     "build": {
-      "env": ["API_BASE_URL", "FEATURE_FLAGS"]
-    }
-  }
+      "env": ["API_BASE_URL", "FEATURE_FLAGS"],
+    },
+  },
 }
 ```
 
@@ -181,18 +182,18 @@ Example of how you'd configure them:
 
 Turborepo considers **all files tracked by git** as inputs. Files in `.gitignore` (like `.env*`, `node_modules/`, `dist/`) are excluded automatically — you never need to list them.
 
-> *"By default, all files checked into source control are considered. Certain files are always treated as inputs regardless of configuration: package.json, turbo.json, and package manager lockfiles."*
+> _"By default, all files checked into source control are considered. Certain files are always treated as inputs regardless of configuration: package.json, turbo.json, and package manager lockfiles."_
 
 #### The `$TURBO_DEFAULT$` microsyntax
 
-When you explicitly set `inputs`, Turborepo **opts out** of its default behavior. To keep the defaults *and* customize, start the array with `$TURBO_DEFAULT$`:
+When you explicitly set `inputs`, Turborepo **opts out** of its default behavior. To keep the defaults _and_ customize, start the array with `$TURBO_DEFAULT$`:
 
 ```jsonc
 // Our pattern — keep defaults, but ignore markdown changes
 "inputs": ["$TURBO_DEFAULT$", "!**/*.md"]
 ```
 
-> *"You can use the `$TURBO_DEFAULT$` microsyntax to fine-tune the default inputs behavior while maintaining Turborepo's standard input handling. This allows you to restore the default behavior that respects your .gitignore file and follows changes tracked by source control, while also excluding specific files that you know don't affect the task's output."*
+> _"You can use the `$TURBO_DEFAULT$` microsyntax to fine-tune the default inputs behavior while maintaining Turborepo's standard input handling. This allows you to restore the default behavior that respects your .gitignore file and follows changes tracked by source control, while also excluding specific files that you know don't affect the task's output."_
 
 #### Common gotcha
 
@@ -220,12 +221,12 @@ These are included regardless of configuration:
 
 When a task succeeds, Turborepo caches the files listed in `outputs`. On a cache hit, these files are restored from cache instead of being rebuilt.
 
-| Task             | Cached outputs                  |
-| ---------------- | ------------------------------- |
-| `build` (apps)   | `.output/**`                    |
-| `build` (packages) | `dist/**`                     |
-| `build:storybook` | `storybook-static/**`          |
-| `test`           | `coverage/**` (but task itself is uncached) |
+| Task               | Cached outputs                              |
+| ------------------ | ------------------------------------------- |
+| `build` (apps)     | `.output/**`                                |
+| `build` (packages) | `dist/**`                                   |
+| `build:storybook`  | `storybook-static/**`                       |
+| `test`             | `coverage/**` (but task itself is uncached) |
 
 ---
 
@@ -239,7 +240,7 @@ Not every task rule belongs in the root config. `packages/config` must build its
 
 A package-level `turbo.json` must include `"extends": ["//"]` to inherit from the root config. The `//` is a special token meaning "the root of the monorepo."
 
-> *"Add a turbo.json file in any package with an extends key pointing to the root configuration. The extends array must start with `["//"]` to reference the root directory. You can override existing tasks or define new package-specific tasks."*
+> _"Add a turbo.json file in any package with an extends key pointing to the root configuration. The extends array must start with `["//"]` to reference the root directory. You can override existing tasks or define new package-specific tasks."_
 
 ### Our package-level config
 

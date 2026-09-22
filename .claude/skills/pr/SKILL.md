@@ -114,9 +114,9 @@ Same as conventional commit title:
 <type>(<functional-scope>[, <app-or-package>]): <description>
 ```
 
-Example: `feat(auth, so-backoffice): add user login functionality`
+Example: `feat(auth, backoffice): add user login functionality`
 
-For breaking changes, append `!` before the colon (e.g. `feat(api, so-backoffice)!: remove deprecated endpoints`). The PR title becomes the squash commit title on merge, so the marker must be present here to survive into history.
+For breaking changes, append `!` before the colon (e.g. `feat(api, backoffice)!: remove deprecated endpoints`). The PR title becomes the squash commit title on merge, so the marker must be present here to survive into history.
 
 Scope has two parts: a required functional part (e.g. `seo`, `auth`) and an optional second part for the app or package the change targets, separated by `, ` (comma + space). For the second part, use the directory name of the affected workspace under `apps/` or `packages/` — discover current names by listing those directories (e.g. `ls apps/ packages/`). Omit the second part for cross-cutting changes (monorepo tooling, `.claude/`, root configs).
 
@@ -221,7 +221,7 @@ After a branch's content lands elsewhere, clean up the old head branch automatic
 
 ### Protected Branches (never delete)
 
-- `dev/*` (any branch starting with `dev/`, e.g. `dev/so-backoffice`, `dev/fm-backoffice`)
+- `dev/*` (any branch starting with `dev/`, e.g. `dev/backoffice`, `dev/portal`)
 - `develop`
 - `main`
 

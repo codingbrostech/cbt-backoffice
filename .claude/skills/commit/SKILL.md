@@ -92,24 +92,24 @@ Branch names MUST follow this three-segment pattern:
 
 The type prefix comes from the commit type:
 
-| Type       | Branch Prefix | Example                           |
-| ---------- | ------------- | --------------------------------- |
-| `feat`     | `feature/`    | `feature/so-backoffice/user-auth`    |
-| `fix`      | `fix/`        | `fix/fm-backoffice/login-bug`      |
-| `docs`     | `docs/`       | `docs/deploy/runbook`             |
-| `style`    | `style/`      | `style/config/formatting`  |
-| `refactor` | `refactor/`   | `refactor/so-backoffice/auth`      |
-| `perf`     | `perf/`       | `perf/fm-backoffice/queries`         |
-| `test`     | `test/`       | `test/so-backoffice/unit-tests`   |
-| `build`    | `build/`      | `build/deps/turbo-bump`           |
-| `ci`       | `ci/`         | `ci/deploy/first-changelog`       |
-| `chore`    | `chore/`      | `chore/skills/bff-api`            |
-| `revert`   | `revert/`     | `revert/fm-backoffice/broken-feat` |
+| Type       | Branch Prefix | Example                        |
+| ---------- | ------------- | ------------------------------ |
+| `feat`     | `feature/`    | `feature/backoffice/user-auth` |
+| `fix`      | `fix/`        | `fix/portal/login-bug`         |
+| `docs`     | `docs/`       | `docs/deploy/runbook`          |
+| `style`    | `style/`      | `style/config/formatting`      |
+| `refactor` | `refactor/`   | `refactor/backoffice/auth`     |
+| `perf`     | `perf/`       | `perf/portal/queries`          |
+| `test`     | `test/`       | `test/portal/unit-tests`       |
+| `build`    | `build/`      | `build/deps/turbo-bump`        |
+| `ci`       | `ci/`         | `ci/deploy/first-changelog`    |
+| `chore`    | `chore/`      | `chore/skills/bff-api`         |
+| `revert`   | `revert/`     | `revert/portal/broken-feat`    |
 
 ### Rules
 
-- The middle segment names what the change targets: a workspace directory under `apps/` or `packages/` (e.g. `so-backoffice`, `fm-backoffice`, `config`), or an area for cross-cutting changes (e.g. `deploy`, `skills`, `rules`, `deps`)
-- If already on a properly named branch (e.g., `feature/so-backoffice/something`), use it
+- The middle segment names what the change targets: a workspace directory under `apps/` or `packages/` (e.g. `backoffice`, `portal`, `config`), or an area for cross-cutting changes (e.g. `deploy`, `skills`, `rules`, `deps`)
+- If already on a properly named branch (e.g., `feature/backoffice/something`), use it
 - If on `develop`, `main`, or a misnamed branch, create a new branch:
   ```bash
   git checkout -b <type>/<app-or-area>/<short-description-in-kebab-case>
@@ -153,7 +153,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 - Type must be lowercase
 - Scope has two parts: a required functional part (e.g. `seo`, `auth`) and an optional second part for the app or package the change targets, separated by `, ` (comma + space). For the second part, use the directory name of the affected workspace under `apps/` or `packages/` — discover current names by listing those directories (e.g. `ls apps/ packages/`). Omit the second part for cross-cutting changes (monorepo tooling, `.claude/`, root configs).
-  - App-scoped: `feat(auth, so-backoffice): add login`
+  - App-scoped: `feat(auth, backoffice): add login`
   - Cross-cutting: `chore(deps): bump turbo to 2.5`
 - Description under 50 characters, present tense
 - Body uses bullet points for clarity
@@ -165,7 +165,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 Append "**!**" before the colon:
 
 ```
-feat(api, so-backoffice)!: remove deprecated API endpoints
+feat(api, backoffice)!: remove deprecated API endpoints
 ```
 
 With `!`, the description itself serves as the breaking-change explanation (Conventional Commits rule 13), so write it to say what breaks. The spec's alternative `BREAKING CHANGE:` footer form is not used in this repo.

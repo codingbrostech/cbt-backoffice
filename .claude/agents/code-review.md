@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Reviews GitHub PRs for consistency, software principles (SRP, separation of concerns, DRY), potential issues, and simplification. Use when given a PR link, or when the user says \"review PR\", \"code review\", or \"check this PR\"."
+description: 'Reviews GitHub PRs for consistency, software principles (SRP, separation of concerns, DRY), potential issues, and simplification. Use when given a PR link, or when the user says "review PR", "code review", or "check this PR".'
 tools: Bash, Read, Grep, Glob, mcp__github__*
 model: sonnet
 color: green
@@ -55,15 +55,15 @@ Compare changes against existing codebase patterns:
 
 ### 2. Codebase Patterns (cbt-backoffice specific)
 
-| Pattern                    | Expected                                                  |
-| -------------------------- | --------------------------------------------------------- |
-| App source location        | `apps/<app>/src`, file-based routes under `src/routes`     |
-| Generated files            | `src/routeTree.gen.ts` (committed), `src/components/ui/**` (shadcn, vendored) |
-| Export pattern             | Components export from `index.ts` barrel files            |
-| ESLint config              | Uses `@cbt-bo/config/eslint` (repo rules + TanStack toolchain) |
-| Package naming             | `@cbt-bo/package-name`                                   |
-| React version              | 19.x                                                      |
-| Framework                  | TanStack Start (Vite 8, Nitro), TanStack Router / Query   |
+| Pattern             | Expected                                                                      |
+| ------------------- | ----------------------------------------------------------------------------- |
+| App source location | `apps/<app>/src`, file-based routes under `src/routes`                        |
+| Generated files     | `src/routeTree.gen.ts` (committed), `src/components/ui/**` (shadcn, vendored) |
+| Export pattern      | Components export from `index.ts` barrel files                                |
+| ESLint config       | Uses `@cbt-bo/config/eslint` (repo rules + TanStack toolchain)                |
+| Package naming      | `@cbt-bo/package-name`                                                        |
+| React version       | 19.x                                                                          |
+| Framework           | TanStack Start (Vite 8, Nitro), TanStack Router / Query                       |
 
 ### 3. Potential Issues
 
@@ -370,11 +370,11 @@ Only after user approval, use GitHub MCP tools to post the approved comments.
 ### Lint affected packages
 
 ```bash
-# For so-backoffice changes
-pnpm --filter so-backoffice lint
+# For app changes
+pnpm --filter backoffice lint
 
-# For fm-backoffice changes
-pnpm --filter fm-backoffice lint
+# For portal changes
+pnpm --filter @cbt-bo/portal lint
 
 # For all packages
 pnpm lint
@@ -383,11 +383,11 @@ pnpm lint
 ### Type-check affected packages
 
 ```bash
-# For so-backoffice changes
-pnpm --filter so-backoffice check:types
+# For app changes
+pnpm --filter backoffice check:types
 
-# For fm-backoffice changes
-pnpm --filter fm-backoffice check:types
+# For portal changes
+pnpm --filter @cbt-bo/portal check:types
 
 # For all packages
 pnpm check:types

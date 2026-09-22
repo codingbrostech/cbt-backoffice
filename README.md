@@ -6,8 +6,9 @@ A **Turborepo monorepo** for the CBT backoffice apps using pnpm workspaces.
 
 ### Apps and Packages
 
-- `apps/so-backoffice`: Solaire Online admin portal, a [TanStack Start](https://tanstack.com/start) app
-- `apps/fm-backoffice`: FUNaloMAX admin portal, a [TanStack Start](https://tanstack.com/start) app
+- `apps/backoffice`: The admin portal app, a [TanStack Start](https://tanstack.com/start) shell that serves Solaire Online (`BRAND=SO`) or FUNaloMAX (`BRAND=FM`) depending on its environment
+- `packages/portal`: The admin portal itself (pages, layouts, hooks, stores, i18n, shadcn/ui)
+- `packages/api-schema`: Orval-generated MGT API clients and the fetch mutator
 - `packages/config`: Shared configurations (ESLint, TypeScript, Prettier, Vitest, Storybook)
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
@@ -25,7 +26,7 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 - Node.js >=24
 - pnpm 12.3.4 (`corepack enable` picks it up from `packageManager`)
-- Playwright Chromium for Storybook tests: `pnpm exec playwright install chromium`
+- Playwright Chromium for Storybook tests: `pnpm --filter @cbt-bo/portal exec playwright install chromium` (the portal workspace pins the Playwright version the tests run with)
 
 ### Install
 
@@ -35,13 +36,18 @@ pnpm install
 
 ### Develop
 
+The app reads the brand and the MGT API settings from the server environment. Copy `apps/backoffice/.env.example` to `apps/backoffice/.env` for the shared values, and put `BRAND` plus `MGT_BASE_URL` in `apps/backoffice/.env.so` and `apps/backoffice/.env.fm`.
+
 ```bash
 # All apps/packages
 pnpm dev
 
-# One app
-pnpm dev:so    # http://localhost:3000
-pnpm dev:fm    # http://localhost:3001
+# One brand
+pnpm dev:so    # BRAND=SO, http://localhost:3000
+pnpm dev:fm    # BRAND=FM, http://localhost:3001
+
+# Portal component stories
+pnpm --filter @cbt-bo/portal storybook   # http://localhost:6008
 ```
 
 ### Build
@@ -50,8 +56,8 @@ pnpm dev:fm    # http://localhost:3001
 # All packages
 pnpm build
 
-# One app
-pnpm build --filter=so-backoffice
+# The app only
+pnpm build --filter=backoffice
 ```
 
 ### Lint, Type Check & Test
@@ -62,12 +68,28 @@ pnpm check:types
 pnpm test
 ```
 
-### Add a TanStack integration
-
-Each app was scaffolded with the [TanStack CLI](https://github.com/tanstack/cli) and keeps its `.cta.json`. Run the CLI from the app directory to add an integration, then review the regenerated files with `git diff`.
+### Run the production build
 
 ```bash
-cd apps/so-backoffice
+pnpm build --filter=backoffice
+PORT=3000 BRAND=SO MGT_BASE_URL=https://... MGT_SITE_ID=... node apps/backoffice/.output/server/index.mjs
+```
+
+### Docker
+
+The root `Dockerfile` packages `apps/backoffice/.output/`. Build the app first, then:
+
+```bash
+docker build -t backoffice:local .
+docker run --rm -p 3000:3000 -e BRAND=SO -e MGT_BASE_URL=https://... -e MGT_SITE_ID=... backoffice:local
+```
+
+### Add a TanStack integration
+
+The app was scaffolded with the [TanStack CLI](https://github.com/tanstack/cli) and keeps its `.cta.json`. Run the CLI from the app directory to add an integration, then review the regenerated files with `git diff`.
+
+```bash
+cd apps/backoffice
 pnpm dlx @tanstack/cli@latest create --list-add-ons
 pnpm dlx @tanstack/cli@latest add <id>
 ```
@@ -112,7 +134,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 **Examples**:
 
 ```
-feat(auth, so-backoffice): add user login functionality
+feat(auth, backoffice): add user login functionality
 
 - Add login form component
 - Integrate with auth API
@@ -178,6 +200,8 @@ praise: Great use of composition here!
 
 - [Git Workflow](docs/git-workflow.md): branch strategy and merge rules for a linear history
 - [Turborepo](docs/turborepo.md): how tasks, the dependency graph, and caching work in this monorepo
+- [Deployment](docs/deployment.md): images, deploy tags, `cbt-deploy` settings, and the cutover from `cbt-play-web`
+- [GitHub Actions](.github/workflows/README.md): what each workflow does and how the caches and images fit together
 
 ---
 
