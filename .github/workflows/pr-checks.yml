@@ -1,0 +1,116 @@
+name: PR Checks
+
+# Validates PRs and pushes to develop / dev/**. The push runs publish fresh
+# Turborepo caches on each base branch, so a new PR's first push seeds from
+# its base branch instead of building cold.
+
+run-name: Check branch ${{ github.head_ref || github.ref_name }}
+
+on:
+  pull_request:
+    branches: ["**"]
+  push:
+    branches:
+      - develop
+      - "dev/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-check:
+    name: Lint & Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: 01. Checkout code
+        uses: actions/checkout@v6.0.3
+
+      - name: 02. Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 03. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: 04. Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: 05. Restore Turborepo cache
+        id: turbo-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-checks-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-checks-
+
+      - name: 06. Turbo Cache status
+        env:
+          MATCHED_KEY: ${{ steps.turbo-cache.outputs.cache-matched-key }}
+        run: |
+          if [ -n "$MATCHED_KEY" ]; then
+            echo "✅ Restored $MATCHED_KEY — Turborepo will check per-task hashes"
+          else
+            echo "⚠️  No .turbo/ cache found — all tasks will run from scratch"
+          fi
+
+      - name: 07. Install Playwright browsers 安裝 Storybook 測試用瀏覽器
+        run: pnpm --filter @cbt-bo/portal exec playwright install --with-deps chromium
+
+      - name: 08. Run lint, type check & tests
+        run: pnpm turbo run lint check:types test
+
+      - name: 09. Save Turborepo cache
+        if: steps.turbo-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .turbo
+          key: ${{ steps.turbo-cache.outputs.cache-primary-key }}
+
+  # Required status check "Build" (branch ruleset). Proves every app production-builds.
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - name: 01. Checkout code
+        uses: actions/checkout@v6.0.3
+
+      - name: 02. Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 03. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: 04. Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: 05. Cache Turborepo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-shared-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-shared-
+
+      - name: 06. Build applications
+        env:
+          NODE_ENV: production
+        run: pnpm build
+
+      # .output 必須能脫離 workspace 獨立啟動，這裡直接在 runner 上開起來打 /api/health
+      - name: 07. Smoke test standalone server output 驗證建置產物可獨立啟動
+        run: bash .github/scripts/smoke-test-output.sh backoffice

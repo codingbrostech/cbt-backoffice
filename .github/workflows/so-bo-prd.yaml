@@ -1,0 +1,184 @@
+name: so-bo-prd
+run-name: Deploy ${{ github.ref_name }} by @${{ github.actor }}
+
+# 共用 image：這個 tag 只決定要把同一個 image 部署到哪個環境，品牌 SO 由
+# cbt-deploy 那邊的 BRAND 環境變數決定，不會另外 build 一個專屬 image。映像由
+# build.yaml 提供（ensure-image job 呼叫，已預建則秒級跳過，否則現場建置 sha-<commit>
+# 映像）。實際啟動指令固定在 Dockerfile：
+#   node .output/server/index.mjs
+#
+# 觸發方式：
+#   1. push tag：'v1.2.3-so-bo-prd.N'（N 為 increment，手動打好 tag 直接 push）
+#   2. workflow_dispatch：手動按 Run workflow，留空 core_version 會自動抓最新語意化版本 tag，
+#      並自動算出下一個 increment、建立並 push 新 tag 後才開始 build
+
+on:
+  push:
+    tags:
+      - "v[0-9]*.[0-9]*.[0-9]*-so-bo-prd.*"
+  workflow_dispatch:
+    inputs:
+      core_version:
+        description: "核心版本號（留空自動抓最新）"
+        required: false
+        type: string
+
+env:
+  ENV: prd
+  IMAGE: ghcr.io/${{ github.repository }}
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  prepare:
+    name: Prepare Deploy Tag
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.version.outputs.image_tag }}
+      previous_tag: ${{ steps.previous.outputs.previous_tag }}
+    steps:
+      - name: 01. Checkout 簽出程式碼
+        uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: 02. Reject non-tip deploy tag 驗證部署 tag 必須指向分支 tip
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          TIPS=$(git branch -r --points-at "$COMMIT_SHA" 2>/dev/null \
+            | sed 's/^[ *]*//' | grep -v '^origin/HEAD' | sed 's#^origin/##' | sort -u)
+          if [ -z "$TIPS" ]; then
+            echo "::error title=Invalid deploy tag::$TAG_NAME points at ${COMMIT_SHA:0:7}, which is not the tip of any branch. Deploy tags must point at a branch tip. Point a branch at this commit and re-tag, or deploy via workflow_dispatch. Failing before build so no orphan GHCR image is published."
+            exit 1
+          fi
+          echo "✅ $TAG_NAME → branch tip(s): $(echo "$TIPS" | paste -sd ', ' -)"
+
+      - name: 03. Get previous tag 取得前一個 tag
+        id: previous
+        run: |
+          # dispatch 時新 tag 於下一步才建立，最新既有 tag 即前一次部署；tag push 時先剔除觸發 tag 再取最新；首次部署 fallback 至部署 commit 的 parent（僅顯示本次 commit）
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            name=$(git --no-pager tag -l "v[0-9]*.[0-9]*.[0-9]*-so-bo-prd.*" --sort=creatordate --merged ${{ github.ref_name }} | tail -1)
+          else
+            name=$(git --no-pager tag -l "v[0-9]*.[0-9]*.[0-9]*-so-bo-prd.*" --sort=creatordate --merged ${{ github.ref_name }} | grep -vxF "${{ github.ref_name }}" | tail -1)
+          fi
+          if [ -z "$name" ]; then
+            name=$(git rev-parse "${{ github.ref_name }}^" 2>/dev/null || true)
+          fi
+          echo "previous_tag: $name"
+          echo "previous_tag=$name" >> $GITHUB_OUTPUT
+
+      - name: 04. Set version variable 設定版本變數
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            CORE_VERSION="${{ inputs.core_version }}"
+            if [ -z "$CORE_VERSION" ]; then
+              CORE_VERSION=$(git tag -l 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            fi
+            if [ -z "$CORE_VERSION" ]; then
+              echo "❌ 找不到現有的語意化版本 tag，請手動指定 core_version"
+              exit 1
+            fi
+            [[ "$CORE_VERSION" =~ ^v ]] || CORE_VERSION="v$CORE_VERSION"
+            VERSION_BASE="${CORE_VERSION#v}"
+
+            PATTERN="v${VERSION_BASE}-so-bo-prd\.[0-9]+"
+            MAX_INCREMENT=$(git tag -l | grep -E "$PATTERN" | sed -E "s/v${VERSION_BASE}-so-bo-prd\.([0-9]+).*/\1/" | sort -n | tail -1)
+            if [ -z "$MAX_INCREMENT" ]; then
+              INCREMENT=1
+            else
+              INCREMENT=$((MAX_INCREMENT + 1))
+            fi
+            NEW_TAG="v${VERSION_BASE}-so-bo-prd.${INCREMENT}"
+
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag "$NEW_TAG"
+            git push origin "$NEW_TAG"
+
+            echo "🏷️  Generated tag: $NEW_TAG"
+            echo "image_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          else
+            echo "image_tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+  ensure-image:
+    name: Ensure Image
+    needs: prepare
+    uses: ./.github/workflows/build.yaml
+    permissions:
+      contents: read
+      packages: write
+
+  deploy:
+    name: Re-tag & Trigger Deploy
+    needs: [prepare, ensure-image]
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ needs.prepare.outputs.image_tag }}
+    steps:
+      - name: 01. Login to GHCR 登入 GHCR 容器倉庫
+        uses: docker/login-action@v4.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 02. Re-tag prebuilt image 重新標記預建映像
+        run: |
+          docker buildx imagetools create \
+            --tag "${IMAGE}:${IMAGE_TAG}" \
+            "${IMAGE}:sha-${{ github.sha }}"
+
+      - name: 03. Mint deploy token 取得部署 App token
+        id: deploy-token
+        uses: actions/create-github-app-token@v3.2.0
+        with:
+          app-id: ${{ secrets.DISPATCH_APP_ID }}
+          private-key: ${{ secrets.DISPATCH_APP_PRIVATE_KEY }}
+          owner: codingbrostech
+          repositories: cbt-deploy
+
+      - name: 04. Invoke Infra GitOps 觸發部署流程
+        run: |
+          curl -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ steps.deploy-token.outputs.token }}" \
+          --request POST \
+          --data '{"event_type": "cbt-backoffice-so-backoffice-image-update-trigger", "client_payload": { "buildenv": "'"$ENV"'", "buildtag": "'"$IMAGE_TAG"'" }}' \
+          https://api.github.com/repos/codingbrostech/cbt-deploy/dispatches
+
+  notify:
+    name: Notify Slack
+    needs: [prepare, ensure-image, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 01. Checkout 簽出程式碼
+        uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: 02. Notify Slack card 通知 Slack 卡片
+        env:
+          JOB_STATUS: ${{ needs.deploy.result == 'success' && 'success' || 'failure' }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: C0BGUT5573K
+          OTHER_APP_PREFIXES: fm-bo
+          TARGET_LABEL: so-bo
+          IMAGE_TAG: ${{ needs.prepare.outputs.image_tag }}
+          PREVIOUS_TAG: ${{ needs.prepare.outputs.previous_tag }}
+          REPO_FULL: ${{ github.repository }}
+          AUTHOR: ${{ github.actor }}
+          COMMIT_SHA: ${{ github.sha }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          SERVER_URL: ${{ github.server_url }}
+          RUN_ID: ${{ github.run_id }}
+          REF_NAME: ${{ github.ref_name }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: bash .github/scripts/notify-slack.sh

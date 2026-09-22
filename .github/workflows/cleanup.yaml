@@ -1,0 +1,53 @@
+name: Cleanup
+
+# 回收 GHCR 映像與 Actions cache。映像只要仍被 origin 上的 git tag 引用就保留，
+# 其餘（未部署的 sha-* 預建、git tag 已刪除的版本、孤兒 manifest）一律刪除。
+#
+# 觸發方式：
+#   1. schedule：每日
+#   2. workflow_dispatch
+#   3. workflow_call
+
+run-name: Cleanup images & caches (${{ github.event_name }})
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: cleanup
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  ORG: ${{ github.repository_owner }}
+
+jobs:
+  images:
+    name: Prune images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: 01. Checkout 簽出程式碼
+        uses: actions/checkout@v6.0.3
+
+      - name: 02. Delete unreferenced images 刪除沒有 tag 也沒有 parent 的映像
+        run: bash .github/scripts/cleanup-images.sh
+
+  caches:
+    name: Prune caches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: 01. Checkout 簽出程式碼
+        uses: actions/checkout@v6.0.3
+
+      - name: 02. Keep the newest cache per ref and prefix 每個 ref 與 prefix 只留最新一份
+        run: bash .github/scripts/cleanup-caches.sh

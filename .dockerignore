@@ -1,0 +1,3 @@
+# Dockerfile 只需要 apps/backoffice/.output，其餘一律排除，縮小 build context
+*
+!apps/backoffice/.output

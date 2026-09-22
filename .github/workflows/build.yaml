@@ -1,0 +1,124 @@
+name: Image Build
+
+# 共用 image：main 與 release/** 的每個 push 建置一次，image 名稱為 sha-<commit>。
+# 同一個映像服務 SO 與 FM 兩個品牌，品牌由部署端的 BRAND 環境變數決定。
+# 部署 workflow 找到預建映像後直接重新標記（imagetools create），不再重複建置。
+#
+# 觸發方式：
+#   1. push branch：main 與 release/**
+#   2. workflow_dispatch：手動對任一分支預建映像
+#   3. workflow_call：部署 workflow 的 ensure-image job 呼叫，確保部署 commit 的映像存在
+#
+# 同一 commit 的執行依序排隊（queue: max），不互相取消。分支 push 與各部署 workflow 的
+# ensure-image 呼叫都會落在同一個 group，排隊的執行輪到時由 check job 探測到映像已存在，
+# 直接跳過建置。group 用 github.sha 而非 github.ref：workflow_call 時 github context 屬於
+# caller，github.ref 會是部署 tag 的 ref，同一 commit 反而分到不同 group。
+
+run-name: Build ${{ github.ref_name }} by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - main
+      - "release/**"
+  workflow_dispatch:
+  workflow_call:
+
+env:
+  REPO: ${{ github.repository }}
+  BUILD_SHA: ${{ github.sha }}
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: build-${{ github.sha }}
+  queue: max
+
+jobs:
+  check:
+    name: Check Existing Image
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.probe.outputs.exists }}
+    steps:
+      - name: 01. Login to GHCR 登入 GHCR 容器倉庫
+        uses: docker/login-action@v4.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 02. Probe for existing sha image 檢查映像是否已存在
+        id: probe
+        run: |
+          if docker manifest inspect "ghcr.io/${REPO}:sha-${BUILD_SHA}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Image sha-${BUILD_SHA} already exists, skipping build"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-and-push:
+    name: Build
+    needs: check
+    if: needs.check.outputs.exists == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 01. Login to GHCR 登入 GHCR 容器倉庫
+        uses: docker/login-action@v4.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 02. Checkout 簽出程式碼
+        uses: actions/checkout@v6.0.3
+
+      - name: 03. Setup pnpm 安裝 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 04. Setup Node.js 設定 Node.js 環境
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: 05. Install dependencies 安裝依賴
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      # branch push 共享同一個 ref 的 cache，restore-keys 會命中同分支上一個 commit 的快取
+      - name: 06. Cache Turborepo 快取 Turborepo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-shared-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-shared-
+
+      - name: 07. Build application 建置應用程式
+        env:
+          NODE_ENV: production
+        run: pnpm build
+
+      - name: 08. Smoke test standalone server output 驗證建置產物可獨立啟動
+        run: bash .github/scripts/smoke-test-output.sh backoffice
+
+      - name: 09. Setup QEMU 設定 QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: 10. Setup Docker Buildx 設定 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 11. Build and push multi-platform sha image 建置並推送多平台映像
+        env:
+          CACHE_IMAGE: ghcr.io/${{ env.REPO }}:buildcache
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --tag "ghcr.io/${REPO}:sha-${BUILD_SHA}" \
+            --cache-from "type=registry,ref=${CACHE_IMAGE}" \
+            --cache-to "type=registry,ref=${CACHE_IMAGE},mode=max" \
+            --push \
+            .
