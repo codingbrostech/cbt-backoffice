@@ -1,0 +1,43 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as TextFieldStories from './TextField.stories';
+
+<Meta of={TextFieldStories} />
+
+<Title />
+
+**TextField** is a text input bound to a react-hook-form field. It calls `useController` with the given `control` and `name`, so the input's value, change handler and blur handler all come from the form. The label sits above the input and is linked to it through `name`, which doubles as the input id. While the field carries an error, the input turns invalid (`aria-invalid` plus the destructive border) and the message renders below it.
+
+`prefix` and `suffix` render inside the input at its start and end, and the text is padded away from them. `LoginForm` fills `prefix` with the user and lock icons, and `PasswordField` fills `suffix` with its toggle. Every other prop is forwarded to the underlying `Input`, such as `placeholder`, `autoComplete`, `disabled` and `className`.
+
+The component carries no validation of its own. Rules and messages belong to the form's resolver, as `LoginForm` does with the zod schema it builds from `labels`.
+
+## Usage
+
+```tsx
+import { UserIcon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+
+import { TextField } from '@cbt-bo/component-lib/components/forms';
+
+const form = useForm<ILoginFormValues>({ defaultValues: { username: '' } });
+
+<TextField
+  control={form.control}
+  name="username"
+  label={labels.account}
+  placeholder={labels.account}
+  prefix={<UserIcon />}
+  autoComplete="username"
+/>;
+```
+
+## Stories
+
+Each story creates its own form. `value` seeds the bound field, and `errorMessage`, when set, is written to the field with `setError`, so the invalid rendering shows without a resolver.
+
+<Story of={TextFieldStories.Default} />
+
+<Controls of={TextFieldStories.Default} />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,38 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as TimezoneClockStories from './TimezoneClock.stories';
+
+<Meta of={TimezoneClockStories} />
+
+<Title />
+
+**TimezoneClock** is the clock cluster in the header. It prints the current time as `YYYY-MM-DD HH:mm:ss` shifted by `timezoneMinutes`, and never re-applies the browser's own timezone, so the same instant reads the same on every machine. It ticks once a second for as long as it is mounted.
+
+The component is controlled. The caller owns the offset, passes it as `timezoneMinutes`, and receives the next value through `onTimezoneChange` when the user picks another option. Both apps keep it in `usePreferencesStore` from `@cbt-bo/api/preferences/store`, so every other date on the page reads the same offset.
+
+- `options` lists the offsets the select offers, each an offset in minutes with a label.
+- `isTimezoneSelectable` (default `true`) shows the select. Set it to `false` to hide it and keep the clock on whatever `timezoneMinutes` the caller passes.
+- `version` is printed under the time when given, and nothing is rendered there when it is absent.
+
+The clock label and the select are internal parts of this folder. Only `TimezoneClock` and the `ITimezoneOption` type are exported.
+
+## Usage
+
+```tsx
+import { TimezoneClock } from '@cbt-bo/component-lib/components/header';
+
+<TimezoneClock
+  timezoneMinutes={timezoneMinutes}
+  options={timezoneOptions}
+  onTimezoneChange={setTimezoneMinutes}
+  version="dev-0.0.7"
+/>;
+```
+
+## Stories
+
+<Story of={TimezoneClockStories.Default} />
+
+<Controls of={TimezoneClockStories.Default} />
+
+<Stories includePrimary={false} />

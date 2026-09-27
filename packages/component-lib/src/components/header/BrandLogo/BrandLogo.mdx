@@ -1,0 +1,36 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as BrandLogoStories from './BrandLogo.stories';
+
+<Meta of={BrandLogoStories} />
+
+<Title />
+
+**BrandLogo** is the brand mark for `AppHeader`'s `start` slot. It shows `icon` beside `brandName`, and drops `brandName` once the sidebar rail collapses to icon only, so the mark keeps tracking the rail's width.
+
+It reads `useSidebar()`, so it has to render inside a `SidebarProvider`. The stories below wrap it themselves.
+
+## Usage
+
+```tsx
+import brandIcon from '#/assets/brand-icon.webp';
+import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
+
+<AppHeader
+  start={
+    <BrandLogo
+      icon={<img src={brandIcon} alt={t('login.brandName')} className="size-5" />}
+      brandName={t('login.brandName')}
+    />
+  }
+  {...headerProps}
+/>;
+```
+
+## Stories
+
+<Story of={BrandLogoStories.Expanded} />
+
+<Controls of={BrandLogoStories.Expanded} />
+
+<Stories includePrimary={false} />

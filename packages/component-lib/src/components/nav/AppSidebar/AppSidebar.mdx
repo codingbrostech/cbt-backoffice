@@ -1,0 +1,117 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as AppSidebarStories from './AppSidebar.stories';
+
+<Meta of={AppSidebarStories} />
+
+<Title />
+
+**AppSidebar** is the nav rail. Expanded, each top-level item shows its icon and label, and the selected group opens a second column listing its children through `NavMenuList`. That column defaults to the group containing `activeKey`, so landing on a nested page opens the right group. Collapsed, the rail is icon only and a group opens its children in a popover. The group selection lives inside the sidebar and is dropped whenever the rail toggles.
+
+It reads `useSidebar()`, so it has to render inside a `SidebarProvider`, and the footer toggle flips that provider. The stories below wrap it themselves. In the apps the provider also wraps `AppHeader`, so header content can read `useSidebar()` too, which is how `BrandLogo` keeps the brand mark aligned with the rail as it changes width.
+
+## Items
+
+`items` is a `TNavItem[]`. A leaf carries a `path` and is rendered through `renderLink`. A group carries `children` instead, and a child may itself be a group. Each app builds the list once per language, so labels arrive already translated. Leaves nested inside a group usually skip `icon`.
+
+```tsx
+import type { TNavItem } from '@cbt-bo/component-lib/components/nav';
+import { Boxes, LayoutDashboard, Tag, Users } from 'lucide-react';
+
+export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
+  {
+    key: 'dashboard',
+    label: t('nav.dashboard'),
+    icon: <LayoutDashboard />,
+    pageKey: 'dashboard',
+    path: PATH.DASHBOARD
+  },
+  {
+    key: 'player',
+    label: t('nav.player'),
+    icon: <Users />,
+    pageKey: 'player',
+    children: [
+      {
+        key: 'player-mgmt',
+        label: t('nav.playerMgmt'),
+        icon: <Users />,
+        pageKey: 'playerMgmt',
+        children: [
+          { key: 'players', label: t('nav.players'), pageKey: 'players', path: PATH.PLAYERS },
+          {
+            key: 'player-sessions',
+            label: t('nav.playerSessions'),
+            pageKey: 'playerSessions',
+            path: PATH.PLAYER_SESSIONS
+          }
+        ]
+      },
+      {
+        key: 'player-labels',
+        label: t('nav.playerLabels'),
+        icon: <Tag />,
+        pageKey: 'playerLabels',
+        path: PATH.PLAYER_LABELS
+      },
+      {
+        key: 'player-groups',
+        label: t('nav.playerGroups'),
+        icon: <Boxes />,
+        pageKey: 'playerGroups',
+        path: PATH.PLAYER_GROUPS
+      }
+    ]
+  }
+];
+```
+
+With this list, landing on `/players` gives `activeKey` of `players`, the `player` rail item shows as active, and the docked column opens `Player Mgmt` with `Players` highlighted.
+
+## Usage
+
+The authenticated layout is a `SidebarProvider` stacked as a column. `AppHeader` spans the top, and a row below it holds the sidebar beside the page content in `SidebarInset`.
+
+```tsx
+import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
+import { AppSidebar } from '@cbt-bo/component-lib/components/nav';
+import { SidebarInset, SidebarProvider } from '@cbt-bo/component-lib/components/ui/sidebar';
+
+<SidebarProvider className="h-svh flex-col">
+  <AppHeader
+    start={
+      <BrandLogo
+        icon={<img src={brandIcon} alt={t('login.brandName')} className="size-5" />}
+        brandName={t('login.brandName')}
+      />
+    }
+    version="dev-0.0.7"
+    timezoneOptions={timezoneOptions}
+    currentLanguage={i18n.language}
+    languageOptions={languageOptions}
+    onLanguageChange={handleLanguageChange}
+    userName={user.name}
+    userRole={user.role}
+    logoutLabel={t('common.logout')}
+    onLogout={handleLogout}
+  />
+  <div className="flex min-h-0 flex-1">
+    <AppSidebar
+      items={buildNavItems(t)}
+      activeKey={activeKey}
+      renderLink={(item, children) => <Link to={item.path}>{children}</Link>}
+    />
+    <SidebarInset>
+      <Outlet />
+    </SidebarInset>
+  </div>
+</SidebarProvider>;
+```
+
+## Stories
+
+<Story of={AppSidebarStories.Expanded} />
+
+<Controls of={AppSidebarStories.Expanded} />
+
+<Stories includePrimary={false} />

@@ -1,0 +1,32 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as ThemeToggleStories from './ThemeToggle.stories';
+
+<Meta of={ThemeToggleStories} />
+
+<Title />
+
+**ThemeToggle** is the light/dark switch in the header. It shows a moon icon in light mode and a sun icon in dark mode, each naming the mode a click switches to.
+
+The component is controlled. The caller owns `theme`, usually through `usePreferencesStore` from `@cbt-bo/api/preferences/store`, and receives the next value through `onThemeChange`. Applying the `dark` class to the page is the caller's responsibility, this component only reports the chosen theme.
+
+## Usage
+
+```tsx
+import { ThemeToggle } from '@cbt-bo/component-lib/components/header';
+
+<ThemeToggle
+  theme={theme}
+  onThemeChange={setTheme}
+  lightLabel={t('common.theme.light')}
+  darkLabel={t('common.theme.dark')}
+/>;
+```
+
+## Stories
+
+<Story of={ThemeToggleStories.Default} />
+
+<Controls of={ThemeToggleStories.Default} />
+
+<Stories includePrimary={false} />
