@@ -1,0 +1,30 @@
+{
+  "name": "@cbt-bo/api",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "lint": "eslint --max-warnings 0 .",
+    "lint:fix": "eslint --fix .",
+    "check:types": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.so.json",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@cbt-bo/api-schema": "workspace:*",
+    "@tanstack/react-query": "catalog:",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@cbt-bo/config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "jsdom": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
