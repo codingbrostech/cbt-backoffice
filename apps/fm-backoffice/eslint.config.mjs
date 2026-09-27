@@ -11,10 +11,11 @@ const ignoreFiles = globalIgnores([
   'src/components/ui/**'
 ]);
 
-const routeFileNames = {
+const routeFileRules = {
   files: ['src/routes/**'],
   rules: {
-    'unicorn/filename-case': 'off'
+    'unicorn/filename-case': 'off',
+    '@typescript-eslint/only-throw-error': ['error', { allow: [{ from: 'lib', name: 'Response' }] }]
   }
 };
 
@@ -27,5 +28,5 @@ export default defineConfig([
   ...cbtPlugin.configs['flat/tanstack'],
   ...buildWorkspaceConfig(import.meta.dirname),
   ignoreFiles,
-  routeFileNames
+  routeFileRules
 ]);
