@@ -1,0 +1,20 @@
+{
+  "extends": "@cbt-bo/config/typescript/react-library.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "types": ["node", "vite/client", "vitest/globals"],
+    "paths": {
+      "@cbt-bo/component-lib/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}

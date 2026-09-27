@@ -22,6 +22,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@cbt-bo/component-lib": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/match-sorter-utils": "catalog:",
     "@tanstack/react-devtools": "catalog:",
@@ -33,16 +34,11 @@
     "@tanstack/react-router-ssr-query": "catalog:",
     "@tanstack/react-start": "catalog:",
     "@tanstack/react-table": "catalog:",
-    "class-variance-authority": "catalog:",
-    "clsx": "catalog:",
     "lucide-react": "catalog:",
     "nitro": "catalog:",
-    "radix-ui": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
-    "tw-animate-css": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -7,8 +7,7 @@ const ignoreFiles = globalIgnores([
   'node_modules/**',
   'storybook-static/**',
   '.storybook/**',
-  'src/routeTree.gen.ts',
-  'src/components/ui/**'
+  'src/routeTree.gen.ts'
 ]);
 
 const routeFileRules = {
