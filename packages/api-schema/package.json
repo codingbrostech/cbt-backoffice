@@ -7,6 +7,10 @@
       "types": "./dist/fetcher.d.ts",
       "import": "./dist/fetcher.js"
     },
+    "./mgt": {
+      "types": "./dist/mgt/index.d.ts",
+      "import": "./dist/mgt/index.js"
+    },
     "./bo-fm/*": {
       "types": "./dist/bo-fm/*/index.d.ts",
       "import": "./dist/bo-fm/*/index.js"

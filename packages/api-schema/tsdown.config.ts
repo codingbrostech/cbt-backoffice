@@ -12,7 +12,8 @@ const GENERATED_DIR = path.join(SRC_DIR, 'generated');
  */
 const buildEntryMap = (): Record<string, string> => {
   const entries: Record<string, string> = {
-    fetcher: path.join(SRC_DIR, 'fetcher.ts')
+    fetcher: path.join(SRC_DIR, 'fetcher.ts'),
+    'mgt/index': path.join(SRC_DIR, 'mgt', 'index.ts')
   };
 
   const apps = fs
