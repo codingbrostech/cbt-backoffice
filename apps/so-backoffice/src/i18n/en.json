@@ -1,0 +1,85 @@
+{
+  "common": {
+    "logout": "Logout",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "unknownError": "Unknown error",
+    "timezone": {
+      "utc0": "UTC+0",
+      "utc8": "CST(+8)"
+    },
+    "theme": {
+      "light": "Switch to light mode",
+      "dark": "Switch to dark mode"
+    }
+  },
+  "login": {
+    "title": "Backoffice",
+    "brandName": "Solaire Online",
+    "account": "Admin ID",
+    "password": "Password",
+    "remember": "Remember login information",
+    "submit": "Login",
+    "validation": {
+      "accountRequired": "Admin ID is required",
+      "passwordRequired": "Password is required"
+    },
+    "error": {
+      "fail": "Login failed",
+      "sessionExpired": "Session expired",
+      "code": {
+        "10001": "Session expired"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {{name}}"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "player": "Player",
+    "playerMgmt": "Player Management",
+    "players": "Players",
+    "playerSessions": "Player Sessions",
+    "playerMobilePolicy": "Player Mobile Policy",
+    "playerSelfLimits": "Player Self Limits",
+    "playerLabels": "Player Labels",
+    "playerGroups": "Player Groups",
+    "finance": "Reports",
+    "reports": "Reports",
+    "betTrans": "Bet Trans",
+    "ledgerTrans": "Ledger Trans",
+    "paymentTransaction": "Payment Transaction",
+    "wagerStats": "Wager Stats",
+    "acsc": "ACSC",
+    "acscRewardPushLogs": "Status Points Trans",
+    "acscTransfers": "ACSC Transfer",
+    "game": "Games",
+    "games": "Games",
+    "gameCategories": "Game Categories",
+    "gameRanking": "Game Ranking",
+    "promotion": "Promotion",
+    "banners": "Banners",
+    "bonuses": "Bonuses",
+    "rebateSetting": "Rebate Setting",
+    "rebateTrans": "Rebate Trans",
+    "rewardsShop": "Rewards Shop",
+    "rewardsShopCategories": "Rewards Shop Categories",
+    "redemptionHistory": "Redemption History",
+    "promos": "Promotions",
+    "promotionTransactions": "Promotion Transactions",
+    "pages": "Pages",
+    "setting": "Setting",
+    "acctMgmt": "Account Management",
+    "admins": "Admins",
+    "adminQuotaConfigs": "Admin Quota Configs",
+    "adminQuotas": "Admin Quotas",
+    "adminSessions": "Admin Sessions",
+    "adminOpsLogs": "Admin Ops Logs",
+    "roleManagement": "Role Management",
+    "roles": "Roles",
+    "rolesPermission": "Roles Permission",
+    "paymentChannels": "Payment Channels"
+  }
+}

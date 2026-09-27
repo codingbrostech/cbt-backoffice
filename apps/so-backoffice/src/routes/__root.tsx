@@ -1,16 +1,26 @@
+import { initMgtClient } from '@cbt-bo/api/client';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
-import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
-import appCss from '../styles.css?url';
+import AppProviders from '#/app/AppProviders';
+import TanStackQueryDevtools from '#/integrations/tanstack-query/devtools';
+import { loadRuntimeEnv } from '#/server/runtime-env';
+import appCss from '#/styles.css?url';
 
 interface IRouterContext {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<IRouterContext>()({
+  beforeLoad: async () => {
+    const env = await loadRuntimeEnv();
+
+    initMgtClient(env);
+
+    return { env };
+  },
   head: () => ({
     meta: [
       {
@@ -21,7 +31,7 @@ export const Route = createRootRouteWithContext<IRouterContext>()({
         content: 'width=device-width, initial-scale=1'
       },
       {
-        title: 'SO Backoffice'
+        title: 'Solaire Online Backoffice'
       }
     ],
     links: [
@@ -31,8 +41,17 @@ export const Route = createRootRouteWithContext<IRouterContext>()({
       }
     ]
   }),
-  shellComponent: RootDocument
+  shellComponent: RootDocument,
+  component: RootComponent
 });
+
+function RootComponent() {
+  return (
+    <AppProviders>
+      <Outlet />
+    </AppProviders>
+  );
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
