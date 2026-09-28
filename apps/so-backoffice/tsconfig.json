@@ -3,7 +3,9 @@
   "compilerOptions": {
     "paths": {
       "#/*": ["./src/*"],
-      "@/*": ["./src/*"]
+      "@cbt-bo/api/*": ["../../packages/api/src/*"],
+      "@cbt-bo/api-schema/bo/*": ["../../packages/api-schema/dist/bo-so/*/index"],
+      "@cbt-bo/component-lib/*": ["../../packages/component-lib/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

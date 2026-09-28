@@ -1,0 +1,33 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as SubmitButtonStories from './SubmitButton.stories';
+
+<Meta of={SubmitButtonStories} />
+
+<Title />
+
+**SubmitButton** is a `Button` of `type="submit"` bound to a form's `control`. It reads `isSubmitting` from `useFormState`, so from the moment `handleSubmit` starts until the submit handler settles, the button disables itself and shows a `Spinner` before the label. `disabled` still disables it outside of a submission, which `LoginForm` uses while the login mutation is pending. Every other `Button` prop passes through, such as `variant`, `size` and `className`.
+
+## Usage
+
+```tsx
+import { SubmitButton } from '@cbt-bo/component-lib/components/forms';
+
+<form
+  onSubmit={event => {
+    void form.handleSubmit(onSubmit)(event);
+  }}
+>
+  <SubmitButton control={form.control} label={labels.submit} className="w-full" />
+</form>;
+```
+
+## Stories
+
+The stories render the button inside a form whose submit handler resolves after `submitDelayMs`, so pressing the button in the canvas shows the submitting state for that long. `Submitting` presses it for you and keeps the form pending.
+
+<Story of={SubmitButtonStories.Default} />
+
+<Controls of={SubmitButtonStories.Default} />
+
+<Stories includePrimary={false} />

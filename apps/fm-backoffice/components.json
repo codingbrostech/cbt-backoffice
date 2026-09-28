@@ -5,17 +5,17 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/styles.css",
+    "css": "../../packages/component-lib/src/styles.css",
     "baseColor": "zinc",
     "cssVariables": true,
     "prefix": ""
   },
+  "iconLibrary": "lucide",
   "aliases": {
     "components": "#/components",
-    "utils": "#/lib/utils",
-    "ui": "#/components/ui",
+    "hooks": "#/hooks",
     "lib": "#/lib",
-    "hooks": "#/hooks"
-  },
-  "iconLibrary": "lucide"
+    "ui": "@cbt-bo/component-lib/components/ui",
+    "utils": "@cbt-bo/component-lib/lib/utils"
+  }
 }

@@ -1,0 +1,27 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as CheckboxFieldStories from './CheckboxField.stories';
+
+<Meta of={CheckboxFieldStories} />
+
+<Title />
+
+**CheckboxField** binds a `Checkbox` to a boolean field through `useController`. Checking writes `true` and unchecking writes `false`, so the `indeterminate` value the primitive can emit never reaches the form. The label sits beside the box in a horizontal `Field`, is linked to it through `name`, and toggles the box when clicked. `LoginForm` uses it for the remember-me flag.
+
+## Usage
+
+```tsx
+import { CheckboxField } from '@cbt-bo/component-lib/components/forms';
+
+<CheckboxField control={form.control} name="isRememberMe" label={labels.remember} />;
+```
+
+## Stories
+
+Each story creates its own form and seeds the bound field with `isChecked`.
+
+<Story of={CheckboxFieldStories.Default} />
+
+<Controls of={CheckboxFieldStories.Default} />
+
+<Stories includePrimary={false} />

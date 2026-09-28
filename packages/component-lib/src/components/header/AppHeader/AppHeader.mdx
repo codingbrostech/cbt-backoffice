@@ -1,0 +1,46 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as AppHeaderStories from './AppHeader.stories';
+
+<Meta of={AppHeaderStories} />
+
+<Title />
+
+**AppHeader** is the top bar of an authenticated page. `start` fills the left side, usually a brand icon. The right side lines up a `TimezoneClock`, a `LanguageMenu`, a `ThemeToggle` and a `UserMenu`, separated by vertical rules. Setting `isTimeVisible` to `false` drops the clock cluster and its separator. Setting `isTimezoneSelectable` to `false` keeps the clock but hides its timezone select, leaving the clock on `timezoneMinutes`.
+
+The timezone and the theme are controlled. The host app owns `timezoneMinutes` and `theme`, usually through `usePreferencesStore` from `@cbt-bo/api/preferences/store`, and writes the next values from `onTimezoneChange` and `onThemeChange`. `themeLightLabel` and `themeDarkLabel` pass through to the toggle's accessible labels.
+
+The component carries no i18n dependency. Every label arrives already translated through props, and the host app resolves `t()` before rendering it.
+
+## Usage
+
+```tsx
+import { AppHeader } from '@cbt-bo/component-lib/components/header';
+
+<AppHeader
+  start={<img src={brandIcon} alt={t('login.brandName')} className="size-5" />}
+  version="dev-0.0.7"
+  timezoneMinutes={timezoneMinutes}
+  timezoneOptions={timezoneOptions}
+  onTimezoneChange={setTimezoneMinutes}
+  currentLanguage={i18n.language}
+  languageOptions={languageOptions}
+  onLanguageChange={handleLanguageChange}
+  theme={theme}
+  onThemeChange={setTheme}
+  themeLightLabel={t('common.theme.light')}
+  themeDarkLabel={t('common.theme.dark')}
+  userName={user.name}
+  userRole={user.role}
+  logoutLabel={t('common.logout')}
+  onLogout={handleLogout}
+/>;
+```
+
+## Stories
+
+<Story of={AppHeaderStories.Default} />
+
+<Controls of={AppHeaderStories.Default} />
+
+<Stories includePrimary={false} />
