@@ -12,8 +12,8 @@ pnpm install
 pnpm dev
 
 # One app
-pnpm dev:so   # so-backoffice on http://localhost:3000
-pnpm dev:fm   # fm-backoffice on http://localhost:3001
+pnpm dev:so   # so-backoffice on http://localhost:3001
+pnpm dev:fm   # fm-backoffice on http://localhost:3000
 
 # Build all
 pnpm build

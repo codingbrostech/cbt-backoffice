@@ -59,8 +59,8 @@ cp apps/so-backoffice/.env.example apps/so-backoffice/.env
 pnpm dev
 
 # One app
-pnpm dev:so    # http://localhost:3000
-pnpm dev:fm    # http://localhost:3001
+pnpm dev:so    # http://localhost:3001
+pnpm dev:fm    # http://localhost:3000
 ```
 
 ### Build

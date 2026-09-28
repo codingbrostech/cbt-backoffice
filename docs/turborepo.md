@@ -21,8 +21,8 @@ Three concepts to know:
 ```
 cbt-backoffice/
 ├── apps/
-│   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3000
-│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3001
+│   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3001
+│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3000
 │
 ├── packages/
 │   ├── api/             # Shared MGT actions, query options and stores, consumed as TypeScript source
