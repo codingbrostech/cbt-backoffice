@@ -1,0 +1,44 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as HeaderTabsStories from './HeaderTabs.stories';
+
+<Meta of={HeaderTabsStories} />
+
+<Title />
+
+**HeaderTabs** is the browser-style tab strip above the page content in the authenticated shell. Each tab is a page the user has visited, and clicking one switches to it. A tab shows a close button, and the strip shows a tab actions menu, only while more than one tab is open, since the last remaining tab can't be closed. The strip scrolls horizontally once the tabs overflow, with a left or right arrow button appearing at each end while there's more to scroll in that direction.
+
+Tabs reorder by drag unless `isDraggable` is false. Pressing a tab and moving it a few pixels picks it up, the other tabs slide aside as it passes them, and dropping it over another tab calls `onMove` with the dragged key and the key of the tab it landed on. The caller then moves the first to the second's position. Movement is locked to the strip's axis, and the strip scrolls when a tab is dragged near an overflowing edge. Only pointer drag is supported, since the arrow keys already move focus between tabs. With `isDraggable` set to false, the tabs stay in the order given and `onMove` never fires.
+
+The tab actions menu (the `⋯` trigger at the end of the strip) opens a dropdown with "Close selected tab", which closes `activeKey` through `onClose`, and "Close other tabs", which closes every tab but `activeKey` through `onCloseOthers`.
+
+The component is controlled. The caller owns the open `tabs`, their order, the `activeKey`, and what happens on `onSelect`, `onClose`, `onCloseOthers`, or `onMove`, usually the current pathname and `usePageTabsStore` from `@cbt-bo/api/page-tabs/store` plus the router's navigation.
+
+## Usage
+
+```tsx
+import { HeaderTabs } from '@cbt-bo/component-lib/components/layout';
+
+<HeaderTabs
+  tabs={tabs}
+  activeKey={pathname}
+  onSelect={handleSelect}
+  onClose={handleClose}
+  onCloseOthers={handleCloseOthers}
+  onMove={handleMove}
+  closeTabLabel={t('common.closeTab')}
+  tabActionsLabel={t('common.tabActions')}
+  closeSelectedTabLabel={t('common.closeSelectedTab')}
+  closeOtherTabsLabel={t('common.closeOtherTabs')}
+  scrollLeftLabel={t('common.scrollTabsLeft')}
+  scrollRightLabel={t('common.scrollTabsRight')}
+/>;
+```
+
+## Stories
+
+<Story of={HeaderTabsStories.Default} />
+
+<Controls of={HeaderTabsStories.Default} />
+
+<Stories includePrimary={false} />
