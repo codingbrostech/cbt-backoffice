@@ -27,7 +27,7 @@ const AppHeader = (props: TAppHeaderProps) => {
   } = props;
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between bg-sidebar px-4 text-sidebar-foreground">
+    <header className="flex h-12 shrink-0 items-center justify-between bg-sidebar px-4 text-sidebar-foreground">
       <div className="flex items-center gap-2 font-medium">{start}</div>
       <div className="flex items-center gap-3">
         {props.isTimeVisible !== false && (
