@@ -83,6 +83,13 @@ export const ensureSession = (queryClient: QueryClient): Promise<IUser | null> =
   queryClient.query(sessionQueryOptions());
 
 /**
+ * Removes the cached session so `ensureSession` fetches it again on next use.
+ */
+export const resetSessionQuery = (queryClient: QueryClient): void => {
+  queryClient.removeQueries({ queryKey: sessionQueryKey() });
+};
+
+/**
  * Logs in with the admin code and secret, then loads the role permissions.
  * Resolves with the signed-in user.
  */

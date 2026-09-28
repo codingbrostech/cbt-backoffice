@@ -1,4 +1,4 @@
-import { ensureSession, signOut } from '@cbt-bo/api/auth/queries';
+import { ensureSession, resetSessionQuery, signOut } from '@cbt-bo/api/auth/queries';
 import { hydrateSessionStore } from '@cbt-bo/api/auth/store';
 import { initMgtClient } from '@cbt-bo/api/client';
 import { hydratePreferencesStore, usePreferencesStore } from '@cbt-bo/api/preferences/store';
@@ -56,6 +56,7 @@ function AuthenticatedLayout() {
   const handleLogout = useCallback(() => {
     void (async () => {
       await signOut();
+      resetSessionQuery(queryClient);
       await navigate({ to: PATH.LOGIN, replace: true });
       queryClient.clear();
     })();

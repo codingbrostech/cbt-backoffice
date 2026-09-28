@@ -1,3 +1,4 @@
+import { resetSessionQuery } from '@cbt-bo/api/auth/queries';
 import { clearSession } from '@cbt-bo/api/auth/session';
 import { useSessionStore } from '@cbt-bo/api/auth/store';
 import { SESSION_EXPIRED_EVENT } from '@cbt-bo/api/client';
@@ -22,6 +23,7 @@ export const useSessionExpiry = (): void => {
     if (!useSessionStore.getState().token) return;
 
     clearSession();
+    resetSessionQuery(queryClient);
     toast.error(t('login.error.fail'), { description: t('login.error.sessionExpired') });
     void navigate({ to: PATH.LOGIN, replace: true }).then(() => {
       queryClient.clear();
