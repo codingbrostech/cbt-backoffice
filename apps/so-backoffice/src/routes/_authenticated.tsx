@@ -79,7 +79,7 @@ function AuthenticatedLayout() {
         start={
           <BrandLogo
             icon={<img src={brandIcon} alt={t('login.brandName')} className="size-5 rounded-sm" />}
-            brandName={t('login.brandName')}
+            brandName={`${t('login.brandName')} ${t('login.title')}`}
           />
         }
         isTimezoneSelectable={false}

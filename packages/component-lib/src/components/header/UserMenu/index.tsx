@@ -1,4 +1,4 @@
-import { UserIcon } from 'lucide-react';
+import { LogOutIcon, UserIcon } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -31,7 +31,10 @@ const UserMenu = ({ userName, userRole, logoutLabel, onLogout }: IUserMenuProps)
           {userRole ? `${userName} · ${userRole}` : userName}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onLogout}>{logoutLabel}</DropdownMenuItem>
+        <DropdownMenuItem onClick={onLogout}>
+          <LogOutIcon aria-hidden />
+          {logoutLabel}
+        </DropdownMenuItem>
       </DropdownMenuGroup>
     </DropdownMenuContent>
   </DropdownMenu>

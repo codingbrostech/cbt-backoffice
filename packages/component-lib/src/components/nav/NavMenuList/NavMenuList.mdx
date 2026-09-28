@@ -10,7 +10,7 @@ import * as NavMenuListStories from './NavMenuList.stories';
 
 It is built on the shadcn sidebar menu primitives, so it expects to sit inside a `Sidebar` under a `SidebarProvider`. `AppSidebar` renders it in both the docked column and the collapsed popover.
 
-Hovering a group heading swaps its icon for a chevron that invites the toggle. The chevron points down while the group is expanded and right once it is collapsed. The two hover stories below force that hover state on the heading through the pseudo-states addon, so the chevron shows without a mouse.
+Hovering a group heading swaps its icon for a chevron that invites the toggle. The chevron points down while the group is expanded and right once it is collapsed. Group headings and leaves share one hover and active treatment, and every row spans the full column width. Nested rows indent their content through padding, so the highlight stays aligned across levels, and a collapsed heading shows as active while it hides the active leaf. The two hover stories below force that hover state on the heading through the pseudo-states addon, so the chevron shows without a mouse.
 
 ## Usage
 
