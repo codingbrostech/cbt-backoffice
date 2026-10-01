@@ -113,20 +113,26 @@ function AuthenticatedLayout() {
         />
         <SidebarInset className="min-h-0 min-w-0 rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
           <div className="mx-5 mt-2.5 mb-5 flex min-h-0 flex-1 flex-col">
-            <HeaderTabs
+            <HeaderTabs.Root
               tabs={pageTabs.tabs}
               activeKey={pageTabs.activeKey}
               onSelect={pageTabs.onSelect}
               onClose={pageTabs.onClose}
               onCloseOthers={pageTabs.onCloseOthers}
               onMove={pageTabs.onMove}
-              closeTabLabel={t('common.closeTab')}
-              tabActionsLabel={t('common.tabActions')}
-              closeSelectedTabLabel={t('common.closeSelectedTab')}
-              closeOtherTabsLabel={t('common.closeOtherTabs')}
-              scrollLeftLabel={t('common.scrollTabsLeft')}
-              scrollRightLabel={t('common.scrollTabsRight')}
-            />
+            >
+              <HeaderTabs.ScrollArea
+                scrollLeftLabel={t('common.scrollTabsLeft')}
+                scrollRightLabel={t('common.scrollTabsRight')}
+              >
+                <HeaderTabs.List closeTabLabel={t('common.closeTab')} />
+              </HeaderTabs.ScrollArea>
+              <HeaderTabs.Actions
+                label={t('common.tabActions')}
+                closeSelectedTabLabel={t('common.closeSelectedTab')}
+                closeOtherTabsLabel={t('common.closeOtherTabs')}
+              />
+            </HeaderTabs.Root>
             <div className="flex min-h-0 flex-1 flex-col overflow-auto rounded-sm rounded-t-none border border-t-0 border-border bg-card px-5 pt-6 pb-2">
               <Outlet />
             </div>
