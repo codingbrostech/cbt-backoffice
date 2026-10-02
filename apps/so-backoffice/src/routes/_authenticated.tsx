@@ -54,7 +54,7 @@ function AuthenticatedLayout() {
   const setTheme = usePreferencesStore(state => state.setTheme);
 
   const items = buildNavItems(t);
-  const activeKey = buildActiveNavKey(items, location.pathname) ?? '';
+  const activeKey = buildActiveNavKey(items, location.pathname);
   const pageTabs = usePageTabs(items, location.pathname);
 
   const handleLogout = useCallback(() => {
@@ -102,7 +102,7 @@ function AuthenticatedLayout() {
         onLogout={handleLogout}
       />
       <div className="flex min-h-0 flex-1">
-        <AppSidebar
+        <AppSidebar.Root
           items={items}
           activeKey={activeKey}
           renderLink={(item, children) => (
@@ -110,7 +110,18 @@ function AuthenticatedLayout() {
               {children}
             </Link>
           )}
-        />
+        >
+          <AppSidebar.Rail>
+            <AppSidebar.Menu />
+            <AppSidebar.Footer>
+              <AppSidebar.Toggle
+                openLabel={t('common.openSidebar')}
+                closeLabel={t('common.closeSidebar')}
+              />
+            </AppSidebar.Footer>
+          </AppSidebar.Rail>
+          <AppSidebar.Panel />
+        </AppSidebar.Root>
         <SidebarInset className="min-h-0 min-w-0 rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
           <div className="mx-5 mt-2.5 mb-5 flex min-h-0 flex-1 flex-col">
             <HeaderTabs.Root

@@ -58,6 +58,12 @@ describe('containsActiveKey', () => {
       expect(containsActiveKey(ITEMS[1], 'unknown')).toBe(false);
     });
   });
+
+  describe('when the active key is absent', () => {
+    it('should return false', () => {
+      expect(containsActiveKey(ITEMS[1])).toBe(false);
+    });
+  });
 });
 
 describe('buildActiveGroupKey', () => {
@@ -82,6 +88,12 @@ describe('buildActiveGroupKey', () => {
   describe('when the active key matches nothing', () => {
     it('should return undefined', () => {
       expect(buildActiveGroupKey(ITEMS, 'unknown')).toBeUndefined();
+    });
+  });
+
+  describe('when the active key is absent', () => {
+    it('should return undefined', () => {
+      expect(buildActiveGroupKey(ITEMS)).toBeUndefined();
     });
   });
 });

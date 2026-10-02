@@ -1,24 +1,123 @@
-import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cbt-bo/component-lib/components/ui/tabs';
 
 import * as AppSidebarStories from './AppSidebar.stories';
 
 <Meta of={AppSidebarStories} />
 
-<Title />
+# AppSidebar
 
-**AppSidebar** is the nav rail. Expanded, each top-level item shows its icon and label, and the selected group opens a second column listing its children through `NavMenuList`. That column defaults to the group containing `activeKey`, so landing on a nested page opens the right group. Collapsed, the rail is icon only and a group opens its children in a popover. The group selection lives inside the sidebar and is dropped whenever the rail toggles.
+The left nav rail of the admin pages. It shows one button per top-level nav item. A top-level item with children opens them in a panel beside the rail, and the rail can collapse to icons only.
 
-It reads `useSidebar()`, so it has to render inside a `SidebarProvider`, and the footer toggle flips that provider. The stories below wrap it themselves. In the apps the provider also wraps `AppHeader`, so header content can read `useSidebar()` too, which is how `BrandLogo` keeps the brand mark aligned with the rail as it changes width.
+<Canvas className="w-fit" of={AppSidebarStories.Expanded} />
 
-## Items
+## Usage
 
-`items` is a `TNavItem[]`. A leaf carries a `path` and is rendered through `renderLink`. A group carries `children` instead, and a child may itself be a group. Each app builds the list once per language, so labels arrive already translated. Leaves nested inside a group usually skip `icon`.
+`AppSidebar` is a set of parts. Always nest them like this, and pass data only to `Root` and `Toggle`.
 
 ```tsx
-import type { TNavItem } from '@cbt-bo/component-lib/components/nav';
-import { Boxes, LayoutDashboard, Tag, Users } from 'lucide-react';
+<AppSidebar.Root items={items} activeKey={activeKey} renderLink={renderLink}>
+  <AppSidebar.Rail>
+    <AppSidebar.Menu />
+    <AppSidebar.Footer>
+      <AppSidebar.Toggle openLabel="Open sidebar" closeLabel="Close sidebar" />
+    </AppSidebar.Footer>
+  </AppSidebar.Rail>
+  <AppSidebar.Panel />
+</AppSidebar.Root>
+```
 
-export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
+<table className="w-full text-left text-sm [&_td]:py-2 [&_td]:pr-4 [&_th]:py-2 [&_th]:pr-4 [&_th]:font-medium [&_tr]:border-b">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>What it is</th>
+      <th>What to pass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Root</code>
+      </td>
+      <td>Wraps everything and remembers which group is open</td>
+      <td>
+        <code>items</code>, <code>activeKey</code>, <code>renderLink</code>, then the parts as
+        children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Rail</code>
+      </td>
+      <td>The dark icon column</td>
+      <td>
+        <code>Menu</code> and <code>Footer</code> as children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Menu</code>
+      </td>
+      <td>
+        One button per top-level item in <code>items</code>
+      </td>
+      <td>Nothing</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Footer</code>
+      </td>
+      <td>The bottom of the rail</td>
+      <td>
+        Usually <code>Toggle</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Toggle</code>
+      </td>
+      <td>The collapse and expand button</td>
+      <td>
+        <code>openLabel</code> and <code>closeLabel</code>, translated
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Panel</code>
+      </td>
+      <td>The column beside the rail listing the open group's pages</td>
+      <td>Nothing</td>
+    </tr>
+  </tbody>
+</table>
+
+Every part also takes a `className`.
+
+<Tabs defaultValue="Root">
+  <TabsList variant="line">
+    {AppSidebarStories.PART_CONTROLS.map(({ part }) => (
+      <TabsTrigger key={part} value={part}>
+        {part}
+      </TabsTrigger>
+    ))}
+  </TabsList>
+  {AppSidebarStories.PART_CONTROLS.map(({ part, include }) => (
+    <TabsContent key={part} value={part}>
+      <Controls of={AppSidebarStories.Expanded} include={include} />
+    </TabsContent>
+  ))}
+</Tabs>
+
+`activeKey` is the `key` of the leaf for the current page. Get it with `buildActiveNavKey(items, location.pathname)`, and leave it out when no leaf matches. `renderLink` turns a leaf into the app's router link, so return `<Link to={item.path}>{children}</Link>`.
+
+## Items format
+
+`items` is a `TNavItem[]` with two kinds of item. A **leaf** has a `path` and navigates there. A **group** has `children` instead of a `path` and opens them. A child can itself be a group. Every item has `key`, `label` and `pageKey`, and top-level items usually have an `icon`. Build the list once per language so labels arrive translated.
+
+```tsx
+const items: TNavItem[] = [
   {
     key: 'dashboard',
     label: t('nav.dashboard'),
@@ -53,67 +152,72 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         icon: <Tag />,
         pageKey: 'playerLabels',
         path: PATH.PLAYER_LABELS
-      },
-      {
-        key: 'player-groups',
-        label: t('nav.playerGroups'),
-        icon: <Boxes />,
-        pageKey: 'playerGroups',
-        path: PATH.PLAYER_GROUPS
       }
     ]
   }
 ];
 ```
 
-With this list, landing on `/players` gives `activeKey` of `players`, the `player` rail item shows as active, and the docked column opens `Player Mgmt` with `Players` highlighted.
+## How parent and child show
 
-## Usage
+A top-level item is a button on the rail with its icon and label. Clicking a group docks its children in the panel.
 
-The authenticated layout is a `SidebarProvider` stacked as a column. `AppHeader` spans the top, and a row below it holds the sidebar beside the page content in `SidebarInset`.
+<Canvas className="w-fit" of={AppSidebarStories.GroupDocked} />
 
-The docked column squares off its right edge so it meets `SidebarInset` flush, which means the inset should round its left corners only while that column is hidden (a leaf such as Dashboard, or the rail collapsed). The sidebar root carries `data-panel-docked` while the column is shown, and the inset reads it as its previous sibling through an arbitrary variant, so no state has to leave the sidebar.
+The panel also opens on its own for the group that contains `activeKey`, so landing on `/players` shows the Player button as active, opens the panel, and highlights Players. A child that is itself a group, like Player Mgmt, shows in the panel as a section that expands and collapses.
+
+<Canvas className="w-fit" of={AppSidebarStories.SectionExpanded} />
+
+Hovering a section heading swaps its icon for a chevron, pointing down while the section is expanded and right once it is collapsed. A collapsed heading shows as active while it hides the active page.
+
+<Canvas className="w-fit" of={AppSidebarStories.SectionCollapsed} />
+
+Collapsed, the rail shows icons only and each button names itself in a tooltip.
+
+<Canvas className="w-fit" of={AppSidebarStories.Collapsed} />
+
+A group opens its children in a popover instead of the panel.
+
+<Canvas className="w-fit" of={AppSidebarStories.CollapsedPopover} />
+
+## Usage in the app
+
+Render it inside the `SidebarProvider` that already wraps `AppHeader`, in a row beside `SidebarInset`. `Root` carries `data-panel-docked` while the panel is open, and the inset reads it to square off its left corner.
 
 ```tsx
-import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
-import { AppSidebar } from '@cbt-bo/component-lib/components/nav';
-import { SidebarInset, SidebarProvider } from '@cbt-bo/component-lib/components/ui/sidebar';
+import { AppSidebar, buildActiveNavKey } from '@cbt-bo/component-lib/components/nav';
+import { SidebarInset } from '@cbt-bo/component-lib/components/ui/sidebar';
 
-<SidebarProvider className="h-svh flex-col">
-  <AppHeader
-    start={
-      <BrandLogo
-        icon={<img src={brandIcon} alt={t('login.brandName')} className="size-5" />}
-        brandName={t('login.brandName')}
-      />
-    }
-    version="dev-0.0.7"
-    timezoneOptions={timezoneOptions}
-    currentLanguage={i18n.language}
-    languageOptions={languageOptions}
-    onLanguageChange={handleLanguageChange}
-    userName={user.name}
-    userRole={user.role}
-    logoutLabel={t('common.logout')}
-    onLogout={handleLogout}
-  />
-  <div className="flex min-h-0 flex-1">
-    <AppSidebar
-      items={buildNavItems(t)}
-      activeKey={activeKey}
-      renderLink={(item, children) => <Link to={item.path}>{children}</Link>}
-    />
-    <SidebarInset className="rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
-      <Outlet />
-    </SidebarInset>
-  </div>
-</SidebarProvider>;
+const items = buildNavItems(t);
+const activeKey = buildActiveNavKey(items, location.pathname);
+
+<div className="flex min-h-0 flex-1">
+  <AppSidebar.Root
+    items={items}
+    activeKey={activeKey}
+    renderLink={(item, children) => <Link to={item.path}>{children}</Link>}
+  >
+    <AppSidebar.Rail>
+      <AppSidebar.Menu />
+      <AppSidebar.Footer>
+        <AppSidebar.Toggle
+          openLabel={t('common.openSidebar')}
+          closeLabel={t('common.closeSidebar')}
+        />
+      </AppSidebar.Footer>
+    </AppSidebar.Rail>
+    <AppSidebar.Panel />
+  </AppSidebar.Root>
+  <SidebarInset className="rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
+    <Outlet />
+  </SidebarInset>
+</div>;
 ```
 
-## Stories
+## Widths
 
-<Story of={AppSidebarStories.Expanded} />
+The widths are CSS variables on `Root`. A `className` on `Root` overrides one for the whole sidebar, for example `[--app-sidebar-panel-width:18rem]`.
 
-<Controls of={AppSidebarStories.Expanded} />
-
-<Stories includePrimary={false} />
+- `--app-sidebar-rail-width` defaults to `5rem`
+- `--app-sidebar-rail-width-collapsed` defaults to `3.5rem`
+- `--app-sidebar-panel-width` defaults to `14rem`
