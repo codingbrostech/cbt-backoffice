@@ -11,6 +11,8 @@
     "closeOtherTabs": "關閉其他分頁",
     "scrollTabsLeft": "向左捲動分頁",
     "scrollTabsRight": "向右捲動分頁",
+    "openSidebar": "開啟側邊欄",
+    "closeSidebar": "關閉側邊欄",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "亞洲時區(+8)"
