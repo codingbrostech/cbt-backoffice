@@ -4,6 +4,13 @@
     "showPassword": "顯示密碼",
     "hidePassword": "隱藏密碼",
     "unknownError": "未知錯誤",
+    "underConstruction": "此頁面建設中",
+    "closeTab": "關閉分頁",
+    "tabActions": "分頁選項",
+    "closeSelectedTab": "關閉選取的分頁",
+    "closeOtherTabs": "關閉其他分頁",
+    "scrollTabsLeft": "向左捲動分頁",
+    "scrollTabsRight": "向右捲動分頁",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "亞洲時區(+8)"

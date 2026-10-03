@@ -4,6 +4,13 @@
     "showPassword": "Show password",
     "hidePassword": "Hide password",
     "unknownError": "Unknown error",
+    "underConstruction": "This page is under construction",
+    "closeTab": "Close tab",
+    "tabActions": "Tab actions",
+    "closeSelectedTab": "Close selected tab",
+    "closeOtherTabs": "Close other tabs",
+    "scrollTabsLeft": "Scroll tabs left",
+    "scrollTabsRight": "Scroll tabs right",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "CST(+8)"

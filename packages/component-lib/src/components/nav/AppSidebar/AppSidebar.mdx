@@ -72,6 +72,8 @@ With this list, landing on `/players` gives `activeKey` of `players`, the `playe
 
 The authenticated layout is a `SidebarProvider` stacked as a column. `AppHeader` spans the top, and a row below it holds the sidebar beside the page content in `SidebarInset`.
 
+The docked column squares off its right edge so it meets `SidebarInset` flush, which means the inset should round its left corners only while that column is hidden (a leaf such as Dashboard, or the rail collapsed). The sidebar root carries `data-panel-docked` while the column is shown, and the inset reads it as its previous sibling through an arbitrary variant, so no state has to leave the sidebar.
+
 ```tsx
 import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
 import { AppSidebar } from '@cbt-bo/component-lib/components/nav';
@@ -101,7 +103,7 @@ import { SidebarInset, SidebarProvider } from '@cbt-bo/component-lib/components/
       activeKey={activeKey}
       renderLink={(item, children) => <Link to={item.path}>{children}</Link>}
     />
-    <SidebarInset>
+    <SidebarInset className="rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
       <Outlet />
     </SidebarInset>
   </div>
