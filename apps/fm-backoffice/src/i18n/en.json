@@ -11,6 +11,8 @@
     "closeOtherTabs": "Close other tabs",
     "scrollTabsLeft": "Scroll tabs left",
     "scrollTabsRight": "Scroll tabs right",
+    "openSidebar": "Open sidebar",
+    "closeSidebar": "Close sidebar",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "CST(+8)"
