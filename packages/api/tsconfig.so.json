@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@cbt-bo/api/*": ["./src/*"],
+      "@cbt-bo/api-schema/bo/*": ["../api-schema/dist/bo-so/*/index"]
+    }
+  }
+}

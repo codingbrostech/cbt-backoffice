@@ -5,3 +5,4 @@ coverage
 *.lock
 pnpm-lock.yaml
 **/routeTree.gen.ts
+**/generated/**

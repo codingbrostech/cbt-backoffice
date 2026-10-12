@@ -1,0 +1,31 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as LanguageMenuStories from './LanguageMenu.stories';
+
+<Meta of={LanguageMenuStories} />
+
+<Title />
+
+**LanguageMenu** shows the `shortLabel` of the option matching `currentLanguage` and opens a radio list of every option. When no option matches, the trigger falls back to the upper-cased `currentLanguage` so the button never renders empty.
+
+The `ILanguageOption` type is exported from here and reused by `AppHeader` and the apps' language constants.
+
+## Usage
+
+```tsx
+import { LanguageMenu } from '@cbt-bo/component-lib/components/header';
+
+<LanguageMenu
+  currentLanguage={i18n.language}
+  options={languageOptions}
+  onChange={language => i18n.changeLanguage(language)}
+/>;
+```
+
+## Stories
+
+<Story of={LanguageMenuStories.Default} />
+
+<Controls of={LanguageMenuStories.Default} />
+
+<Stories includePrimary={false} />

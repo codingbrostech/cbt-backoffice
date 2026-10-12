@@ -21,11 +21,14 @@ Three concepts to know:
 ```
 cbt-backoffice/
 ├── apps/
-│   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3000
-│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3001
+│   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3001
+│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3000
 │
 ├── packages/
-│   └── config/          # Shared ESLint, TypeScript, Prettier, Vitest, and Storybook configs
+│   ├── api/             # Shared MGT actions, query options and stores, consumed as TypeScript source
+│   ├── api-schema/      # Orval-generated MGT API clients, built with tsdown
+│   ├── config/          # Shared ESLint, TypeScript, Prettier, Vitest, and Storybook configs
+│   └── component-lib/   # Shared UI consumed as TypeScript source (no build step)
 │
 ├── turbo.json           # Root task definitions
 ├── pnpm-workspace.yaml  # Declares apps/* and packages/* as workspaces
@@ -35,12 +38,13 @@ cbt-backoffice/
 ### Dependency graph
 
 ```
-apps/so-backoffice ──┐
-                     ├──▶ packages/config
-apps/fm-backoffice ──┘
+apps/so-backoffice ──┐   ┌──▶ packages/component-lib ──▶ packages/config
+                     ├───┼──▶ packages/api ──▶ packages/api-schema ──▶ packages/config
+apps/fm-backoffice ──┘   ├──▶ packages/api-schema ──▶ packages/config
+                         └──▶ packages/config
 ```
 
-Both apps depend on `packages/config` via `devDependencies` for shared ESLint, TypeScript, Prettier, Vitest, and Storybook presets. The apps do not depend on each other.
+Both apps depend on `packages/config` via `devDependencies` for shared ESLint, TypeScript, Prettier, Vitest, and Storybook presets, on `packages/api-schema` for the generated MGT clients, on `packages/api` for the shared actions, query options and stores, and on `packages/component-lib` for the shared components. `packages/api` depends on `packages/api-schema` for the request layer and the generated client. The apps do not depend on each other. `packages/api` and `packages/component-lib` have no build script, so `^build` skips them and the apps compile their source directly.
 
 ### How `workspace:*` works
 
@@ -72,8 +76,9 @@ Every task our repo can run is defined in the root `turbo.json`. Here's a simpli
       "outputs": [".output/**", "dist/**"]           // 3. What to store in cache
     },
     "dev": {
-      "cache": false,   // 4. Never cache (long-running process)
-      "persistent": true // 5. Keeps running until you stop it
+      "cache": false,          // 4. Never cache (long-running process)
+      "dependsOn": ["^build"], // 5. Build config and api-schema first
+      "persistent": true       // 6. Keeps running until you stop it
     }
   }
 }
@@ -107,7 +112,7 @@ Every task our repo can run is defined in the root `turbo.json`. Here's a simpli
 | `lint`         | `^build`, `^lint`        | Yes     | No          |                                |
 | `lint:fix`     | `^build`                 | No      | No          | Mutates files, can't cache     |
 | `check:types`  | `^check:types`           | Yes     | No          |                                |
-| `dev`          | —                        | No      | Yes         | Long-running dev servers       |
+| `dev`          | `^build`                 | No      | Yes         | Long-running dev servers       |
 | `test`         | `^build`                 | No      | No          | Outputs: `coverage/**`         |
 | `format`       | `^build`                 | No      | No          | Mutates files, can't cache     |
 | `storybook`    | —                        | No      | Yes         | Long-running Storybook servers |

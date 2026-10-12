@@ -6,6 +6,12 @@ export default defineConfig({
     clearMocks: true,
     restoreMocks: true,
     mockReset: true,
-    projects: ['apps/so-backoffice', 'apps/fm-backoffice']
+    projects: [
+      'apps/so-backoffice',
+      'apps/fm-backoffice',
+      'packages/api-schema',
+      'packages/api',
+      'packages/component-lib'
+    ]
   }
 });

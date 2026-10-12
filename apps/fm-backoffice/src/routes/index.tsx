@@ -1,14 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/')({ component: Home });
+import { PATH } from '#/constants/path';
 
-function Home() {
-  return (
-    <main>
-      <h1>FM Backoffice</h1>
-      <p>
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </main>
-  );
-}
+export const Route = createFileRoute('/')({
+  beforeLoad: () => {
+    throw redirect({ to: PATH.DASHBOARD });
+  }
+});

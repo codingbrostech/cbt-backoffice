@@ -4,7 +4,7 @@ import { create, type ThemeVarsPartial } from 'storybook/theming';
 export interface IManagerOptions {
   /** The title displayed in the Storybook sidebar header and browser tab */
   title: string;
-  /** The base color scheme. Defaults to 'dark'. */
+  /** The base color scheme. Defaults to 'light'. */
   base?: ThemeVarsPartial['base'];
 }
 
@@ -75,7 +75,7 @@ function registerTitleAddon(pageTitle: string): void {
  * setupManager({ title: "Storybook - Component Lib" });
  * ```
  */
-export function setupManager({ title, base = 'dark' }: IManagerOptions): void {
+export function setupManager({ title, base = 'light' }: IManagerOptions): void {
   registerTitleAddon(title);
   addons.setConfig({
     theme: create({ base, brandTitle: title })

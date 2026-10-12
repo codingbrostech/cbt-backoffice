@@ -1,0 +1,8 @@
+{
+  "extends": "@cbt-bo/config/typescript/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src", "*.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

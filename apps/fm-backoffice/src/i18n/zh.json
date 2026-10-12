@@ -1,0 +1,85 @@
+{
+  "common": {
+    "logout": "登出",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼",
+    "unknownError": "未知錯誤",
+    "timezone": {
+      "utc0": "UTC+0",
+      "utc8": "亞洲時區(+8)"
+    },
+    "theme": {
+      "light": "切換至淺色模式",
+      "dark": "切換至深色模式"
+    }
+  },
+  "login": {
+    "title": "後台",
+    "brandName": "FUNaloMAX",
+    "account": "管理員編碼",
+    "password": "密碼",
+    "remember": "記住登入信息",
+    "submit": "登入",
+    "validation": {
+      "accountRequired": "請輸入管理員編碼",
+      "passwordRequired": "請輸入密碼"
+    },
+    "error": {
+      "fail": "登入失敗",
+      "sessionExpired": "登入時段已過期",
+      "code": {
+        "10001": "登入時段已過期"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "儀表板",
+    "welcome": "歡迎，{{name}}"
+  },
+  "nav": {
+    "dashboard": "儀表板",
+    "player": "玩家",
+    "playerMgmt": "玩家管理",
+    "players": "玩家列表",
+    "playerSessions": "玩家登入時段",
+    "playerMobilePolicy": "玩家手機政策",
+    "playerSelfLimits": "玩家自我限制",
+    "playerLabels": "玩家標籤",
+    "playerGroups": "玩家群組",
+    "vipLevels": "VIP 等級",
+    "finance": "報告",
+    "reports": "報表",
+    "betTrans": "投注記錄",
+    "ledgerTrans": "帳戶交易",
+    "paymentTransaction": "支付記錄",
+    "pointTransaction": "積分交易",
+    "wagerStats": "投注統計",
+    "game": "遊戲",
+    "games": "遊戲",
+    "gameCategories": "遊戲分類",
+    "gameRanking": "遊戲排行榜",
+    "promotion": "推廣",
+    "banners": "橫幅",
+    "bonuses": "獎勵",
+    "rebateSetting": "返水設定",
+    "rebateTrans": "返水獎勵記錄",
+    "rewardsShop": "獎勵商城",
+    "rewardsShopCategories": "獎勵商城分類",
+    "redemptionHistory": "兌換紀錄",
+    "promos": "推廣",
+    "promotionTransactions": "推廣交易",
+    "tierTransactions": "等級交易",
+    "pages": "頁面",
+    "setting": "設置",
+    "acctMgmt": "帳號管理",
+    "admins": "管理員",
+    "adminQuotaConfigs": "管理員額度配置",
+    "adminQuotas": "管理員充值額度",
+    "adminSessions": "管理員登入時段",
+    "adminOpsLogs": "管理員操作日誌",
+    "roleManagement": "角色管理",
+    "roles": "角色",
+    "rolesPermission": "角色權限",
+    "paymentChannels": "金流通道"
+  }
+}

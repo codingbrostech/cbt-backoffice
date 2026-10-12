@@ -6,7 +6,7 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev --port 3001",
+    "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
@@ -22,6 +22,10 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@cbt-bo/api": "workspace:*",
+    "@cbt-bo/api-schema": "workspace:*",
+    "@cbt-bo/component-lib": "workspace:*",
+    "@hookform/resolvers": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/match-sorter-utils": "catalog:",
     "@tanstack/react-devtools": "catalog:",
@@ -33,16 +37,16 @@
     "@tanstack/react-router-ssr-query": "catalog:",
     "@tanstack/react-start": "catalog:",
     "@tanstack/react-table": "catalog:",
-    "class-variance-authority": "catalog:",
-    "clsx": "catalog:",
+    "i18next": "catalog:",
     "lucide-react": "catalog:",
     "nitro": "catalog:",
-    "radix-ui": "catalog:",
+    "radash": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwind-merge": "catalog:",
+    "react-hook-form": "catalog:",
+    "react-i18next": "catalog:",
+    "sonner": "catalog:",
     "tailwindcss": "catalog:",
-    "tw-animate-css": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

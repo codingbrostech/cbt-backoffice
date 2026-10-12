@@ -8,6 +8,9 @@ A **Turborepo monorepo** for the CBT backoffice apps using pnpm workspaces.
 
 - `apps/so-backoffice`: Solaire Online admin portal, a [TanStack Start](https://tanstack.com/start) app
 - `apps/fm-backoffice`: FUNaloMAX admin portal, a [TanStack Start](https://tanstack.com/start) app
+- `packages/component-lib`: Shared UI consumed as source by both apps (shadcn/ui set, theme stylesheet, react-hook-form field bindings, PageSpinner). Page forms live in the apps.
+- `packages/api-schema`: Generated MGT API clients plus the `@cbt-bo/api-schema/mgt` request layer (`createMgtAction`, `ApiError`)
+- `packages/api`: Hand-written MGT actions, query options and stores shared by both apps, consumed as source and brand-neutral through the `@cbt-bo/api-schema/bo/*` alias
 - `packages/config`: Shared configurations (ESLint, TypeScript, Prettier, Vitest, Storybook)
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
@@ -33,6 +36,22 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 pnpm install
 ```
 
+`postinstall` builds `@cbt-bo/config` and `@cbt-bo/api-schema`, which the apps import from `dist/`.
+
+### Configure an app
+
+Each app reads the MGT API settings from the server environment at request time. Copy the example file and adjust it.
+
+```bash
+cp apps/fm-backoffice/.env.example apps/fm-backoffice/.env
+cp apps/so-backoffice/.env.example apps/so-backoffice/.env
+```
+
+| Variable       | Purpose                                |
+| -------------- | -------------------------------------- |
+| `MGT_BASE_URL` | Origin of the MGT API for this brand   |
+| `MGT_SITE_ID`  | Value sent in the `X-Tgpx-Site` header |
+
 ### Develop
 
 ```bash
@@ -40,8 +59,8 @@ pnpm install
 pnpm dev
 
 # One app
-pnpm dev:so    # http://localhost:3000
-pnpm dev:fm    # http://localhost:3001
+pnpm dev:so    # http://localhost:3001
+pnpm dev:fm    # http://localhost:3000
 ```
 
 ### Build
@@ -60,6 +79,14 @@ pnpm build --filter=so-backoffice
 pnpm lint
 pnpm check:types
 pnpm test
+```
+
+### Regenerate the API clients
+
+```bash
+pnpm gen:api         # both MGT targets, then rebuild the package
+pnpm gen:api:bo:fm   # FM only
+pnpm gen:api:bo:so   # SO only
 ```
 
 ### Add a TanStack integration
