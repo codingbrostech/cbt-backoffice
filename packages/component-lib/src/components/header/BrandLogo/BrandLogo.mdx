@@ -6,7 +6,7 @@ import * as BrandLogoStories from './BrandLogo.stories';
 
 <Title />
 
-**BrandLogo** is the brand mark for `AppHeader`'s `start` slot. It shows `icon` beside `brandName`, and drops `brandName` once the sidebar rail collapses to icon only, so the mark keeps tracking the rail's width.
+**BrandLogo** is the brand mark for `AppHeader.Start`. It shows `icon` beside `brandName`, and drops `brandName` once the sidebar rail collapses to icon only, so the mark keeps tracking the rail's width.
 
 It reads `useSidebar()`, so it has to render inside a `SidebarProvider`. The stories below wrap it themselves.
 
@@ -16,15 +16,15 @@ It reads `useSidebar()`, so it has to render inside a `SidebarProvider`. The sto
 import brandIcon from '#/assets/brand-icon.webp';
 import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
 
-<AppHeader
-  start={
+<AppHeader.Root>
+  <AppHeader.Start>
     <BrandLogo
       icon={<img src={brandIcon} alt={t('login.brandName')} className="size-5" />}
       brandName={t('login.brandName')}
     />
-  }
-  {...headerProps}
-/>;
+  </AppHeader.Start>
+  <AppHeader.End>{controls}</AppHeader.End>
+</AppHeader.Root>;
 ```
 
 ## Stories
