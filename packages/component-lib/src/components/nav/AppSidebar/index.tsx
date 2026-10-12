@@ -41,6 +41,8 @@ export interface IAppSidebarProps {
 /**
  * A group picked from the rail, tagged with the nav mode it was picked in.
  * A pick made in the other mode is ignored, so toggling the rail drops it.
+ * Navigating to a different page also drops it, so the docked or popover
+ * panel falls back to following `activeKey`'s own group.
  */
 interface IGroupSelection {
   key?: string;
@@ -57,14 +59,25 @@ const TOOLTIP_PILL = { className: 'rounded-full', sideOffset: 12, showArrow: fal
  * Nav rail for the authenticated pages. Expanded, each top-level item shows
  * its icon and label, and a group opens its children in a docked column that
  * defaults to the group containing `activeKey`. Collapsed, the rail is icon
- * only and a group opens its children in a popover. The rail is NAV_RAIL_WIDTH
- * wide expanded and NAV_RAIL_WIDTH_COLLAPSED collapsed, and the docked column
- * adds NAV_PANEL_WIDTH. Reads `useSidebar()`, so it must render inside a
- * `SidebarProvider`, whose open state the footer toggle flips.
+ * only and a group opens its children in a popover. Navigating to a page
+ * outside a manually picked group (a tab, a link inside the panel itself)
+ * drops that pick, so the panel snaps back to `activeKey`'s own group. The
+ * rail is NAV_RAIL_WIDTH wide expanded and NAV_RAIL_WIDTH_COLLAPSED
+ * collapsed, and the docked column adds NAV_PANEL_WIDTH. The root carries
+ * `data-panel-docked` while the docked column is shown, so the page
+ * container beside it can square off its left edge only then. Reads
+ * `useSidebar()`, so it must render inside a `SidebarProvider`, whose open
+ * state the footer toggle flips.
  */
 const AppSidebar = ({ items, activeKey, renderLink, footer }: IAppSidebarProps) => {
   const { open: isNavExpanded, setOpen } = useSidebar();
   const [groupSelection, setGroupSelection] = useState<IGroupSelection>();
+  const [prevActiveKey, setPrevActiveKey] = useState(activeKey);
+
+  if (activeKey !== prevActiveKey) {
+    setPrevActiveKey(activeKey);
+    setGroupSelection(undefined);
+  }
 
   const selectedGroupKey =
     groupSelection?.isNavExpanded === isNavExpanded ? groupSelection.key : undefined;
@@ -188,8 +201,9 @@ const AppSidebar = ({ items, activeKey, renderLink, footer }: IAppSidebarProps) 
   return (
     <Sidebar
       collapsible="none"
-      className="hidden flex-row overflow-hidden border-r border-sidebar-border transition-[width] duration-200 ease-linear md:flex"
+      className="hidden shrink-0 flex-row overflow-hidden transition-[width] duration-200 ease-linear md:flex"
       style={{ width: navWidth }}
+      data-panel-docked={panelItems ? '' : undefined}
     >
       <Sidebar collapsible="none" className="shrink-0" style={{ width: railWidth }}>
         <SidebarContent>
@@ -212,7 +226,7 @@ const AppSidebar = ({ items, activeKey, renderLink, footer }: IAppSidebarProps) 
       {panelItems && (
         <Sidebar
           collapsible="none"
-          className="hidden min-w-0 flex-1 rounded-tl-xl bg-sidebar-panel md:flex"
+          className="hidden min-w-0 flex-1 rounded-tl-md rounded-bl-sm bg-sidebar-panel md:flex"
         >
           <SidebarContent>
             <SidebarGroup>

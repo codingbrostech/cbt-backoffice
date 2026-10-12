@@ -1,9 +1,10 @@
 import { ensureSession, resetSessionQuery, signOut } from '@cbt-bo/api/auth/queries';
 import { hydrateSessionStore } from '@cbt-bo/api/auth/store';
 import { initMgtClient } from '@cbt-bo/api/client';
+import { hydratePageTabsStore, usePageTabsStore } from '@cbt-bo/api/page-tabs/store';
 import { hydratePreferencesStore, usePreferencesStore } from '@cbt-bo/api/preferences/store';
 import { AppHeader, BrandLogo } from '@cbt-bo/component-lib/components/header';
-import { PageSpinner } from '@cbt-bo/component-lib/components/layout';
+import { HeaderTabs, PageSpinner } from '@cbt-bo/component-lib/components/layout';
 import { AppSidebar, buildActiveNavKey } from '@cbt-bo/component-lib/components/nav';
 import { SidebarInset, SidebarProvider } from '@cbt-bo/component-lib/components/ui/sidebar';
 import { useQueryClient } from '@tanstack/react-query';
@@ -22,6 +23,7 @@ import brandIcon from '#/assets/brand-icon.webp';
 import { LANGUAGE_OPTIONS } from '#/constants/language-options';
 import { buildNavItems } from '#/constants/nav-items';
 import { PATH } from '#/constants/path';
+import { usePageTabs } from '#/hooks/use-page-tabs';
 
 export const Route = createFileRoute('/_authenticated')({
   ssr: false,
@@ -29,6 +31,7 @@ export const Route = createFileRoute('/_authenticated')({
     initMgtClient(env);
     await hydrateSessionStore();
     await hydratePreferencesStore();
+    await hydratePageTabsStore();
 
     const user = await ensureSession(queryClient);
 
@@ -52,6 +55,7 @@ function AuthenticatedLayout() {
 
   const items = buildNavItems(t);
   const activeKey = buildActiveNavKey(items, location.pathname) ?? '';
+  const pageTabs = usePageTabs(items, location.pathname);
 
   const handleLogout = useCallback(() => {
     void (async () => {
@@ -59,6 +63,7 @@ function AuthenticatedLayout() {
       resetSessionQuery(queryClient);
       await navigate({ to: PATH.LOGIN, replace: true });
       queryClient.clear();
+      usePageTabsStore.getState().clearPaths();
     })();
   }, [navigate, queryClient]);
 
@@ -74,7 +79,7 @@ function AuthenticatedLayout() {
   }, [theme]);
 
   return (
-    <SidebarProvider className="h-svh flex-col">
+    <SidebarProvider className="h-svh flex-col border-4 border-sidebar bg-sidebar">
       <AppHeader
         start={
           <BrandLogo
@@ -106,8 +111,32 @@ function AuthenticatedLayout() {
             </Link>
           )}
         />
-        <SidebarInset>
-          <Outlet />
+        <SidebarInset className="min-h-0 min-w-0 rounded-sm rounded-tl-md [[data-panel-docked]+&]:rounded-l-none">
+          <div className="mx-5 mt-2.5 mb-5 flex min-h-0 flex-1 flex-col">
+            <HeaderTabs.Root
+              tabs={pageTabs.tabs}
+              activeKey={pageTabs.activeKey}
+              onSelect={pageTabs.onSelect}
+              onClose={pageTabs.onClose}
+              onCloseOthers={pageTabs.onCloseOthers}
+              onMove={pageTabs.onMove}
+            >
+              <HeaderTabs.ScrollArea
+                scrollLeftLabel={t('common.scrollTabsLeft')}
+                scrollRightLabel={t('common.scrollTabsRight')}
+              >
+                <HeaderTabs.List closeTabLabel={t('common.closeTab')} />
+              </HeaderTabs.ScrollArea>
+              <HeaderTabs.Actions
+                label={t('common.tabActions')}
+                closeSelectedTabLabel={t('common.closeSelectedTab')}
+                closeOtherTabsLabel={t('common.closeOtherTabs')}
+              />
+            </HeaderTabs.Root>
+            <div className="flex min-h-0 flex-1 flex-col overflow-auto rounded-sm rounded-t-none border border-t-0 border-border bg-card px-5 pt-6 pb-2">
+              <Outlet />
+            </div>
+          </div>
         </SidebarInset>
       </div>
     </SidebarProvider>

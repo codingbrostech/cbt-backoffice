@@ -8,6 +8,10 @@ allowBuilds:
   unrs-resolver: true
 
 catalog:
+  "@dnd-kit/core": ^6.3.1
+  "@dnd-kit/modifiers": ^9.0.0
+  "@dnd-kit/sortable": ^10.0.0
+  "@dnd-kit/utilities": ^3.2.2
   "@eslint/js": ^10.0.1
   "@fontsource-variable/geist": ^5.2.9
   "@hookform/resolvers": ^5.9.1
@@ -92,20 +96,20 @@ catalog:
   zustand: ^5.0.8
 
 minimumReleaseAgeExclude:
-  - '@tanstack/history@1.162.4'
-  - '@tanstack/react-router-devtools@1.167.2'
-  - '@tanstack/react-router@1.170.36'
-  - '@tanstack/react-start-client@1.168.34'
-  - '@tanstack/react-start-rsc@0.1.52'
-  - '@tanstack/react-start-server@1.167.41'
-  - '@tanstack/react-start@1.168.53'
-  - '@tanstack/router-cli@1.167.36'
-  - '@tanstack/router-core@1.171.30'
-  - '@tanstack/router-devtools-core@1.168.2'
-  - '@tanstack/router-generator@1.167.36'
-  - '@tanstack/router-plugin@1.168.38'
-  - '@tanstack/start-client-core@1.170.30'
-  - '@tanstack/start-plugin-core@1.171.43'
-  - '@tanstack/start-server-core@1.169.35'
-  - '@tanstack/start-storage-context@1.167.32'
+  - "@tanstack/history@1.162.4"
+  - "@tanstack/react-router-devtools@1.167.2"
+  - "@tanstack/react-router@1.170.36"
+  - "@tanstack/react-start-client@1.168.34"
+  - "@tanstack/react-start-rsc@0.1.52"
+  - "@tanstack/react-start-server@1.167.41"
+  - "@tanstack/react-start@1.168.53"
+  - "@tanstack/router-cli@1.167.36"
+  - "@tanstack/router-core@1.171.30"
+  - "@tanstack/router-devtools-core@1.168.2"
+  - "@tanstack/router-generator@1.167.36"
+  - "@tanstack/router-plugin@1.168.38"
+  - "@tanstack/start-client-core@1.170.30"
+  - "@tanstack/start-plugin-core@1.171.43"
+  - "@tanstack/start-server-core@1.169.35"
+  - "@tanstack/start-storage-context@1.167.32"
   - zod@4.6.5
