@@ -13,7 +13,7 @@ import {
 import type { TNavItem } from '@cbt-bo/component-lib/lib/nav-items';
 
 /**
- * Story fixture covering every item shape NavMenuList and AppSidebar handle.
+ * Story fixture covering every item shape `AppSidebar` handles.
  * A top-level leaf, a group of leaves, a group with a nested group, and a
  * group made only of nested groups.
  */
@@ -94,5 +94,3 @@ export const NAV_ITEMS = [
     ]
   }
 ] as const satisfies TNavItem[];
-
-export const PLAYER_NAV_ITEMS = NAV_ITEMS[1].children;

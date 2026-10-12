@@ -32,8 +32,9 @@ export const isNavGroupItem = (item: TNavItem): item is INavGroupItem =>
 
 /**
  * Whether `item` or one of its nested children, at any depth, matches `activeKey`.
+ * False when `activeKey` is absent.
  */
-export const containsActiveKey = (item: TNavItem, activeKey: string): boolean => {
+export const containsActiveKey = (item: TNavItem, activeKey?: string): boolean => {
   if (item.key === activeKey) return true;
 
   return isNavGroupItem(item) && item.children.some(child => containsActiveKey(child, activeKey));
@@ -43,7 +44,7 @@ export const containsActiveKey = (item: TNavItem, activeKey: string): boolean =>
  * The top-level item whose subtree contains `activeKey`, if any. Used to
  * auto-open the right group's panel when landing directly on one of its pages.
  */
-export const buildActiveGroupKey = (items: TNavItem[], activeKey: string): string | undefined =>
+export const buildActiveGroupKey = (items: TNavItem[], activeKey?: string): string | undefined =>
   items.find(item => isNavGroupItem(item) && containsActiveKey(item, activeKey))?.key;
 
 /**
