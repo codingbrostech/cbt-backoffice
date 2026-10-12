@@ -1,6 +1,7 @@
 import type { TNavItem } from '@cbt-bo/component-lib/lib/nav-items';
 import {
   buildActiveGroupKey,
+  buildActiveNavItem,
   buildActiveNavKey,
   containsActiveKey
 } from '@cbt-bo/component-lib/lib/nav-items';
@@ -81,6 +82,26 @@ describe('buildActiveGroupKey', () => {
   describe('when the active key matches nothing', () => {
     it('should return undefined', () => {
       expect(buildActiveGroupKey(ITEMS, 'unknown')).toBeUndefined();
+    });
+  });
+});
+
+describe('buildActiveNavItem', () => {
+  describe('when the path matches a top-level leaf', () => {
+    it('should return that leaf', () => {
+      expect(buildActiveNavItem(ITEMS, '/dashboard')).toBe(ITEMS[0]);
+    });
+  });
+
+  describe('when the path matches a nested grandchild', () => {
+    it('should return the grandchild', () => {
+      expect(buildActiveNavItem(ITEMS, '/game-round-logs')).toBe(ITEMS[1].children[1].children[0]);
+    });
+  });
+
+  describe('when the path matches nothing', () => {
+    it('should return undefined', () => {
+      expect(buildActiveNavItem(ITEMS, '/unknown')).toBeUndefined();
     });
   });
 });

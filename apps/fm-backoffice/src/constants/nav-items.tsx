@@ -99,10 +99,10 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
     ]
   },
   {
-    key: 'finance',
-    label: t('nav.finance'),
+    key: 'reports',
+    label: t('nav.reports'),
     icon: <FileBarChart />,
-    pageKey: 'finance',
+    pageKey: 'reports',
     children: [
       {
         key: 'reports',

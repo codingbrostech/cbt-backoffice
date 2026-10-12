@@ -47,19 +47,29 @@ export const buildActiveGroupKey = (items: TNavItem[], activeKey: string): strin
   items.find(item => isNavGroupItem(item) && containsActiveKey(item, activeKey))?.key;
 
 /**
- * The key of the leaf item whose `path` matches `pathname`, searching nested
- * group children at any depth.
+ * The leaf item whose `path` matches `pathname`, searching nested group
+ * children at any depth.
  */
-export const buildActiveNavKey = (items: TNavItem[], pathname: string): string | undefined => {
+export const buildActiveNavItem = (
+  items: TNavItem[],
+  pathname: string
+): INavLeafItem | undefined => {
   for (const item of items) {
     if (isNavGroupItem(item)) {
-      const childKey = buildActiveNavKey(item.children, pathname);
-      if (childKey) return childKey;
+      const childItem = buildActiveNavItem(item.children, pathname);
+      if (childItem) return childItem;
       continue;
     }
 
-    if (item.path === pathname) return item.key;
+    if (item.path === pathname) return item;
   }
 
   return undefined;
 };
+
+/**
+ * The key of the leaf item whose `path` matches `pathname`, searching nested
+ * group children at any depth.
+ */
+export const buildActiveNavKey = (items: TNavItem[], pathname: string): string | undefined =>
+  buildActiveNavItem(items, pathname)?.key;

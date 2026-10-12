@@ -13,7 +13,7 @@ Routes live under `src/routes`. TanStack Router regenerates `src/routeTree.gen.t
 
 ```
 src/
-├── routes/          __root (env + providers), login, _authenticated (session guard), _authenticated/dashboard
+├── routes/          __root (env + providers), login, _authenticated (session guard), _authenticated/<section>/<page> per nav entry
 ├── pages/           one folder per page: <Name>Page plus its hooks and forms
 ├── api/             actions for endpoints only this brand has (empty until one is needed)
 ├── hooks/           use-logout, use-session-expiry

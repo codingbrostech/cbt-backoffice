@@ -14,6 +14,40 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as AuthenticatedGamesCategoriesRouteImport } from './routes/_authenticated/games/categories'
+import { Route as AuthenticatedGamesGamesRouteImport } from './routes/_authenticated/games/games'
+import { Route as AuthenticatedGamesRankingRouteImport } from './routes/_authenticated/games/ranking'
+import { Route as AuthenticatedPlayersGroupsRouteImport } from './routes/_authenticated/players/groups'
+import { Route as AuthenticatedPlayersLabelsRouteImport } from './routes/_authenticated/players/labels'
+import { Route as AuthenticatedPlayersMobilePolicyRouteImport } from './routes/_authenticated/players/mobile-policy'
+import { Route as AuthenticatedPlayersPlayersRouteImport } from './routes/_authenticated/players/players'
+import { Route as AuthenticatedPlayersSelfLimitsRouteImport } from './routes/_authenticated/players/self-limits'
+import { Route as AuthenticatedPlayersSessionsRouteImport } from './routes/_authenticated/players/sessions'
+import { Route as AuthenticatedPlayersVipLevelsRouteImport } from './routes/_authenticated/players/vip-levels'
+import { Route as AuthenticatedPromotionsBannersRouteImport } from './routes/_authenticated/promotions/banners'
+import { Route as AuthenticatedPromotionsBonusesRouteImport } from './routes/_authenticated/promotions/bonuses'
+import { Route as AuthenticatedPromotionsPagesRouteImport } from './routes/_authenticated/promotions/pages'
+import { Route as AuthenticatedPromotionsPromotionsRouteImport } from './routes/_authenticated/promotions/promotions'
+import { Route as AuthenticatedPromotionsRebateSettingRouteImport } from './routes/_authenticated/promotions/rebate-setting'
+import { Route as AuthenticatedPromotionsRebateTransRouteImport } from './routes/_authenticated/promotions/rebate-trans'
+import { Route as AuthenticatedPromotionsTransactionsRouteImport } from './routes/_authenticated/promotions/transactions'
+import { Route as AuthenticatedPromotionsVipLevelTransRouteImport } from './routes/_authenticated/promotions/vip-level-trans'
+import { Route as AuthenticatedPromotionsXpShopRouteImport } from './routes/_authenticated/promotions/xp-shop'
+import { Route as AuthenticatedPromotionsXpShopCategoriesRouteImport } from './routes/_authenticated/promotions/xp-shop-categories'
+import { Route as AuthenticatedPromotionsXpShopHistoryRouteImport } from './routes/_authenticated/promotions/xp-shop-history'
+import { Route as AuthenticatedReportsBetTransRouteImport } from './routes/_authenticated/reports/bet-trans'
+import { Route as AuthenticatedReportsLedgerTransRouteImport } from './routes/_authenticated/reports/ledger-trans'
+import { Route as AuthenticatedReportsPaymentTransactionRouteImport } from './routes/_authenticated/reports/payment-transaction'
+import { Route as AuthenticatedReportsPointTransactionRouteImport } from './routes/_authenticated/reports/point-transaction'
+import { Route as AuthenticatedReportsWagerStatsRouteImport } from './routes/_authenticated/reports/wager-stats'
+import { Route as AuthenticatedSettingsAdminOpsLogsRouteImport } from './routes/_authenticated/settings/admin-ops-logs'
+import { Route as AuthenticatedSettingsAdminQuotaConfigsRouteImport } from './routes/_authenticated/settings/admin-quota-configs'
+import { Route as AuthenticatedSettingsAdminQuotasRouteImport } from './routes/_authenticated/settings/admin-quotas'
+import { Route as AuthenticatedSettingsAdminSessionsRouteImport } from './routes/_authenticated/settings/admin-sessions'
+import { Route as AuthenticatedSettingsAdminsRouteImport } from './routes/_authenticated/settings/admins'
+import { Route as AuthenticatedSettingsPaymentChannelsRouteImport } from './routes/_authenticated/settings/payment-channels'
+import { Route as AuthenticatedSettingsRolesRouteImport } from './routes/_authenticated/settings/roles'
+import { Route as AuthenticatedSettingsRolesPermissionRouteImport } from './routes/_authenticated/settings/roles-permission'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +73,289 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
   path: '/api/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedGamesCategoriesRoute =
+  AuthenticatedGamesCategoriesRouteImport.update({
+    id: '/games/categories',
+    path: '/games/categories',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedGamesGamesRoute = AuthenticatedGamesGamesRouteImport.update({
+  id: '/games/games',
+  path: '/games/games',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedGamesRankingRoute =
+  AuthenticatedGamesRankingRouteImport.update({
+    id: '/games/ranking',
+    path: '/games/ranking',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersGroupsRoute =
+  AuthenticatedPlayersGroupsRouteImport.update({
+    id: '/players/groups',
+    path: '/players/groups',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersLabelsRoute =
+  AuthenticatedPlayersLabelsRouteImport.update({
+    id: '/players/labels',
+    path: '/players/labels',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersMobilePolicyRoute =
+  AuthenticatedPlayersMobilePolicyRouteImport.update({
+    id: '/players/mobile-policy',
+    path: '/players/mobile-policy',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersPlayersRoute =
+  AuthenticatedPlayersPlayersRouteImport.update({
+    id: '/players/players',
+    path: '/players/players',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersSelfLimitsRoute =
+  AuthenticatedPlayersSelfLimitsRouteImport.update({
+    id: '/players/self-limits',
+    path: '/players/self-limits',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersSessionsRoute =
+  AuthenticatedPlayersSessionsRouteImport.update({
+    id: '/players/sessions',
+    path: '/players/sessions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPlayersVipLevelsRoute =
+  AuthenticatedPlayersVipLevelsRouteImport.update({
+    id: '/players/vip-levels',
+    path: '/players/vip-levels',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsBannersRoute =
+  AuthenticatedPromotionsBannersRouteImport.update({
+    id: '/promotions/banners',
+    path: '/promotions/banners',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsBonusesRoute =
+  AuthenticatedPromotionsBonusesRouteImport.update({
+    id: '/promotions/bonuses',
+    path: '/promotions/bonuses',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsPagesRoute =
+  AuthenticatedPromotionsPagesRouteImport.update({
+    id: '/promotions/pages',
+    path: '/promotions/pages',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsPromotionsRoute =
+  AuthenticatedPromotionsPromotionsRouteImport.update({
+    id: '/promotions/promotions',
+    path: '/promotions/promotions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsRebateSettingRoute =
+  AuthenticatedPromotionsRebateSettingRouteImport.update({
+    id: '/promotions/rebate-setting',
+    path: '/promotions/rebate-setting',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsRebateTransRoute =
+  AuthenticatedPromotionsRebateTransRouteImport.update({
+    id: '/promotions/rebate-trans',
+    path: '/promotions/rebate-trans',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsTransactionsRoute =
+  AuthenticatedPromotionsTransactionsRouteImport.update({
+    id: '/promotions/transactions',
+    path: '/promotions/transactions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsVipLevelTransRoute =
+  AuthenticatedPromotionsVipLevelTransRouteImport.update({
+    id: '/promotions/vip-level-trans',
+    path: '/promotions/vip-level-trans',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsXpShopRoute =
+  AuthenticatedPromotionsXpShopRouteImport.update({
+    id: '/promotions/xp-shop',
+    path: '/promotions/xp-shop',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsXpShopCategoriesRoute =
+  AuthenticatedPromotionsXpShopCategoriesRouteImport.update({
+    id: '/promotions/xp-shop-categories',
+    path: '/promotions/xp-shop-categories',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPromotionsXpShopHistoryRoute =
+  AuthenticatedPromotionsXpShopHistoryRouteImport.update({
+    id: '/promotions/xp-shop-history',
+    path: '/promotions/xp-shop-history',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsBetTransRoute =
+  AuthenticatedReportsBetTransRouteImport.update({
+    id: '/reports/bet-trans',
+    path: '/reports/bet-trans',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsLedgerTransRoute =
+  AuthenticatedReportsLedgerTransRouteImport.update({
+    id: '/reports/ledger-trans',
+    path: '/reports/ledger-trans',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsPaymentTransactionRoute =
+  AuthenticatedReportsPaymentTransactionRouteImport.update({
+    id: '/reports/payment-transaction',
+    path: '/reports/payment-transaction',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsPointTransactionRoute =
+  AuthenticatedReportsPointTransactionRouteImport.update({
+    id: '/reports/point-transaction',
+    path: '/reports/point-transaction',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedReportsWagerStatsRoute =
+  AuthenticatedReportsWagerStatsRouteImport.update({
+    id: '/reports/wager-stats',
+    path: '/reports/wager-stats',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAdminOpsLogsRoute =
+  AuthenticatedSettingsAdminOpsLogsRouteImport.update({
+    id: '/settings/admin-ops-logs',
+    path: '/settings/admin-ops-logs',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAdminQuotaConfigsRoute =
+  AuthenticatedSettingsAdminQuotaConfigsRouteImport.update({
+    id: '/settings/admin-quota-configs',
+    path: '/settings/admin-quota-configs',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAdminQuotasRoute =
+  AuthenticatedSettingsAdminQuotasRouteImport.update({
+    id: '/settings/admin-quotas',
+    path: '/settings/admin-quotas',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAdminSessionsRoute =
+  AuthenticatedSettingsAdminSessionsRouteImport.update({
+    id: '/settings/admin-sessions',
+    path: '/settings/admin-sessions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAdminsRoute =
+  AuthenticatedSettingsAdminsRouteImport.update({
+    id: '/settings/admins',
+    path: '/settings/admins',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsPaymentChannelsRoute =
+  AuthenticatedSettingsPaymentChannelsRouteImport.update({
+    id: '/settings/payment-channels',
+    path: '/settings/payment-channels',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsRolesRoute =
+  AuthenticatedSettingsRolesRouteImport.update({
+    id: '/settings/roles',
+    path: '/settings/roles',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsRolesPermissionRoute =
+  AuthenticatedSettingsRolesPermissionRouteImport.update({
+    id: '/settings/roles-permission',
+    path: '/settings/roles-permission',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/games/categories': typeof AuthenticatedGamesCategoriesRoute
+  '/games/games': typeof AuthenticatedGamesGamesRoute
+  '/games/ranking': typeof AuthenticatedGamesRankingRoute
+  '/players/groups': typeof AuthenticatedPlayersGroupsRoute
+  '/players/labels': typeof AuthenticatedPlayersLabelsRoute
+  '/players/mobile-policy': typeof AuthenticatedPlayersMobilePolicyRoute
+  '/players/players': typeof AuthenticatedPlayersPlayersRoute
+  '/players/self-limits': typeof AuthenticatedPlayersSelfLimitsRoute
+  '/players/sessions': typeof AuthenticatedPlayersSessionsRoute
+  '/players/vip-levels': typeof AuthenticatedPlayersVipLevelsRoute
+  '/promotions/banners': typeof AuthenticatedPromotionsBannersRoute
+  '/promotions/bonuses': typeof AuthenticatedPromotionsBonusesRoute
+  '/promotions/pages': typeof AuthenticatedPromotionsPagesRoute
+  '/promotions/promotions': typeof AuthenticatedPromotionsPromotionsRoute
+  '/promotions/rebate-setting': typeof AuthenticatedPromotionsRebateSettingRoute
+  '/promotions/rebate-trans': typeof AuthenticatedPromotionsRebateTransRoute
+  '/promotions/transactions': typeof AuthenticatedPromotionsTransactionsRoute
+  '/promotions/vip-level-trans': typeof AuthenticatedPromotionsVipLevelTransRoute
+  '/promotions/xp-shop': typeof AuthenticatedPromotionsXpShopRoute
+  '/promotions/xp-shop-categories': typeof AuthenticatedPromotionsXpShopCategoriesRoute
+  '/promotions/xp-shop-history': typeof AuthenticatedPromotionsXpShopHistoryRoute
+  '/reports/bet-trans': typeof AuthenticatedReportsBetTransRoute
+  '/reports/ledger-trans': typeof AuthenticatedReportsLedgerTransRoute
+  '/reports/payment-transaction': typeof AuthenticatedReportsPaymentTransactionRoute
+  '/reports/point-transaction': typeof AuthenticatedReportsPointTransactionRoute
+  '/reports/wager-stats': typeof AuthenticatedReportsWagerStatsRoute
+  '/settings/admin-ops-logs': typeof AuthenticatedSettingsAdminOpsLogsRoute
+  '/settings/admin-quota-configs': typeof AuthenticatedSettingsAdminQuotaConfigsRoute
+  '/settings/admin-quotas': typeof AuthenticatedSettingsAdminQuotasRoute
+  '/settings/admin-sessions': typeof AuthenticatedSettingsAdminSessionsRoute
+  '/settings/admins': typeof AuthenticatedSettingsAdminsRoute
+  '/settings/payment-channels': typeof AuthenticatedSettingsPaymentChannelsRoute
+  '/settings/roles': typeof AuthenticatedSettingsRolesRoute
+  '/settings/roles-permission': typeof AuthenticatedSettingsRolesPermissionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/games/categories': typeof AuthenticatedGamesCategoriesRoute
+  '/games/games': typeof AuthenticatedGamesGamesRoute
+  '/games/ranking': typeof AuthenticatedGamesRankingRoute
+  '/players/groups': typeof AuthenticatedPlayersGroupsRoute
+  '/players/labels': typeof AuthenticatedPlayersLabelsRoute
+  '/players/mobile-policy': typeof AuthenticatedPlayersMobilePolicyRoute
+  '/players/players': typeof AuthenticatedPlayersPlayersRoute
+  '/players/self-limits': typeof AuthenticatedPlayersSelfLimitsRoute
+  '/players/sessions': typeof AuthenticatedPlayersSessionsRoute
+  '/players/vip-levels': typeof AuthenticatedPlayersVipLevelsRoute
+  '/promotions/banners': typeof AuthenticatedPromotionsBannersRoute
+  '/promotions/bonuses': typeof AuthenticatedPromotionsBonusesRoute
+  '/promotions/pages': typeof AuthenticatedPromotionsPagesRoute
+  '/promotions/promotions': typeof AuthenticatedPromotionsPromotionsRoute
+  '/promotions/rebate-setting': typeof AuthenticatedPromotionsRebateSettingRoute
+  '/promotions/rebate-trans': typeof AuthenticatedPromotionsRebateTransRoute
+  '/promotions/transactions': typeof AuthenticatedPromotionsTransactionsRoute
+  '/promotions/vip-level-trans': typeof AuthenticatedPromotionsVipLevelTransRoute
+  '/promotions/xp-shop': typeof AuthenticatedPromotionsXpShopRoute
+  '/promotions/xp-shop-categories': typeof AuthenticatedPromotionsXpShopCategoriesRoute
+  '/promotions/xp-shop-history': typeof AuthenticatedPromotionsXpShopHistoryRoute
+  '/reports/bet-trans': typeof AuthenticatedReportsBetTransRoute
+  '/reports/ledger-trans': typeof AuthenticatedReportsLedgerTransRoute
+  '/reports/payment-transaction': typeof AuthenticatedReportsPaymentTransactionRoute
+  '/reports/point-transaction': typeof AuthenticatedReportsPointTransactionRoute
+  '/reports/wager-stats': typeof AuthenticatedReportsWagerStatsRoute
+  '/settings/admin-ops-logs': typeof AuthenticatedSettingsAdminOpsLogsRoute
+  '/settings/admin-quota-configs': typeof AuthenticatedSettingsAdminQuotaConfigsRoute
+  '/settings/admin-quotas': typeof AuthenticatedSettingsAdminQuotasRoute
+  '/settings/admin-sessions': typeof AuthenticatedSettingsAdminSessionsRoute
+  '/settings/admins': typeof AuthenticatedSettingsAdminsRoute
+  '/settings/payment-channels': typeof AuthenticatedSettingsPaymentChannelsRoute
+  '/settings/roles': typeof AuthenticatedSettingsRolesRoute
+  '/settings/roles-permission': typeof AuthenticatedSettingsRolesPermissionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +364,122 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/_authenticated/games/categories': typeof AuthenticatedGamesCategoriesRoute
+  '/_authenticated/games/games': typeof AuthenticatedGamesGamesRoute
+  '/_authenticated/games/ranking': typeof AuthenticatedGamesRankingRoute
+  '/_authenticated/players/groups': typeof AuthenticatedPlayersGroupsRoute
+  '/_authenticated/players/labels': typeof AuthenticatedPlayersLabelsRoute
+  '/_authenticated/players/mobile-policy': typeof AuthenticatedPlayersMobilePolicyRoute
+  '/_authenticated/players/players': typeof AuthenticatedPlayersPlayersRoute
+  '/_authenticated/players/self-limits': typeof AuthenticatedPlayersSelfLimitsRoute
+  '/_authenticated/players/sessions': typeof AuthenticatedPlayersSessionsRoute
+  '/_authenticated/players/vip-levels': typeof AuthenticatedPlayersVipLevelsRoute
+  '/_authenticated/promotions/banners': typeof AuthenticatedPromotionsBannersRoute
+  '/_authenticated/promotions/bonuses': typeof AuthenticatedPromotionsBonusesRoute
+  '/_authenticated/promotions/pages': typeof AuthenticatedPromotionsPagesRoute
+  '/_authenticated/promotions/promotions': typeof AuthenticatedPromotionsPromotionsRoute
+  '/_authenticated/promotions/rebate-setting': typeof AuthenticatedPromotionsRebateSettingRoute
+  '/_authenticated/promotions/rebate-trans': typeof AuthenticatedPromotionsRebateTransRoute
+  '/_authenticated/promotions/transactions': typeof AuthenticatedPromotionsTransactionsRoute
+  '/_authenticated/promotions/vip-level-trans': typeof AuthenticatedPromotionsVipLevelTransRoute
+  '/_authenticated/promotions/xp-shop': typeof AuthenticatedPromotionsXpShopRoute
+  '/_authenticated/promotions/xp-shop-categories': typeof AuthenticatedPromotionsXpShopCategoriesRoute
+  '/_authenticated/promotions/xp-shop-history': typeof AuthenticatedPromotionsXpShopHistoryRoute
+  '/_authenticated/reports/bet-trans': typeof AuthenticatedReportsBetTransRoute
+  '/_authenticated/reports/ledger-trans': typeof AuthenticatedReportsLedgerTransRoute
+  '/_authenticated/reports/payment-transaction': typeof AuthenticatedReportsPaymentTransactionRoute
+  '/_authenticated/reports/point-transaction': typeof AuthenticatedReportsPointTransactionRoute
+  '/_authenticated/reports/wager-stats': typeof AuthenticatedReportsWagerStatsRoute
+  '/_authenticated/settings/admin-ops-logs': typeof AuthenticatedSettingsAdminOpsLogsRoute
+  '/_authenticated/settings/admin-quota-configs': typeof AuthenticatedSettingsAdminQuotaConfigsRoute
+  '/_authenticated/settings/admin-quotas': typeof AuthenticatedSettingsAdminQuotasRoute
+  '/_authenticated/settings/admin-sessions': typeof AuthenticatedSettingsAdminSessionsRoute
+  '/_authenticated/settings/admins': typeof AuthenticatedSettingsAdminsRoute
+  '/_authenticated/settings/payment-channels': typeof AuthenticatedSettingsPaymentChannelsRoute
+  '/_authenticated/settings/roles': typeof AuthenticatedSettingsRolesRoute
+  '/_authenticated/settings/roles-permission': typeof AuthenticatedSettingsRolesPermissionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/dashboard' | '/api/health'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/api/health'
+    | '/games/categories'
+    | '/games/games'
+    | '/games/ranking'
+    | '/players/groups'
+    | '/players/labels'
+    | '/players/mobile-policy'
+    | '/players/players'
+    | '/players/self-limits'
+    | '/players/sessions'
+    | '/players/vip-levels'
+    | '/promotions/banners'
+    | '/promotions/bonuses'
+    | '/promotions/pages'
+    | '/promotions/promotions'
+    | '/promotions/rebate-setting'
+    | '/promotions/rebate-trans'
+    | '/promotions/transactions'
+    | '/promotions/vip-level-trans'
+    | '/promotions/xp-shop'
+    | '/promotions/xp-shop-categories'
+    | '/promotions/xp-shop-history'
+    | '/reports/bet-trans'
+    | '/reports/ledger-trans'
+    | '/reports/payment-transaction'
+    | '/reports/point-transaction'
+    | '/reports/wager-stats'
+    | '/settings/admin-ops-logs'
+    | '/settings/admin-quota-configs'
+    | '/settings/admin-quotas'
+    | '/settings/admin-sessions'
+    | '/settings/admins'
+    | '/settings/payment-channels'
+    | '/settings/roles'
+    | '/settings/roles-permission'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/dashboard' | '/api/health'
+  to:
+    | '/'
+    | '/login'
+    | '/dashboard'
+    | '/api/health'
+    | '/games/categories'
+    | '/games/games'
+    | '/games/ranking'
+    | '/players/groups'
+    | '/players/labels'
+    | '/players/mobile-policy'
+    | '/players/players'
+    | '/players/self-limits'
+    | '/players/sessions'
+    | '/players/vip-levels'
+    | '/promotions/banners'
+    | '/promotions/bonuses'
+    | '/promotions/pages'
+    | '/promotions/promotions'
+    | '/promotions/rebate-setting'
+    | '/promotions/rebate-trans'
+    | '/promotions/transactions'
+    | '/promotions/vip-level-trans'
+    | '/promotions/xp-shop'
+    | '/promotions/xp-shop-categories'
+    | '/promotions/xp-shop-history'
+    | '/reports/bet-trans'
+    | '/reports/ledger-trans'
+    | '/reports/payment-transaction'
+    | '/reports/point-transaction'
+    | '/reports/wager-stats'
+    | '/settings/admin-ops-logs'
+    | '/settings/admin-quota-configs'
+    | '/settings/admin-quotas'
+    | '/settings/admin-sessions'
+    | '/settings/admins'
+    | '/settings/payment-channels'
+    | '/settings/roles'
+    | '/settings/roles-permission'
   id:
     | '__root__'
     | '/'
@@ -72,6 +487,40 @@ export interface FileRouteTypes {
     | '/login'
     | '/_authenticated/dashboard'
     | '/api/health'
+    | '/_authenticated/games/categories'
+    | '/_authenticated/games/games'
+    | '/_authenticated/games/ranking'
+    | '/_authenticated/players/groups'
+    | '/_authenticated/players/labels'
+    | '/_authenticated/players/mobile-policy'
+    | '/_authenticated/players/players'
+    | '/_authenticated/players/self-limits'
+    | '/_authenticated/players/sessions'
+    | '/_authenticated/players/vip-levels'
+    | '/_authenticated/promotions/banners'
+    | '/_authenticated/promotions/bonuses'
+    | '/_authenticated/promotions/pages'
+    | '/_authenticated/promotions/promotions'
+    | '/_authenticated/promotions/rebate-setting'
+    | '/_authenticated/promotions/rebate-trans'
+    | '/_authenticated/promotions/transactions'
+    | '/_authenticated/promotions/vip-level-trans'
+    | '/_authenticated/promotions/xp-shop'
+    | '/_authenticated/promotions/xp-shop-categories'
+    | '/_authenticated/promotions/xp-shop-history'
+    | '/_authenticated/reports/bet-trans'
+    | '/_authenticated/reports/ledger-trans'
+    | '/_authenticated/reports/payment-transaction'
+    | '/_authenticated/reports/point-transaction'
+    | '/_authenticated/reports/wager-stats'
+    | '/_authenticated/settings/admin-ops-logs'
+    | '/_authenticated/settings/admin-quota-configs'
+    | '/_authenticated/settings/admin-quotas'
+    | '/_authenticated/settings/admin-sessions'
+    | '/_authenticated/settings/admins'
+    | '/_authenticated/settings/payment-channels'
+    | '/_authenticated/settings/roles'
+    | '/_authenticated/settings/roles-permission'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,15 +567,335 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/games/categories': {
+      id: '/_authenticated/games/categories'
+      path: '/games/categories'
+      fullPath: '/games/categories'
+      preLoaderRoute: typeof AuthenticatedGamesCategoriesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/games/games': {
+      id: '/_authenticated/games/games'
+      path: '/games/games'
+      fullPath: '/games/games'
+      preLoaderRoute: typeof AuthenticatedGamesGamesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/games/ranking': {
+      id: '/_authenticated/games/ranking'
+      path: '/games/ranking'
+      fullPath: '/games/ranking'
+      preLoaderRoute: typeof AuthenticatedGamesRankingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/groups': {
+      id: '/_authenticated/players/groups'
+      path: '/players/groups'
+      fullPath: '/players/groups'
+      preLoaderRoute: typeof AuthenticatedPlayersGroupsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/labels': {
+      id: '/_authenticated/players/labels'
+      path: '/players/labels'
+      fullPath: '/players/labels'
+      preLoaderRoute: typeof AuthenticatedPlayersLabelsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/mobile-policy': {
+      id: '/_authenticated/players/mobile-policy'
+      path: '/players/mobile-policy'
+      fullPath: '/players/mobile-policy'
+      preLoaderRoute: typeof AuthenticatedPlayersMobilePolicyRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/players': {
+      id: '/_authenticated/players/players'
+      path: '/players/players'
+      fullPath: '/players/players'
+      preLoaderRoute: typeof AuthenticatedPlayersPlayersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/self-limits': {
+      id: '/_authenticated/players/self-limits'
+      path: '/players/self-limits'
+      fullPath: '/players/self-limits'
+      preLoaderRoute: typeof AuthenticatedPlayersSelfLimitsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/sessions': {
+      id: '/_authenticated/players/sessions'
+      path: '/players/sessions'
+      fullPath: '/players/sessions'
+      preLoaderRoute: typeof AuthenticatedPlayersSessionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/players/vip-levels': {
+      id: '/_authenticated/players/vip-levels'
+      path: '/players/vip-levels'
+      fullPath: '/players/vip-levels'
+      preLoaderRoute: typeof AuthenticatedPlayersVipLevelsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/banners': {
+      id: '/_authenticated/promotions/banners'
+      path: '/promotions/banners'
+      fullPath: '/promotions/banners'
+      preLoaderRoute: typeof AuthenticatedPromotionsBannersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/bonuses': {
+      id: '/_authenticated/promotions/bonuses'
+      path: '/promotions/bonuses'
+      fullPath: '/promotions/bonuses'
+      preLoaderRoute: typeof AuthenticatedPromotionsBonusesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/pages': {
+      id: '/_authenticated/promotions/pages'
+      path: '/promotions/pages'
+      fullPath: '/promotions/pages'
+      preLoaderRoute: typeof AuthenticatedPromotionsPagesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/promotions': {
+      id: '/_authenticated/promotions/promotions'
+      path: '/promotions/promotions'
+      fullPath: '/promotions/promotions'
+      preLoaderRoute: typeof AuthenticatedPromotionsPromotionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/rebate-setting': {
+      id: '/_authenticated/promotions/rebate-setting'
+      path: '/promotions/rebate-setting'
+      fullPath: '/promotions/rebate-setting'
+      preLoaderRoute: typeof AuthenticatedPromotionsRebateSettingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/rebate-trans': {
+      id: '/_authenticated/promotions/rebate-trans'
+      path: '/promotions/rebate-trans'
+      fullPath: '/promotions/rebate-trans'
+      preLoaderRoute: typeof AuthenticatedPromotionsRebateTransRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/transactions': {
+      id: '/_authenticated/promotions/transactions'
+      path: '/promotions/transactions'
+      fullPath: '/promotions/transactions'
+      preLoaderRoute: typeof AuthenticatedPromotionsTransactionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/vip-level-trans': {
+      id: '/_authenticated/promotions/vip-level-trans'
+      path: '/promotions/vip-level-trans'
+      fullPath: '/promotions/vip-level-trans'
+      preLoaderRoute: typeof AuthenticatedPromotionsVipLevelTransRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/xp-shop': {
+      id: '/_authenticated/promotions/xp-shop'
+      path: '/promotions/xp-shop'
+      fullPath: '/promotions/xp-shop'
+      preLoaderRoute: typeof AuthenticatedPromotionsXpShopRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/xp-shop-categories': {
+      id: '/_authenticated/promotions/xp-shop-categories'
+      path: '/promotions/xp-shop-categories'
+      fullPath: '/promotions/xp-shop-categories'
+      preLoaderRoute: typeof AuthenticatedPromotionsXpShopCategoriesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/promotions/xp-shop-history': {
+      id: '/_authenticated/promotions/xp-shop-history'
+      path: '/promotions/xp-shop-history'
+      fullPath: '/promotions/xp-shop-history'
+      preLoaderRoute: typeof AuthenticatedPromotionsXpShopHistoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/bet-trans': {
+      id: '/_authenticated/reports/bet-trans'
+      path: '/reports/bet-trans'
+      fullPath: '/reports/bet-trans'
+      preLoaderRoute: typeof AuthenticatedReportsBetTransRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/ledger-trans': {
+      id: '/_authenticated/reports/ledger-trans'
+      path: '/reports/ledger-trans'
+      fullPath: '/reports/ledger-trans'
+      preLoaderRoute: typeof AuthenticatedReportsLedgerTransRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/payment-transaction': {
+      id: '/_authenticated/reports/payment-transaction'
+      path: '/reports/payment-transaction'
+      fullPath: '/reports/payment-transaction'
+      preLoaderRoute: typeof AuthenticatedReportsPaymentTransactionRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/point-transaction': {
+      id: '/_authenticated/reports/point-transaction'
+      path: '/reports/point-transaction'
+      fullPath: '/reports/point-transaction'
+      preLoaderRoute: typeof AuthenticatedReportsPointTransactionRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reports/wager-stats': {
+      id: '/_authenticated/reports/wager-stats'
+      path: '/reports/wager-stats'
+      fullPath: '/reports/wager-stats'
+      preLoaderRoute: typeof AuthenticatedReportsWagerStatsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/admin-ops-logs': {
+      id: '/_authenticated/settings/admin-ops-logs'
+      path: '/settings/admin-ops-logs'
+      fullPath: '/settings/admin-ops-logs'
+      preLoaderRoute: typeof AuthenticatedSettingsAdminOpsLogsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/admin-quota-configs': {
+      id: '/_authenticated/settings/admin-quota-configs'
+      path: '/settings/admin-quota-configs'
+      fullPath: '/settings/admin-quota-configs'
+      preLoaderRoute: typeof AuthenticatedSettingsAdminQuotaConfigsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/admin-quotas': {
+      id: '/_authenticated/settings/admin-quotas'
+      path: '/settings/admin-quotas'
+      fullPath: '/settings/admin-quotas'
+      preLoaderRoute: typeof AuthenticatedSettingsAdminQuotasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/admin-sessions': {
+      id: '/_authenticated/settings/admin-sessions'
+      path: '/settings/admin-sessions'
+      fullPath: '/settings/admin-sessions'
+      preLoaderRoute: typeof AuthenticatedSettingsAdminSessionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/admins': {
+      id: '/_authenticated/settings/admins'
+      path: '/settings/admins'
+      fullPath: '/settings/admins'
+      preLoaderRoute: typeof AuthenticatedSettingsAdminsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/payment-channels': {
+      id: '/_authenticated/settings/payment-channels'
+      path: '/settings/payment-channels'
+      fullPath: '/settings/payment-channels'
+      preLoaderRoute: typeof AuthenticatedSettingsPaymentChannelsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/roles': {
+      id: '/_authenticated/settings/roles'
+      path: '/settings/roles'
+      fullPath: '/settings/roles'
+      preLoaderRoute: typeof AuthenticatedSettingsRolesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/roles-permission': {
+      id: '/_authenticated/settings/roles-permission'
+      path: '/settings/roles-permission'
+      fullPath: '/settings/roles-permission'
+      preLoaderRoute: typeof AuthenticatedSettingsRolesPermissionRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedGamesCategoriesRoute: typeof AuthenticatedGamesCategoriesRoute
+  AuthenticatedGamesGamesRoute: typeof AuthenticatedGamesGamesRoute
+  AuthenticatedGamesRankingRoute: typeof AuthenticatedGamesRankingRoute
+  AuthenticatedPlayersGroupsRoute: typeof AuthenticatedPlayersGroupsRoute
+  AuthenticatedPlayersLabelsRoute: typeof AuthenticatedPlayersLabelsRoute
+  AuthenticatedPlayersMobilePolicyRoute: typeof AuthenticatedPlayersMobilePolicyRoute
+  AuthenticatedPlayersPlayersRoute: typeof AuthenticatedPlayersPlayersRoute
+  AuthenticatedPlayersSelfLimitsRoute: typeof AuthenticatedPlayersSelfLimitsRoute
+  AuthenticatedPlayersSessionsRoute: typeof AuthenticatedPlayersSessionsRoute
+  AuthenticatedPlayersVipLevelsRoute: typeof AuthenticatedPlayersVipLevelsRoute
+  AuthenticatedPromotionsBannersRoute: typeof AuthenticatedPromotionsBannersRoute
+  AuthenticatedPromotionsBonusesRoute: typeof AuthenticatedPromotionsBonusesRoute
+  AuthenticatedPromotionsPagesRoute: typeof AuthenticatedPromotionsPagesRoute
+  AuthenticatedPromotionsPromotionsRoute: typeof AuthenticatedPromotionsPromotionsRoute
+  AuthenticatedPromotionsRebateSettingRoute: typeof AuthenticatedPromotionsRebateSettingRoute
+  AuthenticatedPromotionsRebateTransRoute: typeof AuthenticatedPromotionsRebateTransRoute
+  AuthenticatedPromotionsTransactionsRoute: typeof AuthenticatedPromotionsTransactionsRoute
+  AuthenticatedPromotionsVipLevelTransRoute: typeof AuthenticatedPromotionsVipLevelTransRoute
+  AuthenticatedPromotionsXpShopRoute: typeof AuthenticatedPromotionsXpShopRoute
+  AuthenticatedPromotionsXpShopCategoriesRoute: typeof AuthenticatedPromotionsXpShopCategoriesRoute
+  AuthenticatedPromotionsXpShopHistoryRoute: typeof AuthenticatedPromotionsXpShopHistoryRoute
+  AuthenticatedReportsBetTransRoute: typeof AuthenticatedReportsBetTransRoute
+  AuthenticatedReportsLedgerTransRoute: typeof AuthenticatedReportsLedgerTransRoute
+  AuthenticatedReportsPaymentTransactionRoute: typeof AuthenticatedReportsPaymentTransactionRoute
+  AuthenticatedReportsPointTransactionRoute: typeof AuthenticatedReportsPointTransactionRoute
+  AuthenticatedReportsWagerStatsRoute: typeof AuthenticatedReportsWagerStatsRoute
+  AuthenticatedSettingsAdminOpsLogsRoute: typeof AuthenticatedSettingsAdminOpsLogsRoute
+  AuthenticatedSettingsAdminQuotaConfigsRoute: typeof AuthenticatedSettingsAdminQuotaConfigsRoute
+  AuthenticatedSettingsAdminQuotasRoute: typeof AuthenticatedSettingsAdminQuotasRoute
+  AuthenticatedSettingsAdminSessionsRoute: typeof AuthenticatedSettingsAdminSessionsRoute
+  AuthenticatedSettingsAdminsRoute: typeof AuthenticatedSettingsAdminsRoute
+  AuthenticatedSettingsPaymentChannelsRoute: typeof AuthenticatedSettingsPaymentChannelsRoute
+  AuthenticatedSettingsRolesRoute: typeof AuthenticatedSettingsRolesRoute
+  AuthenticatedSettingsRolesPermissionRoute: typeof AuthenticatedSettingsRolesPermissionRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedGamesCategoriesRoute: AuthenticatedGamesCategoriesRoute,
+  AuthenticatedGamesGamesRoute: AuthenticatedGamesGamesRoute,
+  AuthenticatedGamesRankingRoute: AuthenticatedGamesRankingRoute,
+  AuthenticatedPlayersGroupsRoute: AuthenticatedPlayersGroupsRoute,
+  AuthenticatedPlayersLabelsRoute: AuthenticatedPlayersLabelsRoute,
+  AuthenticatedPlayersMobilePolicyRoute: AuthenticatedPlayersMobilePolicyRoute,
+  AuthenticatedPlayersPlayersRoute: AuthenticatedPlayersPlayersRoute,
+  AuthenticatedPlayersSelfLimitsRoute: AuthenticatedPlayersSelfLimitsRoute,
+  AuthenticatedPlayersSessionsRoute: AuthenticatedPlayersSessionsRoute,
+  AuthenticatedPlayersVipLevelsRoute: AuthenticatedPlayersVipLevelsRoute,
+  AuthenticatedPromotionsBannersRoute: AuthenticatedPromotionsBannersRoute,
+  AuthenticatedPromotionsBonusesRoute: AuthenticatedPromotionsBonusesRoute,
+  AuthenticatedPromotionsPagesRoute: AuthenticatedPromotionsPagesRoute,
+  AuthenticatedPromotionsPromotionsRoute:
+    AuthenticatedPromotionsPromotionsRoute,
+  AuthenticatedPromotionsRebateSettingRoute:
+    AuthenticatedPromotionsRebateSettingRoute,
+  AuthenticatedPromotionsRebateTransRoute:
+    AuthenticatedPromotionsRebateTransRoute,
+  AuthenticatedPromotionsTransactionsRoute:
+    AuthenticatedPromotionsTransactionsRoute,
+  AuthenticatedPromotionsVipLevelTransRoute:
+    AuthenticatedPromotionsVipLevelTransRoute,
+  AuthenticatedPromotionsXpShopRoute: AuthenticatedPromotionsXpShopRoute,
+  AuthenticatedPromotionsXpShopCategoriesRoute:
+    AuthenticatedPromotionsXpShopCategoriesRoute,
+  AuthenticatedPromotionsXpShopHistoryRoute:
+    AuthenticatedPromotionsXpShopHistoryRoute,
+  AuthenticatedReportsBetTransRoute: AuthenticatedReportsBetTransRoute,
+  AuthenticatedReportsLedgerTransRoute: AuthenticatedReportsLedgerTransRoute,
+  AuthenticatedReportsPaymentTransactionRoute:
+    AuthenticatedReportsPaymentTransactionRoute,
+  AuthenticatedReportsPointTransactionRoute:
+    AuthenticatedReportsPointTransactionRoute,
+  AuthenticatedReportsWagerStatsRoute: AuthenticatedReportsWagerStatsRoute,
+  AuthenticatedSettingsAdminOpsLogsRoute:
+    AuthenticatedSettingsAdminOpsLogsRoute,
+  AuthenticatedSettingsAdminQuotaConfigsRoute:
+    AuthenticatedSettingsAdminQuotaConfigsRoute,
+  AuthenticatedSettingsAdminQuotasRoute: AuthenticatedSettingsAdminQuotasRoute,
+  AuthenticatedSettingsAdminSessionsRoute:
+    AuthenticatedSettingsAdminSessionsRoute,
+  AuthenticatedSettingsAdminsRoute: AuthenticatedSettingsAdminsRoute,
+  AuthenticatedSettingsPaymentChannelsRoute:
+    AuthenticatedSettingsPaymentChannelsRoute,
+  AuthenticatedSettingsRolesRoute: AuthenticatedSettingsRolesRoute,
+  AuthenticatedSettingsRolesPermissionRoute:
+    AuthenticatedSettingsRolesPermissionRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
