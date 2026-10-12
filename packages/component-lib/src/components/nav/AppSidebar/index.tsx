@@ -63,7 +63,9 @@ const TOOLTIP_PILL = { className: 'rounded-full', sideOffset: 12, showArrow: fal
  * outside a manually picked group (a tab, a link inside the panel itself)
  * drops that pick, so the panel snaps back to `activeKey`'s own group. The
  * rail is NAV_RAIL_WIDTH wide expanded and NAV_RAIL_WIDTH_COLLAPSED
- * collapsed, and the docked column adds NAV_PANEL_WIDTH. Reads
+ * collapsed, and the docked column adds NAV_PANEL_WIDTH. The root carries
+ * `data-panel-docked` while the docked column is shown, so the page
+ * container beside it can square off its left edge only then. Reads
  * `useSidebar()`, so it must render inside a `SidebarProvider`, whose open
  * state the footer toggle flips.
  */
@@ -201,6 +203,7 @@ const AppSidebar = ({ items, activeKey, renderLink, footer }: IAppSidebarProps) 
       collapsible="none"
       className="hidden shrink-0 flex-row overflow-hidden transition-[width] duration-200 ease-linear md:flex"
       style={{ width: navWidth }}
+      data-panel-docked={panelItems ? '' : undefined}
     >
       <Sidebar collapsible="none" className="shrink-0" style={{ width: railWidth }}>
         <SidebarContent>
