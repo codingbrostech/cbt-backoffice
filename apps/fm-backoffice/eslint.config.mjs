@@ -14,7 +14,6 @@ export default defineConfig([
   ...cbtPlugin.configs['flat/filename-case'],
   ...cbtPlugin.configs['flat/react'],
   ...cbtPlugin.configs['flat/react-query'],
-  ...cbtPlugin.configs['flat/tanstack'],
   ...buildWorkspaceConfig(import.meta.dirname),
   ignoreFiles
 ]);
