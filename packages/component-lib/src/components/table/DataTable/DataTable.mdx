@@ -1,0 +1,100 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as DataTableStories from './DataTable.stories';
+
+<Meta of={DataTableStories} />
+
+<Title />
+
+**DataTable** is a compound list table for a server-paginated list. Use `DataTable.Root` as the frame and put the parts inside it. The root holds no state. The caller owns the one-based `{ page, pageSize }` params and the column visibility record, and the root shares them with every part through context, so the parts take no table props. The root takes every label once through `labels`, and no part carries copy of its own, so each app resolves `t()` and passes the result to the root.
+
+| Part                     | What it renders                                                                                          | Props beyond `className`                                                                                                                             |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DataTable.Root`         | The frame that fills the height its parent gives it                                                      | `columns`, `data`, `total`, `labels`, `params`, `onParamsChange`, `columnVisibility`, `onColumnVisibilityChange`, `getRowId`, `isLoading`, `isError` |
+| `DataTable.Toolbar`      | Row above the grid that spreads its children between the two ends                                        | `children`                                                                                                                                           |
+| `DataTable.ColumnToggle` | Dropdown of checkboxes toggling each column                                                              | None                                                                                                                                                 |
+| `DataTable.Grid`         | Rows under a sticky header, with one message row while empty, loading or failed                          | None                                                                                                                                                 |
+| `DataTable.Pagination`   | First, previous, a five-page window, next and last, a page input, the page size select and the row count | None                                                                                                                                                 |
+
+A page that shows every row leaves `DataTable.Pagination` out, and a page without column control leaves `DataTable.ColumnToggle` out. Params can live in state, in the route search, or in a query key, since the root only reports changes through `onParamsChange`.
+
+## Columns
+
+A column is a plain object with a `key`, a `title`, an optional pixel `width` and a `render` that returns the cell. Build them in a function that takes `t`, so the titles follow the language.
+
+```tsx
+import type { IDataTableColumn } from '@cbt-bo/component-lib/components/table';
+
+const EMPTY_VALUE = '-';
+
+export const buildAdminColumns = (t: TFunction): IDataTableColumn<AdminResult>[] => [
+  { key: 'code', title: t('admins.code'), width: 160, render: ({ code }) => code ?? EMPTY_VALUE },
+  { key: 'name', title: t('admins.name'), render: ({ name }) => name ?? EMPTY_VALUE },
+  {
+    key: 'state',
+    title: t('admins.state'),
+    render: ({ state }) => (state ? t(`state.${state}`, { defaultValue: state }) : EMPTY_VALUE)
+  }
+];
+```
+
+`fixed: 'start'` or `fixed: 'end'` pins a column to that edge, such as the login column or an action column. The pin and its edge line appear only while the grid is wider than its container and scrolls sideways. Pin at most one column per edge.
+
+## Column visibility
+
+The page keeps a `TColumnVisibility` record, where a column is hidden only when its entry is `false`, and passes it to the root together with `onColumnVisibilityChange`. `DataTable.ColumnToggle` and `DataTable.Grid` both read it from context. The last visible column cannot be hidden.
+
+## Usage
+
+A page keeps the list params in state, feeds them to a query, and hands the rows and total to the root. The query keeps the previous page while the next one loads, so `isFetching` drives the loading overlay without emptying the grid.
+
+```tsx
+import { adminListQueryOptions } from '@cbt-bo/api/admin/queries';
+import {
+  DEFAULT_PAGE_SIZE,
+  DataTable,
+  type IListParams,
+  type TColumnVisibility
+} from '@cbt-bo/component-lib/components/table';
+import { useQuery } from '@tanstack/react-query';
+
+const AdminsPage = () => {
+  const { t } = useTranslation();
+  const [params, setParams] = useState<IListParams>({ page: 1, pageSize: DEFAULT_PAGE_SIZE });
+  const [columnVisibility, setColumnVisibility] = useState<TColumnVisibility>({});
+  const { data: list, isFetching, isError } = useQuery(adminListQueryOptions(params));
+
+  const { rows = [], total = 0 } = list ?? {};
+  const labels = useTableLabels();
+
+  return (
+    <DataTable.Root
+      columns={buildAdminColumns(t)}
+      data={rows}
+      total={total}
+      labels={labels}
+      params={params}
+      onParamsChange={setParams}
+      columnVisibility={columnVisibility}
+      onColumnVisibilityChange={setColumnVisibility}
+      isLoading={isFetching}
+      isError={isError}
+    >
+      <DataTable.Toolbar>
+        <h1>{t('nav.admins')}</h1>
+        <DataTable.ColumnToggle />
+      </DataTable.Toolbar>
+      <DataTable.Grid />
+      <DataTable.Pagination />
+    </DataTable.Root>
+  );
+};
+```
+
+## Stories
+
+<Story of={DataTableStories.Default} />
+
+<Controls of={DataTableStories.Default} />
+
+<Stories includePrimary={false} />
