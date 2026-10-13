@@ -20,7 +20,13 @@
     "theme": {
       "light": "Switch to light mode",
       "dark": "Switch to dark mode"
-    }
+    },
+    "search": "Search",
+    "reset": "Reset",
+    "cancel": "Cancel",
+    "all": "All",
+    "action": "Action",
+    "edit": "Edit"
   },
   "login": {
     "title": "Backoffice",
@@ -93,5 +99,59 @@
     "roles": "Roles",
     "rolesPermission": "Roles Permission",
     "paymentChannels": "Payment Channels"
+  },
+  "admins": {
+    "code": "Login",
+    "name": "Name",
+    "role": "Role",
+    "state": "State",
+    "secret": "Password",
+    "create": "Create Admin",
+    "rolePlaceholder": "Select a role",
+    "created": "Admin created",
+    "validation": {
+      "codeRequired": "Login is required",
+      "secretRequired": "Password is required",
+      "roleRequired": "Role is required"
+    },
+    "edit": "Edit Admin",
+    "save": "Save",
+    "updated": "Admin updated",
+    "secretPlaceholder": "Leave blank to keep the current password"
+  },
+  "state": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "freeze": "Freeze",
+    "pre_delete": "Pre-delete",
+    "delete": "Delete",
+    "disable": "Disable",
+    "logout": "Logout",
+    "revoke": "Revoke",
+    "expire": "Expire",
+    "approve": "Approve",
+    "rejected": "Rejected",
+    "processing": "Processing",
+    "completed": "Completed",
+    "failed": "Failed",
+    "pending": "Pending",
+    "complete": "Completed",
+    "canceled": "Canceled"
+  },
+  "table": {
+    "columns": "Columns",
+    "rowsPerPage": "Rows per page",
+    "page": "Page",
+    "go": "Go",
+    "range": "Showing {{from}}-{{to}} out of {{total}}",
+    "noData": "No records",
+    "loading": "Loading",
+    "loadFailed": "Failed to load records",
+    "firstPage": "First page",
+    "previousPage": "Previous page",
+    "previous": "Previous",
+    "nextPage": "Next page",
+    "next": "Next",
+    "lastPage": "Last page"
   }
 }

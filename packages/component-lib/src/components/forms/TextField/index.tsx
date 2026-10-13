@@ -11,7 +11,7 @@ export interface ITextFieldProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends Omit<
   ComponentProps<typeof Input>,
-  'value' | 'onChange' | 'onBlur' | 'name' | 'id' | 'prefix'
+  'value' | 'onChange' | 'onBlur' | 'name' | 'id' | 'prefix' | 'size'
 > {
   name: TName;
   control: Control<TFieldValues>;
@@ -24,6 +24,10 @@ export interface ITextFieldProps<
    * Node rendered inside the input at its end, such as a toggle button.
    */
   suffix?: ReactNode;
+  /**
+   * Height of the input. `sm` fits compact rows such as filters.
+   */
+  size?: 'sm' | 'default';
 }
 
 /**
@@ -39,12 +43,14 @@ const TextField = <
   label,
   prefix,
   suffix,
+  size = 'default',
   className,
   ...inputProps
 }: ITextFieldProps<TFieldValues, TName>) => {
   const { field, fieldState } = useController({ name, control });
 
   const isInvalid = Boolean(fieldState.error);
+  const isSmall = size === 'sm';
 
   return (
     <Field data-invalid={isInvalid}>
@@ -59,6 +65,7 @@ const TextField = <
           id={field.name}
           aria-invalid={isInvalid}
           className={cn(
+            isSmall ? 'h-8' : 'h-9',
             prefix && 'pl-12',
             suffix && 'pr-12',
             'rounded-sm focus-visible:ring-0',

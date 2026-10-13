@@ -1,0 +1,178 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cbt-bo/component-lib/components/ui/tabs';
+
+import * as SearchBarStories from './SearchBar.stories';
+
+<Meta of={SearchBarStories} />
+
+# SearchBar
+
+The filter bar above a list page. It shows the page title with an optional action at the end, then a row of filter fields with reset and search buttons. Searching hands the field values to the page, which puts them in its list query.
+
+<Canvas of={SearchBarStories.Default} />
+
+## Usage
+
+`SearchBar` is a set of parts. Always nest them like this. The values go to `Root`, each field part binds to one of them by `name`, and every part takes only the labels it shows.
+
+```tsx
+<SearchBar.Root defaultValues={DEFAULT_FILTER} values={filter} onSubmit={search}>
+  <SearchBar.Header title="Admins">
+    <Button type="button">Create Admin</Button>
+  </SearchBar.Header>
+  <SearchBar.Fields>
+    <SearchBar.TextField name="code" label="Login" />
+    <SearchBar.SelectField name="state" label="State" options={stateOptions} allLabel="All" />
+    <SearchBar.SelectField name="role" label="Role" options={roleOptions} allLabel="All" />
+    <SearchBar.Actions resetLabel="Reset" submitLabel="Search" />
+  </SearchBar.Fields>
+</SearchBar.Root>
+```
+
+<table className="w-full text-left text-sm [&_td]:py-2 [&_td]:pr-4 [&_th]:py-2 [&_th]:pr-4 [&_th]:font-medium [&_tr]:border-b">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>What it is</th>
+      <th>What to pass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Root</code>
+      </td>
+      <td>The form that owns the draft values and shares them with the fields</td>
+      <td>
+        <code>defaultValues</code>, <code>onSubmit</code>, optionally <code>values</code> and{' '}
+        <code>className</code>, then the parts as children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Header</code>
+      </td>
+      <td>The title row. Leave it out when the page has its own heading</td>
+      <td>
+        <code>title</code>, translated, with an optional action as children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Fields</code>
+      </td>
+      <td>The wrapping row that aligns the fields and the buttons to their bottom edge</td>
+      <td>
+        The field parts and <code>Actions</code> as children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>TextField</code>
+      </td>
+      <td>A text filter</td>
+      <td>
+        <code>name</code>, <code>label</code>, optionally <code>placeholder</code> and{' '}
+        <code>className</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>SelectField</code>
+      </td>
+      <td>
+        A single-value filter. <code>allLabel</code> adds a first option that clears the filter, and
+        an empty value is left out of the query by the page
+      </td>
+      <td>
+        <code>name</code>, <code>label</code>, <code>options</code>, optionally{' '}
+        <code>allLabel</code> and <code>className</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Actions</code>
+      </td>
+      <td>The reset and search buttons at the end of the row</td>
+      <td>
+        <code>resetLabel</code> and <code>submitLabel</code>, translated, optionally{' '}
+        <code>isLoading</code> to disable both buttons and spin the search button, and extra
+        controls as children
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs defaultValue="Root">
+  <TabsList variant="line">
+    {SearchBarStories.PART_CONTROLS.map(({ part }) => (
+      <TabsTrigger key={part} value={part}>
+        {part}
+      </TabsTrigger>
+    ))}
+  </TabsList>
+  {SearchBarStories.PART_CONTROLS.map(({ part, include }) => (
+    <TabsContent key={part} value={part}>
+      <Controls of={SearchBarStories.Default} include={include} />
+    </TabsContent>
+  ))}
+</Tabs>
+
+`Root` holds the draft values in a react-hook-form instance and shares it through `FormProvider`, so the field parts need no `control` prop. The page owns the applied filter. Searching calls `onSubmit` with the draft values, and resetting returns every field to `defaultValues` and calls `onSubmit` with them. When the page passes `values`, the fields follow them whenever they change, so a filter applied from elsewhere shows in the bar.
+
+## Values format
+
+`defaultValues` and `values` share one shape, an object with a string per field. An empty string means the field is not applied. The page strips blank fields before building its query.
+
+```tsx
+export interface IAdminListFilter {
+  code: string;
+  state: string;
+  role: string;
+}
+
+export const DEFAULT_ADMIN_LIST_FILTER = {
+  code: '',
+  state: '',
+  role: ''
+} as const satisfies IAdminListFilter;
+```
+
+## How the bar shows
+
+The fields wrap onto a second line when the row is too narrow, and the buttons stay at the end of the last line. Without children, `Header` shows only the title.
+
+<Canvas of={SearchBarStories.WithoutHeaderAction} />
+
+## Usage in the app
+
+Render it above `DataTable.Root` in a list page. The page keeps the applied filter beside the page params, and its list hook returns to the first page on every search.
+
+```tsx
+import { ACTIVATION_STATES } from '@cbt-bo/api/common/constants';
+import { DEFAULT_ADMIN_LIST_FILTER } from '@cbt-bo/api/admin/queries';
+import { SearchBar } from '@cbt-bo/component-lib/components/search';
+
+const { filter, search } = useAdminList();
+const stateOptions = ACTIVATION_STATES.map(state => ({ value: state, label: t(`state.${state}`) }));
+
+<SearchBar.Root defaultValues={DEFAULT_ADMIN_LIST_FILTER} values={filter} onSubmit={search}>
+  <SearchBar.Header title={t('nav.admins')}>
+    <Button type="button" onClick={openCreate}>
+      <PlusIcon />
+      {t('admins.create')}
+    </Button>
+  </SearchBar.Header>
+  <SearchBar.Fields>
+    <SearchBar.TextField name="code" label={t('admins.code')} />
+    <SearchBar.SelectField
+      name="state"
+      label={t('admins.state')}
+      options={stateOptions}
+      allLabel={t('common.all')}
+    />
+    <SearchBar.Actions resetLabel={t('common.reset')} submitLabel={t('common.search')} />
+  </SearchBar.Fields>
+</SearchBar.Root>;
+```

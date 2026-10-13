@@ -44,6 +44,10 @@
   --sidebar-panel-accent: oklch(0.985 0 0);
   --sidebar-panel-accent-foreground: oklch(0.205 0 0);
   --page-background: #e9eaee;
+  --toast-success: #52c41a;
+  --toast-info: #1677ff;
+  --toast-warning: #fa8c16;
+  --toast-error: var(--destructive);
 }
 
 .dark {
@@ -83,10 +87,17 @@
   --sidebar-panel-accent: oklch(0.985 0 0);
   --sidebar-panel-accent-foreground: oklch(0.205 0 0);
   --page-background: oklch(0.145 0 0);
+  --toast-success: #73d13d;
+  --toast-info: #4096ff;
+  --toast-warning: #ffa940;
+  --toast-error: var(--destructive);
 }
 
 @theme inline {
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --text-15: 0.9375rem;
+  --text-15--line-height: 1.375rem;
+  --color-dark: #333333;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -102,6 +113,10 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-toast-success: var(--toast-success);
+  --color-toast-info: var(--toast-info);
+  --color-toast-warning: var(--toast-warning);
+  --color-toast-error: var(--toast-error);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -112,10 +127,6 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-page-background: var(--page-background);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -141,5 +152,10 @@
 
   body {
     @apply bg-background font-sans text-foreground antialiased;
+  }
+
+  #root {
+    @apply text-15 text-dark antialiased;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
   }
 }

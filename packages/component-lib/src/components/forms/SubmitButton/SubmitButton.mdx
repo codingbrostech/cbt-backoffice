@@ -6,7 +6,7 @@ import * as SubmitButtonStories from './SubmitButton.stories';
 
 <Title />
 
-**SubmitButton** is a `Button` of `type="submit"` bound to a form's `control`. It reads `isSubmitting` from `useFormState`, so from the moment `handleSubmit` starts until the submit handler settles, the button disables itself and shows a `Spinner` before the label. `disabled` still disables it outside of a submission, which `LoginForm` uses while the login mutation is pending. Every other `Button` prop passes through, such as `variant`, `size` and `className`.
+**SubmitButton** is a `Button` of `type="submit"` bound to a form's `control`. It reads `isSubmitting` from `useFormState`, so from the moment `handleSubmit` starts until the submit handler settles, the button disables itself and shows a centered `Spinner` over the hidden label, so its width stays the same. `isLoading` gives the same pending state for work outside the form, which `SearchBar.Actions` uses while the list is fetching. `disabled` only disables it, which `LoginForm` uses while the login mutation is pending. Every other `Button` prop passes through, such as `variant`, `size` and `className`.
 
 ## Usage
 

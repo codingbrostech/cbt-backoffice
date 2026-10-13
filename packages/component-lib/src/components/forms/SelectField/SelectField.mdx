@@ -1,0 +1,41 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as SelectFieldStories from './SelectField.stories';
+
+<Meta of={SelectFieldStories} />
+
+<Title />
+
+**SelectField** is a single-value select bound to a react-hook-form field. It calls `useController` with the given `control` and `name`, so the picked value and the change and blur handlers all come from the form. The label sits above the trigger and is linked to it through `name`, which doubles as the trigger id. While the value is empty the trigger shows `placeholder`, and while the field carries an error the trigger turns invalid and the message renders below it.
+
+`emptyLabel` adds a first option that clears the value, such as `All`, and is the selected option while the value is empty. Use it for filters. Leave it out for required fields, where `placeholder` prompts the user to pick.
+
+`options` is a list of `{ value, label }` pairs, rendered in the given order. `size` picks the trigger height, `default` or `sm`, so the field can sit beside the compact inputs of a filter bar. The component carries no validation of its own. Rules and messages belong to the form's resolver, as `AdminForm` does with the zod schema it builds from `labels`.
+
+## Usage
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+import { SelectField } from '@cbt-bo/component-lib/components/forms';
+
+const form = useForm<TAdminFormValues>({ defaultValues: { role: '' } });
+
+<SelectField
+  control={form.control}
+  name="role"
+  label={labels.role}
+  options={roleOptions}
+  placeholder={labels.rolePlaceholder}
+/>;
+```
+
+## Stories
+
+Each story creates its own form. `value` seeds the bound field, and `errorMessage`, when set, is written to the field with `setError`, so the invalid rendering shows without a resolver.
+
+<Story of={SelectFieldStories.Default} />
+
+<Controls of={SelectFieldStories.Default} />
+
+<Stories includePrimary={false} />

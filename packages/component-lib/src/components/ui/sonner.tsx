@@ -1,32 +1,27 @@
 import type { CSSProperties } from 'react';
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon
-} from 'lucide-react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
-const Toaster = ({ ...props }: ToasterProps) => (
+import { toastIcons } from './toast-icons';
+
+const Toaster = ({ position = 'top-right', ...props }: ToasterProps) => (
   <Sonner
-    theme="light"
-    className="toaster group"
-    icons={{
-      success: <CircleCheckIcon className="size-4" />,
-      info: <InfoIcon className="size-4" />,
-      warning: <TriangleAlertIcon className="size-4" />,
-      error: <OctagonXIcon className="size-4" />,
-      loading: <Loader2Icon className="size-4 animate-spin" />
+    className="toaster group [--width:22rem]"
+    closeButton
+    icons={toastIcons}
+    position={position}
+    style={{ '--border-radius': 'var(--radius)' } as CSSProperties}
+    toastOptions={{
+      unstyled: true,
+      classNames: {
+        toast:
+          'flex w-full items-start gap-3 rounded-[var(--radius)] border bg-background px-4 py-3 shadow-sm',
+        title: 'text-sm font-semibold text-foreground',
+        description: 'text-sm text-muted-foreground',
+        icon: 'mt-0.5 shrink-0',
+        closeButton:
+          'order-last ml-auto flex size-6 cursor-pointer shrink-0 items-center justify-center border-0 bg-transparent p-0 text-muted-foreground opacity-100 shadow-none transition-colors hover:bg-transparent hover:text-foreground'
+      }
     }}
-    style={
-      {
-        '--normal-bg': 'var(--popover)',
-        '--normal-text': 'var(--popover-foreground)',
-        '--normal-border': 'var(--border)',
-        '--border-radius': 'var(--radius)'
-      } as CSSProperties
-    }
     {...props}
   />
 );
