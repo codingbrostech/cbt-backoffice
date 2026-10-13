@@ -1,5 +1,5 @@
 {
-  "extends": "@cbt-bo/config/typescript/tanstack-start.json",
+  "extends": "@cbt-bo/config/typescript/vite-react.json",
   "compilerOptions": {
     "paths": {
       "#/*": ["./src/*"],
@@ -9,5 +9,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", ".output", "dist"]
+  "exclude": ["node_modules", "dist"]
 }

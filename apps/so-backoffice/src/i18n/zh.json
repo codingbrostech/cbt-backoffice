@@ -45,6 +45,10 @@
     "title": "儀表板",
     "welcome": "歡迎，{{name}}"
   },
+  "notFound": {
+    "title": "找不到頁面",
+    "description": "此網址沒有對應的頁面。"
+  },
   "nav": {
     "dashboard": "儀表板",
     "player": "玩家",
