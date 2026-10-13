@@ -57,13 +57,13 @@ Compare changes against existing codebase patterns:
 
 | Pattern                    | Expected                                                  |
 | -------------------------- | --------------------------------------------------------- |
-| App source location        | `apps/<app>/src`, file-based routes under `src/routes`     |
-| Generated files            | `src/routeTree.gen.ts` (committed), `src/components/ui/**` (shadcn, vendored) |
+| App source location        | `apps/<app>/src`; both apps declare their `<Routes>` tree in `src/routes/index.tsx` with `login/` and `app/` beside it |
+| Generated files            | `src/components/ui/**` (shadcn, vendored) |
 | Export pattern             | Components export from `index.ts` barrel files            |
 | ESLint config              | Uses `@cbt-bo/config/eslint` (repo rules + TanStack toolchain) |
 | Package naming             | `@cbt-bo/package-name`                                   |
 | React version              | 19.x                                                      |
-| Framework                  | TanStack Start (Vite 8, Nitro), TanStack Router / Query   |
+| Framework                  | Both apps: Vite 8 SPA on React Router, with TanStack Query for API calls |
 
 ### 3. Potential Issues
 

@@ -5,7 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "!**/*.md"],
-      "outputs": [".output/**", "dist/**"]
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^build", "^lint"],

@@ -4,9 +4,9 @@ import { useSessionStore } from '@cbt-bo/api/auth/store';
 import { SESSION_EXPIRED_EVENT } from '@cbt-bo/api/client';
 import { usePageTabsStore } from '@cbt-bo/api/page-tabs/store';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import { PATH } from '#/constants/path';
@@ -26,10 +26,11 @@ export const useSessionExpiry = (): void => {
     clearSession();
     resetSessionQuery(queryClient);
     toast.error(t('login.error.fail'), { description: t('login.error.sessionExpired') });
-    void navigate({ to: PATH.LOGIN, replace: true }).then(() => {
+    void (async () => {
+      await navigate(PATH.LOGIN, { replace: true });
       queryClient.clear();
       usePageTabsStore.getState().clearPaths();
-    });
+    })();
   }, [navigate, queryClient, t]);
 
   useEffect(() => {

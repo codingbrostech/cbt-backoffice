@@ -1,8 +1,8 @@
 import { usePageTabsStore } from '@cbt-bo/api/page-tabs/store';
 import type { TNavItem } from '@cbt-bo/component-lib/components/nav';
 import { buildActiveNavItem } from '@cbt-bo/component-lib/components/nav';
-import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export interface IPageTab {
   key: string;
@@ -39,7 +39,7 @@ export const usePageTabs = (items: TNavItem[], pathname: string): IUsePageTabsRe
   }));
 
   const handleSelect = (path: string) => {
-    void navigate({ href: path });
+    void navigate(path);
   };
 
   const handleClose = (path: string) => {
@@ -55,7 +55,7 @@ export const usePageTabs = (items: TNavItem[], pathname: string): IUsePageTabsRe
     if (!nextPath) return;
 
     closePath(path);
-    void navigate({ href: nextPath });
+    void navigate(nextPath);
   };
 
   useEffect(() => {

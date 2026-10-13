@@ -1,9 +1,65 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import { PATH } from '#/constants/path';
+import AppLayout from '#/routes/app/Layout';
+import DashboardPage from '#/routes/app/dashboard';
+import NotFoundPage from '#/routes/app/not-found';
+import PlaceholderPage from '#/routes/app/placeholder';
+import LoginPage from '#/routes/login';
 
-export const Route = createFileRoute('/')({
-  beforeLoad: () => {
-    throw redirect({ to: PATH.DASHBOARD });
-  }
-});
+const PLACEHOLDER_PATHS = [
+  PATH.PLAYERS,
+  PATH.PLAYER_SESSIONS,
+  PATH.PLAYER_MOBILE_POLICY,
+  PATH.PLAYER_SELF_LIMITS,
+  PATH.PLAYER_LABELS,
+  PATH.PLAYER_GROUPS,
+  PATH.BET_TRANS,
+  PATH.LEDGER_TRANS,
+  PATH.PAYMENT_TRANSACTION,
+  PATH.WAGER_STATS,
+  PATH.ACSC_REWARD_PUSHLOG,
+  PATH.ACSC_TRANSFER,
+  PATH.GAMES,
+  PATH.GAME_CATEGORIES,
+  PATH.GAME_RANKING,
+  PATH.BANNERS,
+  PATH.BONUSES,
+  PATH.REBATE_SETTING,
+  PATH.REBATE_TRANS,
+  PATH.REWARDS_SHOP,
+  PATH.REWARDS_SHOP_CATEGORIES,
+  PATH.REDEMPTION_HISTORY,
+  PATH.PROMOS,
+  PATH.PROMOTION_TRANSACTIONS,
+  PATH.PAGES,
+  PATH.ADMINS,
+  PATH.ADMIN_QUOTA_CONFIGS,
+  PATH.ADMIN_QUOTAS,
+  PATH.ADMIN_SESSIONS,
+  PATH.ADMIN_OPS_LOGS,
+  PATH.ROLES,
+  PATH.ROLES_PERMISSION,
+  PATH.PAYMENT_CHANNELS
+] as const satisfies readonly string[];
+
+/**
+ * Route tree of the app. The index redirects to PATH.DASHBOARD, PATH.LOGIN
+ * renders LoginPage, and every other path renders inside AppLayout, with an
+ * unknown one falling through to NotFoundPage.
+ */
+const AppRoutes = () => (
+  <Routes>
+    <Route index element={<Navigate to={PATH.DASHBOARD} replace />} />
+    <Route path={PATH.LOGIN} element={<LoginPage />} />
+    <Route element={<AppLayout />}>
+      <Route path={PATH.DASHBOARD} element={<DashboardPage />} />
+      {PLACEHOLDER_PATHS.map(path => (
+        <Route key={path} path={path} element={<PlaceholderPage />} />
+      ))}
+      <Route path="*" element={<NotFoundPage />} />
+    </Route>
+  </Routes>
+);
+
+export default AppRoutes;
