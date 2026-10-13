@@ -74,3 +74,22 @@ export const buildActiveNavItem = (
  */
 export const buildActiveNavKey = (items: TNavItem[], pathname: string): string | undefined =>
   buildActiveNavItem(items, pathname)?.key;
+
+/**
+ * Copy of `items` keeping the leaves that pass `isVisible`, searching nested
+ * group children at any depth. A group without a visible child is dropped.
+ *
+ * @example
+ * buildVisibleNavItems(items, ({ pageKey }) => allowedPageKeys.includes(pageKey));
+ */
+export const buildVisibleNavItems = (
+  items: TNavItem[],
+  isVisible: (item: INavLeafItem) => boolean
+): TNavItem[] =>
+  items.flatMap<TNavItem>(item => {
+    if (!isNavGroupItem(item)) return isVisible(item) ? [item] : [];
+
+    const children = buildVisibleNavItems(item.children, isVisible);
+
+    return children.length ? [{ ...item, children }] : [];
+  });

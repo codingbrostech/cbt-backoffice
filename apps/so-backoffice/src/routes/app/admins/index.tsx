@@ -11,6 +11,7 @@ import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { usePagePermission } from '#/hooks/use-page-permission';
 import { useTableLabels } from '#/hooks/use-table-labels';
 import AdminFormDialog from '#/routes/app/admins/components/AdminFormDialog';
 import { buildAdminColumns } from '#/routes/app/admins/data-type';
@@ -27,6 +28,7 @@ const AdminsPage = () => {
     useAdminList();
   const { data: roles = [] } = useQuery(adminRoleListQueryOptions());
   const tableLabels = useTableLabels();
+  const { isCreateAllowed, isUpdateAllowed } = usePagePermission();
 
   const roleOptions = buildRoleOptions(roles);
   const stateOptions = ACTIVATION_STATES.map(state => ({
@@ -44,13 +46,13 @@ const AdminsPage = () => {
     setIsDialogOpen(true);
   };
 
-  const columns = buildAdminColumns(t, { onEdit: openEdit });
+  const columns = buildAdminColumns(t, { onEdit: openEdit, isUpdateAllowed });
 
   return (
     <main className="flex min-h-0 flex-1 flex-col gap-4">
       <SearchBar.Root defaultValues={DEFAULT_ADMIN_LIST_FILTER} values={filter} onSubmit={search}>
         <SearchBar.Header title={t('nav.admins')}>
-          <Button type="button" onClick={openCreate}>
+          <Button type="button" disabled={!isCreateAllowed} onClick={openCreate}>
             <PlusIcon />
             {t('admins.create')}
           </Button>

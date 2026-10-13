@@ -3,6 +3,7 @@ import {
   buildActiveGroupKey,
   buildActiveNavItem,
   buildActiveNavKey,
+  buildVisibleNavItems,
   containsActiveKey
 } from '@cbt-bo/component-lib/lib/nav-items';
 
@@ -140,6 +141,35 @@ describe('buildActiveNavKey', () => {
   describe('when the path matches nothing', () => {
     it('should return undefined', () => {
       expect(buildActiveNavKey(ITEMS, '/unknown')).toBeUndefined();
+    });
+  });
+});
+
+describe('buildVisibleNavItems', () => {
+  describe('when every leaf is visible', () => {
+    it('should keep the whole tree', () => {
+      expect(buildVisibleNavItems(ITEMS, () => true)).toEqual(ITEMS);
+    });
+  });
+
+  describe('when only a nested grandchild is visible', () => {
+    it('should keep the groups leading to it', () => {
+      const items = buildVisibleNavItems(ITEMS, ({ key }) => key === 'game-round-logs');
+
+      expect(items).toEqual([
+        {
+          ...ITEMS[1],
+          children: [{ ...ITEMS[1].children[1], children: [ITEMS[1].children[1].children[0]] }]
+        }
+      ]);
+    });
+  });
+
+  describe('when no leaf of a group is visible', () => {
+    it('should drop the group', () => {
+      const items = buildVisibleNavItems(ITEMS, ({ key }) => key === 'dashboard');
+
+      expect(items).toEqual([ITEMS[0]]);
     });
   });
 });
