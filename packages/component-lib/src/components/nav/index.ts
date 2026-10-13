@@ -10,6 +10,7 @@ export type {
 export {
   buildActiveNavItem,
   buildActiveNavKey,
+  buildVisibleNavItems,
   isNavGroupItem
 } from '@cbt-bo/component-lib/lib/nav-items';
 export type { INavGroupItem, INavLeafItem, TNavItem } from '@cbt-bo/component-lib/lib/nav-items';
