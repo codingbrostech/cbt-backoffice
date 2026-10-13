@@ -28,7 +28,7 @@ const App = () => {
   return (
     <>
       <AppRoutes />
-      <Toaster position="top-right" richColors />
+      <Toaster />
     </>
   );
 };

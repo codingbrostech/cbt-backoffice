@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { PATH } from '#/constants/path';
 import AppLayout from '#/routes/app/Layout';
+import AdminsPage from '#/routes/app/admins';
 import DashboardPage from '#/routes/app/dashboard';
 import NotFoundPage from '#/routes/app/not-found';
 import PlaceholderPage from '#/routes/app/placeholder';
@@ -34,7 +35,6 @@ const PLACEHOLDER_PATHS = [
   PATH.PROMOTION_TRANSACTIONS,
   PATH.TIER_TRANSACTIONS,
   PATH.PAGES,
-  PATH.ADMINS,
   PATH.ADMIN_QUOTA_CONFIGS,
   PATH.ADMIN_QUOTAS,
   PATH.ADMIN_SESSIONS,
@@ -55,6 +55,7 @@ const AppRoutes = () => (
     <Route path={PATH.LOGIN} element={<LoginPage />} />
     <Route element={<AppLayout />}>
       <Route path={PATH.DASHBOARD} element={<DashboardPage />} />
+      <Route path={PATH.ADMINS} element={<AdminsPage />} />
       {PLACEHOLDER_PATHS.map(path => (
         <Route key={path} path={path} element={<PlaceholderPage />} />
       ))}
