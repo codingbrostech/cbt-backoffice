@@ -8,6 +8,7 @@ const ACTION_COLUMN_WIDTH_PX = 80;
 
 export interface IAdminColumnActions {
   onEdit: (admin: AdminResult) => void;
+  isUpdateAllowed: boolean;
 }
 
 /**
@@ -17,7 +18,7 @@ export interface IAdminColumnActions {
  */
 export const buildAdminColumns = (
   t: TFunction,
-  { onEdit }: IAdminColumnActions
+  { onEdit, isUpdateAllowed }: IAdminColumnActions
 ): IDataTableColumn<AdminResult>[] => [
   {
     key: 'code',
@@ -41,6 +42,7 @@ export const buildAdminColumns = (
         type="button"
         variant="muted"
         size="sm"
+        disabled={!isUpdateAllowed}
         onClick={() => {
           onEdit(admin);
         }}
