@@ -22,7 +22,7 @@ Three concepts to know:
 cbt-backoffice/
 ├── apps/
 │   ├── so-backoffice/   # Solaire Online admin portal, TanStack Start, port 3001
-│   └── fm-backoffice/   # FUNaloMAX admin portal, TanStack Start, port 3000
+│   └── fm-backoffice/   # FUNaloMAX admin portal, Vite SPA on React Router, port 3000
 │
 ├── packages/
 │   ├── api/             # Shared MGT actions, query options and stores, consumed as TypeScript source
@@ -101,7 +101,7 @@ Every task our repo can run is defined in the root `turbo.json`. Here's a simpli
 2. Turborepo reads every package's `package.json` to build the dependency graph.
 3. It **topologically sorts** the packages — dependencies come first.
 4. `packages/config` has no workspace deps, so it builds first.
-5. Both apps build last (they depend on config). TanStack Start's Vite build writes `.output/` per app.
+5. Both apps build last (they depend on config). so-backoffice's TanStack Start build writes `.output/`, fm-backoffice's Vite build writes `dist/`.
 7. At each step, Turborepo checks the cache. If `inputs` haven't changed, it **replays the cached `outputs`** instead of running the script — often finishing in milliseconds.
 
 ### All our tasks
@@ -227,7 +227,8 @@ When a task succeeds, Turborepo caches the files listed in `outputs`. On a cache
 
 | Task             | Cached outputs                  |
 | ---------------- | ------------------------------- |
-| `build` (apps)   | `.output/**`                    |
+| `build` (so-backoffice) | `.output/**`             |
+| `build` (fm-backoffice) | `dist/**`                |
 | `build` (packages) | `dist/**`                     |
 | `build:storybook` | `storybook-static/**`          |
 | `test`           | `coverage/**` (but task itself is uncached) |

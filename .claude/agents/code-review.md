@@ -57,13 +57,13 @@ Compare changes against existing codebase patterns:
 
 | Pattern                    | Expected                                                  |
 | -------------------------- | --------------------------------------------------------- |
-| App source location        | `apps/<app>/src`, file-based routes under `src/routes`     |
-| Generated files            | `src/routeTree.gen.ts` (committed), `src/components/ui/**` (shadcn, vendored) |
+| App source location        | `apps/<app>/src`; so-backoffice keeps file-based routes under `src/routes`, fm-backoffice declares its `<Routes>` tree in `src/routes/index.tsx` with `login/` and `app/` beside it |
+| Generated files            | `src/routeTree.gen.ts` (so-backoffice, committed), `src/components/ui/**` (shadcn, vendored) |
 | Export pattern             | Components export from `index.ts` barrel files            |
 | ESLint config              | Uses `@cbt-bo/config/eslint` (repo rules + TanStack toolchain) |
 | Package naming             | `@cbt-bo/package-name`                                   |
 | React version              | 19.x                                                      |
-| Framework                  | TanStack Start (Vite 8, Nitro), TanStack Router / Query   |
+| Framework                  | so-backoffice: TanStack Start (Vite 8, Nitro, TanStack Router). fm-backoffice: Vite 8 SPA on React Router. TanStack Query in both |
 
 ### 3. Potential Issues
 

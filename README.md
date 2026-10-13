@@ -7,7 +7,7 @@ A **Turborepo monorepo** for the CBT backoffice apps using pnpm workspaces.
 ### Apps and Packages
 
 - `apps/so-backoffice`: Solaire Online admin portal, a [TanStack Start](https://tanstack.com/start) app
-- `apps/fm-backoffice`: FUNaloMAX admin portal, a [TanStack Start](https://tanstack.com/start) app
+- `apps/fm-backoffice`: FUNaloMAX admin portal, a [Vite](https://vite.dev) single-page app on [React Router](https://reactrouter.com)
 - `packages/component-lib`: Shared UI consumed as source by both apps (shadcn/ui set, theme stylesheet, react-hook-form field bindings, PageSpinner). Page forms live in the apps.
 - `packages/api-schema`: Generated MGT API clients plus the `@cbt-bo/api-schema/mgt` request layer (`createMgtAction`, `ApiError`)
 - `packages/api`: Hand-written MGT actions, query options and stores shared by both apps, consumed as source and brand-neutral through the `@cbt-bo/api-schema/bo/*` alias
@@ -40,17 +40,19 @@ pnpm install
 
 ### Configure an app
 
-Each app reads the MGT API settings from the server environment at request time. Copy the example file and adjust it.
+Copy each app's example file and adjust it. `so-backoffice` reads its settings from the server environment at request time. `fm-backoffice` is a static bundle, so Vite inlines its `VITE_` prefixed settings at build time.
 
 ```bash
 cp apps/fm-backoffice/.env.example apps/fm-backoffice/.env
 cp apps/so-backoffice/.env.example apps/so-backoffice/.env
 ```
 
-| Variable       | Purpose                                |
-| -------------- | -------------------------------------- |
-| `MGT_BASE_URL` | Origin of the MGT API for this brand   |
-| `MGT_SITE_ID`  | Value sent in the `X-Tgpx-Site` header |
+| App             | Variable            | Purpose                                |
+| --------------- | ------------------- | -------------------------------------- |
+| `so-backoffice` | `MGT_BASE_URL`      | Origin of the MGT API for this brand   |
+| `so-backoffice` | `MGT_SITE_ID`       | Value sent in the `X-Tgpx-Site` header |
+| `fm-backoffice` | `VITE_MGT_BASE_URL` | Origin of the MGT API for this brand   |
+| `fm-backoffice` | `VITE_MGT_SITE_ID`  | Value sent in the `X-Tgpx-Site` header |
 
 ### Develop
 
@@ -91,7 +93,7 @@ pnpm gen:api:bo:so   # SO only
 
 ### Add a TanStack integration
 
-Each app was scaffolded with the [TanStack CLI](https://github.com/tanstack/cli) and keeps its `.cta.json`. Run the CLI from the app directory to add an integration, then review the regenerated files with `git diff`.
+`so-backoffice` was scaffolded with the [TanStack CLI](https://github.com/tanstack/cli) and keeps its `.cta.json`. Run the CLI from that app's directory to add an integration, then review the regenerated files with `git diff`. `fm-backoffice` is a plain Vite app and takes no add-ons.
 
 ```bash
 cd apps/so-backoffice
@@ -213,5 +215,6 @@ praise: Great use of composition here!
 - [Turborepo Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
 - [Turborepo Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
 - [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/overview)
+- [React Router](https://reactrouter.com/start/declarative/routing)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Conventional Comments](https://conventionalcomments.org/)

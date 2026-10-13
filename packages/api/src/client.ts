@@ -4,8 +4,8 @@ import { configureMgtClient } from '@cbt-bo/api-schema/mgt';
 import { useSessionStore } from '@cbt-bo/api/auth/store';
 
 /**
- * MGT API settings read from the server environment at request time and
- * handed to the client through the root route context.
+ * MGT API settings each app reads from its environment and hands to
+ * `initMgtClient` before the first request.
  */
 export interface IRuntimeEnv {
   mgtBaseUrl: string;

@@ -66,7 +66,7 @@ import { useSessionStore } from '@cbt-bo/api/auth/store';
 import { usePreferencesStore } from '@cbt-bo/api/preferences/store';
 ```
 
-Call `initMgtClient(env)` in the routes that talk to the API before the first request. The apps do this in `__root`, `login` and `_authenticated`.
+Call `initMgtClient(env)` before the first request. `so-backoffice` does this in its `__root`, `login` and `_authenticated` routes, and `fm-backoffice` once in `src/main.tsx` before rendering.
 
 ## Scripts
 

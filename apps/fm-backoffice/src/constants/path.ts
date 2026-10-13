@@ -39,9 +39,21 @@ export const PATH = {
 
 const IN_APP_PATH_PATTERN = /^\/(?!\/)/;
 
+export const LOGIN_REDIRECT_PARAM = 'redirect';
+
 /**
  * In-app href to continue to after login. Falls back to PATH.DASHBOARD when
  * `redirect` is missing or points outside the app.
  */
 export const buildPostLoginHref = (redirect?: string): string =>
   redirect && IN_APP_PATH_PATTERN.test(redirect) ? redirect : PATH.DASHBOARD;
+
+/**
+ * Login href carrying `redirect` under LOGIN_REDIRECT_PARAM, so the login
+ * page can continue there afterwards.
+ */
+export const buildLoginHref = (redirect: string): string => {
+  const search = new URLSearchParams({ [LOGIN_REDIRECT_PARAM]: redirect });
+
+  return `${PATH.LOGIN}?${search.toString()}`;
+};
