@@ -16,6 +16,7 @@
   "dependencies": {
     "@cbt-bo/api-schema": "workspace:*",
     "@tanstack/react-query": "catalog:",
+    "radash": "catalog:",
     "zustand": "catalog:"
   },
   "devDependencies": {
