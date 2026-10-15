@@ -6,7 +6,7 @@ const DashboardPage = () => {
   const { name = '' } = useSessionStore(state => state.user) ?? {};
 
   return (
-    <main className="flex min-h-full flex-col items-center justify-center gap-6 p-6">
+    <main className="flex flex-1 flex-col items-center justify-center gap-6 p-6">
       <h1 className="text-2xl font-semibold">{t('dashboard.title')}</h1>
       <p className="text-muted-foreground">{t('dashboard.welcome', { name })}</p>
     </main>

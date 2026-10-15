@@ -35,7 +35,7 @@ const Content = ({ items, pathname, children }: IContentProps) => {
           closeOtherTabsLabel={t('common.closeOtherTabs')}
         />
       </HeaderTabs.Root>
-      <div className="flex min-h-0 flex-1 flex-col overflow-auto rounded-sm rounded-t-none border border-t-0 border-border bg-card px-5 pt-6 pb-2">
+      <div className="@container relative flex min-h-0 flex-1 flex-col overflow-auto overscroll-x-none rounded-sm [scrollbar-color:var(--color-border)_transparent] [scrollbar-gutter:stable] [scrollbar-width:thin] rounded-t-none border border-t-0 border-border bg-card px-5 pb-2 before:block before:h-6 before:shrink-0 before:content-['']">
         {children}
       </div>
     </SidebarInset>

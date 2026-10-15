@@ -1,0 +1,106 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+
+import * as PageStories from './Page.stories';
+
+<Meta of={PageStories} />
+
+# Page
+
+The frame of a list page in the authenticated shell. `Root` is the page's `main` and picks how the page scrolls, and `Header` holds the search bar and anything else above the table.
+
+<Canvas of={PageStories.GridScroll} />
+
+## Usage
+
+`Page` is a set of parts. Always nest them like this, with `DataTable.Root` as a direct child of `Root`. Pass `isPageScroll` to `Root` and to `DataTable.Root` together.
+
+```tsx
+<Page.Root isPageScroll>
+  <Page.Header>
+    <SearchBar.Root>...</SearchBar.Root>
+  </Page.Header>
+  <DataTable.Root isPageScroll>
+    <DataTable.Grid />
+    <DataTable.Pagination />
+  </DataTable.Root>
+</Page.Root>
+```
+
+<table className="w-full text-left text-sm [&_td]:py-2 [&_td]:pr-4 [&_th]:py-2 [&_th]:pr-4 [&_th]:font-medium [&_tr]:border-b">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>What it is</th>
+      <th>What to pass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Root</code>
+      </td>
+      <td>
+        The page's <code>main</code>. Fills the content area, or sizes to its content under{' '}
+        <code>isPageScroll</code>
+      </td>
+      <td>
+        Optionally <code>isPageScroll</code> and <code>className</code>, then the parts as children
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Header</code>
+      </td>
+      <td>
+        Column for everything above the table. Stays in place sideways under{' '}
+        <code>isPageScroll</code>
+      </td>
+      <td>
+        Optionally <code>className</code>, with the search bar and any summary as children
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<Controls of={PageStories.PageScroll} include={['isPageScroll', 'className']} />
+
+## How the page scrolls
+
+Without `isPageScroll`, `Root` fills the content area and the table takes the height left under `Header`. The rows scroll inside the grid, so the search bar and the pagination never move.
+
+<Canvas of={PageStories.GridScroll} />
+
+With `isPageScroll` on both `Root` and `DataTable.Root`, the table grows with its rows and columns and the content area scrolls as a whole, down and sideways. `Header`, `DataTable.Toolbar` and `DataTable.Pagination` keep the visible width and stay put while the grid scrolls sideways. Use it for a page with a tall header, such as a search bar plus summary cards, or for a wide table.
+
+<Canvas of={PageStories.PageScroll} />
+
+Sideways scrolling needs the scrolling element to be a size container (`@container`) that reserves its scrollbar space (`[scrollbar-gutter:stable]`), so `100cqw` is the visible width without the scrollbar. The content area of the authenticated shell already does both.
+
+## Usage in the app
+
+Render it as the page's outermost element. The shell's content area provides the scrolling element.
+
+```tsx
+import { Page } from '@cbt-bo/component-lib/components/layout';
+
+<Page.Root isPageScroll>
+  <Page.Header>
+    <SearchBar.Root defaultValues={defaultFilter} values={filter} onSubmit={search}>
+      ...
+    </SearchBar.Root>
+    <BetTransSummary summary={summary} isLoading={isSummaryFetching} />
+  </Page.Header>
+  <DataTable.Root
+    columns={columns}
+    data={rows}
+    total={total}
+    labels={tableLabels}
+    params={pageParams}
+    onParamsChange={setPageParams}
+    isPageScroll
+  >
+    <DataTable.Grid />
+    <DataTable.Pagination />
+  </DataTable.Root>
+</Page.Root>;
+```
