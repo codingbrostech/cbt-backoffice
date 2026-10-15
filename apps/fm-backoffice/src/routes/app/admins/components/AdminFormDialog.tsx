@@ -45,6 +45,7 @@ const AdminFormDialog = ({
     cancel: t('common.cancel'),
     showPassword: t('common.showPassword'),
     hidePassword: t('common.hidePassword'),
+    noResults: t('common.noResultFound'),
     codeRequiredError: t('admins.validation.codeRequired'),
     secretRequiredError: t('admins.validation.secretRequired'),
     roleRequiredError: t('admins.validation.roleRequired')

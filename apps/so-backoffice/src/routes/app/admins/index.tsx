@@ -65,12 +65,14 @@ const AdminsPage = () => {
               label={t('admins.state')}
               options={stateOptions}
               allLabel={t('common.all')}
+              noResultsLabel={t('common.noResultFound')}
             />
             <SearchBar.SelectField
               name="role"
               label={t('admins.role')}
               options={roleOptions}
               allLabel={t('common.all')}
+              noResultsLabel={t('common.noResultFound')}
             />
             <SearchBar.Actions
               resetLabel={t('common.reset')}

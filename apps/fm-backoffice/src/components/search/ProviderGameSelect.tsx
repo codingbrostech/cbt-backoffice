@@ -45,7 +45,7 @@ const buildGameOptions = (games: GameResult[]): ISelectOption[] =>
   );
 
 /**
- * Provider select and searchable game select for a `SearchBar`, bound to
+ * Searchable provider and game selects for a `SearchBar`, bound to
  * `providerName` and `gameName` on the bar's form. The game options narrow to
  * the picked provider, and a game from another provider is cleared when the
  * provider changes. Pass `only` to render one of the two fields.
@@ -97,16 +97,16 @@ const ProviderGameSelect = ({
           label={t('game.provider')}
           options={providerOptions}
           allLabel={t('common.all')}
+          noResultsLabel={t('common.noResultFound')}
         />
       )}
       {isGameShown && (
-        <SearchBar.ComboboxField
+        <SearchBar.SelectField
           name={gameName}
           label={t('game.game')}
           options={gameOptions}
           allLabel={t('common.all')}
-          searchPlaceholder={t('game.searchPlaceholder')}
-          noResultsLabel={t('common.nothingFound')}
+          noResultsLabel={t('common.noResultFound')}
         />
       )}
     </>

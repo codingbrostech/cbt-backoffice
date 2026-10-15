@@ -1,5 +1,4 @@
 import SearchBarActions from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarActions';
-import SearchBarComboboxField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarComboboxField';
 import SearchBarDateRangeField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarDateRangeField';
 import SearchBarFields from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarFields';
 import SearchBarHeader from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarHeader';
@@ -9,7 +8,6 @@ import SearchBarTextField from '@cbt-bo/component-lib/components/search/SearchBa
 import SearchBarViewToggle from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarViewToggle';
 
 export type { ISearchBarActionsProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarActions';
-export type { ISearchBarComboboxFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarComboboxField';
 export type {
   ISearchBarDateRangeFieldLabels,
   ISearchBarDateRangeFieldProps
@@ -47,7 +45,6 @@ const SearchBar = {
   Fields: SearchBarFields,
   TextField: SearchBarTextField,
   SelectField: SearchBarSelectField,
-  ComboboxField: SearchBarComboboxField,
   DateRangeField: SearchBarDateRangeField,
   Actions: SearchBarActions,
   ViewToggle: SearchBarViewToggle

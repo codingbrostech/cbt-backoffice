@@ -147,7 +147,7 @@ const meta = {
   },
   decorators: [
     Story => (
-      <div className="@container relative flex h-[420px] w-[720px] flex-col overflow-auto overscroll-x-none rounded-sm border border-border bg-card px-5 pb-2 [scrollbar-gutter:stable] [scrollbar-width:thin] before:block before:h-6 before:shrink-0 before:content-['']">
+      <div className="@container relative flex h-[420px] w-[720px] flex-col overflow-auto overscroll-x-none rounded-sm border border-border bg-card px-5 pb-2 [scrollbar-gutter:stable] before:block before:h-6 before:shrink-0 before:content-['']">
         <Story />
       </div>
     )

@@ -6,9 +6,11 @@ import * as SelectFieldStories from './SelectField.stories';
 
 <Title />
 
-**SelectField** is a single-value select bound to a react-hook-form field. It calls `useController` with the given `control` and `name`, so the picked value and the change and blur handlers all come from the form. The label sits above the trigger and is linked to it through `name`, which doubles as the trigger id. While the value is empty the trigger shows `placeholder`, and while the field carries an error the trigger turns invalid and the message renders below it.
+**SelectField** is a searchable single-value select bound to a react-hook-form field. It calls `useController` with the given `control` and `name`, so the picked value and the change and blur handlers all come from the form. The label sits above the input and is linked to it through `name`, which doubles as the input id. While the value is empty the input shows `placeholder`, and while the field carries an error the input turns invalid and the message renders below it.
 
-`emptyLabel` adds a first option that clears the value, such as `All`, and is the selected option while the value is empty. Use it for filters. Leave it out for required fields, where `placeholder` prompts the user to pick.
+The input itself is the search box. Clicking it opens the list and turns the picked label into the placeholder, so typing starts a fresh search that narrows the options by label. Clicking the label only focuses the input and leaves the list closed. The arrow keys move through the list, Enter picks the highlighted option, and Escape or leaving the field closes it and restores the picked label. The list renders at most `SELECT_OPTION_LIMIT` options at once, so a narrower search reaches the rest. `noResultsLabel` is the text the list shows when the search matches nothing. Without it the list hides instead. Inside a modal dialog the list still scrolls with the mouse wheel and touch, even though it renders outside the dialog.
+
+`emptyLabel` adds a first option that clears the value, such as `All`, and is the selected option while the value is empty. Use it for filters. Leave it out for required fields, where `placeholder` prompts the user to pick. `clearLabel` names a clear button that takes the chevron's place while a value is picked, for a field that must stay pickable but should be quick to empty.
 
 `options` is a list of `{ value, label }` pairs, rendered in the given order. `size` picks the trigger height, `default` or `sm`, so the field can sit beside the compact inputs of a filter bar. The component carries no validation of its own. Rules and messages belong to the form's resolver, as `AdminForm` does with the zod schema it builds from `labels`.
 
@@ -27,6 +29,7 @@ const form = useForm<TAdminFormValues>({ defaultValues: { role: '' } });
   label={labels.role}
   options={roleOptions}
   placeholder={labels.rolePlaceholder}
+  noResultsLabel={labels.noResults}
 />;
 ```
 

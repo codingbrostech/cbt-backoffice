@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { expect, screen, userEvent, within } from 'storybook/test';
+
+import { Button } from '@cbt-bo/component-lib/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger
+} from '@cbt-bo/component-lib/components/ui/dialog';
 
 import SelectField, { type ISelectFieldProps } from '.';
 
@@ -15,6 +25,12 @@ const ROLE_OPTIONS = [
   { value: 'ops', label: 'Ops' }
 ];
 
+const RANK_OPTIONS = Array.from({ length: 30 }, (_, index) => {
+  const rank = String(index + 1);
+
+  return { value: rank, label: rank };
+});
+
 const meta = {
   title: 'Forms/SelectField',
   component: SelectField,
@@ -25,6 +41,8 @@ const meta = {
     options: ROLE_OPTIONS,
     placeholder: 'Select a role',
     emptyLabel: '',
+    clearLabel: '',
+    noResultsLabel: 'Nothing found',
     size: 'default',
     disabled: false,
     value: '',
@@ -82,6 +100,80 @@ export const WithEmptyOption: TStory = {
 
 export const Selected: TStory = {
   args: { value: 'admin' }
+};
+
+export const Clearable: TStory = {
+  args: { value: 'admin', clearLabel: 'Clear' }
+};
+
+export const Searching: TStory = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('combobox', { name: 'Role' });
+
+    await userEvent.click(input);
+    await userEvent.keyboard('op');
+
+    await expect(await screen.findByRole('option', { name: 'Ops' })).toBeInTheDocument();
+    await expect(screen.queryByRole('option', { name: 'Admin' })).not.toBeInTheDocument();
+
+    await userEvent.keyboard('{Enter}');
+
+    await expect(input).toHaveValue('Ops');
+  }
+};
+
+export const NoResults: TStory = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('combobox', { name: 'Role' }));
+    await userEvent.keyboard('zz');
+
+    await expect(await screen.findByText('Nothing found')).toBeInTheDocument();
+  }
+};
+
+export const ClickingLabel: TStory = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByText('Role'));
+
+    await expect(canvas.getByRole('combobox', { name: 'Role' })).toHaveFocus();
+    await expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  }
+};
+
+export const InDialog: TStory = {
+  args: { label: 'Rank', options: RANK_OPTIONS, placeholder: 'Select a rank' },
+  decorators: [
+    Story => (
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Open dialog</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Edit entry</DialogTitle>
+          <DialogDescription>The open list scrolls with the mouse wheel.</DialogDescription>
+          <Story />
+        </DialogContent>
+      </Dialog>
+    )
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Open dialog' }));
+    await userEvent.click(await screen.findByRole('combobox', { name: 'Rank' }));
+
+    const listbox = await screen.findByRole('listbox');
+    const wheel = new WheelEvent('wheel', { deltaY: 100, bubbles: true, cancelable: true });
+
+    listbox.dispatchEvent(wheel);
+
+    await expect(wheel.defaultPrevented).toBe(false);
+  }
 };
 
 export const Small: TStory = {

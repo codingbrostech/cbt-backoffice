@@ -114,18 +114,22 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
   const emptyLabel = buildEmptyLabel(labels, isLoading, isError);
   const rowIds = rows.map(({ id }) => id);
 
-  const buildCellProps = ({ key, fixed }: IDataTableColumnMeta, fixedClassName: string) =>
+  const buildCellProps = (
+    { key, fixed, cellClassName }: IDataTableColumnMeta,
+    fixedClassName: string
+  ) =>
     isOverflowing && fixed
       ? {
           className: cn(
             COLUMN_CELL_CLASS_NAME,
+            cellClassName,
             FIXED_CELL_CLASS_NAME,
             edgeKeys[fixed] === key && FIXED_EDGE_CLASS_NAMES[fixed],
             fixedClassName
           ),
           style: { [FIXED_OFFSET_PROPERTIES[fixed]]: pinOffsets[key] ?? 0 }
         }
-      : { className: COLUMN_CELL_CLASS_NAME };
+      : { className: cn(COLUMN_CELL_CLASS_NAME, cellClassName) };
 
   const renderCells = ({ cells }: IDataTableRow, isHighlighted: boolean) =>
     visibleColumns.map(column => (
@@ -171,9 +175,7 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
         className="table-fixed"
         style={{ minWidth: visibleColumns.length * MIN_COLUMN_WIDTH }}
         containerClassName={cn(
-          isPageScroll
-            ? 'overflow-x-visible'
-            : 'min-h-0 flex-1 overflow-y-auto [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin]'
+          isPageScroll ? 'overflow-x-visible' : 'min-h-0 flex-1 overflow-y-auto'
         )}
       >
         <TableHeader className="sticky top-0 z-10 bg-card">
