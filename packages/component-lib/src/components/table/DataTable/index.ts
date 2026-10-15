@@ -1,4 +1,5 @@
 import DataTableColumnToggle from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnToggle';
+import DataTableDragHandle from '@cbt-bo/component-lib/components/table/DataTable/DataTableDragHandle';
 import DataTableGrid from '@cbt-bo/component-lib/components/table/DataTable/DataTableGrid';
 import DataTablePagination from '@cbt-bo/component-lib/components/table/DataTable/DataTablePagination';
 import DataTableRoot from '@cbt-bo/component-lib/components/table/DataTable/DataTableRoot';
@@ -13,6 +14,7 @@ export type {
   IDataTableGridLabels,
   IDataTableGridProps
 } from '@cbt-bo/component-lib/components/table/DataTable/DataTableGrid';
+export type { IDataTableDragHandleProps } from '@cbt-bo/component-lib/components/table/DataTable/DataTableDragHandle';
 export type { IDataTablePaginationLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTablePagination';
 export type { TDataTableLabels } from '@cbt-bo/component-lib/components/table/DataTable/data-table-context';
 export type { IDataTableRootProps } from '@cbt-bo/component-lib/components/table/DataTable/DataTableRoot';
@@ -35,7 +37,8 @@ const DataTable = {
   Toolbar: DataTableToolbar,
   ColumnToggle: DataTableColumnToggle,
   Grid: DataTableGrid,
-  Pagination: DataTablePagination
+  Pagination: DataTablePagination,
+  DragHandle: DataTableDragHandle
 };
 
 export default DataTable;

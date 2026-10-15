@@ -1,7 +1,11 @@
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+
 import DataTableColumnMenu from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnMenu';
+import DataTableSortableRow from '@cbt-bo/component-lib/components/table/DataTable/DataTableSortableRow';
 import { useDataTable } from '@cbt-bo/component-lib/components/table/DataTable/data-table-context';
 import {
   type IDataTableColumnMeta,
+  type IDataTableRow,
   buildPinOffsets,
   buildPinnedColumns,
   buildVisibleColumns
@@ -51,6 +55,12 @@ const FIXED_OFFSET_PROPERTIES = {
 const FIXED_BODY_CELL_CLASS_NAME =
   'bg-background [tr:hover>&]:bg-[color-mix(in_oklab,var(--background),var(--muted)_50%)]';
 
+const HIGHLIGHTED_ROW_CLASS_NAME =
+  'bg-primary/10 shadow-[inset_2px_0_0_0_var(--color-primary)] hover:bg-primary/15';
+
+const HIGHLIGHTED_FIXED_CELL_CLASS_NAME =
+  'bg-[color-mix(in_oklab,var(--background),var(--primary)_10%)] [tr:hover>&]:bg-[color-mix(in_oklab,var(--background),var(--primary)_15%)]';
+
 const buildEdgeKeys = (columns: readonly IDataTableColumnMeta[]): Record<TFixedEdge, string> => {
   const startColumns = columns.filter(({ fixed }) => fixed === 'start');
   const endColumns = columns.filter(({ fixed }) => fixed === 'end');
@@ -84,6 +94,8 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
     columnVisibility,
     columnPinning,
     isColumnPinnable,
+    onRowReorder,
+    highlightedRowId,
     isLoading,
     isError,
     isPageScroll
@@ -100,6 +112,7 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
   const pinOffsets = buildPinOffsets(visibleColumns, widths, scrollPadding);
   const edgeKeys = buildEdgeKeys(visibleColumns);
   const emptyLabel = buildEmptyLabel(labels, isLoading, isError);
+  const rowIds = rows.map(({ id }) => id);
 
   const buildCellProps = ({ key, fixed }: IDataTableColumnMeta, fixedClassName: string) =>
     isOverflowing && fixed
@@ -113,6 +126,35 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
           style: { [FIXED_OFFSET_PROPERTIES[fixed]]: pinOffsets[key] ?? 0 }
         }
       : { className: COLUMN_CELL_CLASS_NAME };
+
+  const renderCells = ({ cells }: IDataTableRow, isHighlighted: boolean) =>
+    visibleColumns.map(column => (
+      <TableCell
+        key={column.key}
+        {...buildCellProps(
+          column,
+          isHighlighted ? HIGHLIGHTED_FIXED_CELL_CLASS_NAME : FIXED_BODY_CELL_CLASS_NAME
+        )}
+      >
+        {cells[column.key]}
+      </TableCell>
+    ));
+
+  const renderRows = () =>
+    rows.map(row => {
+      const isHighlighted = row.id === highlightedRowId;
+      const rowClassName = isHighlighted ? HIGHLIGHTED_ROW_CLASS_NAME : undefined;
+
+      return onRowReorder ? (
+        <DataTableSortableRow key={row.id} id={row.id} className={rowClassName}>
+          {renderCells(row, isHighlighted)}
+        </DataTableSortableRow>
+      ) : (
+        <TableRow key={row.id} className={rowClassName}>
+          {renderCells(row, isHighlighted)}
+        </TableRow>
+      );
+    });
 
   return (
     <div className={cn('relative flex flex-col', !isPageScroll && 'min-h-0 flex-1', className)}>
@@ -162,18 +204,9 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
         </TableHeader>
         <TableBody>
           {rows.length ? (
-            rows.map(({ id, cells }) => (
-              <TableRow key={id}>
-                {visibleColumns.map(column => (
-                  <TableCell
-                    key={column.key}
-                    {...buildCellProps(column, FIXED_BODY_CELL_CLASS_NAME)}
-                  >
-                    {cells[column.key]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
+            <SortableContext items={rowIds} strategy={verticalListSortingStrategy}>
+              {renderRows()}
+            </SortableContext>
           ) : (
             <TableRow>
               <TableCell

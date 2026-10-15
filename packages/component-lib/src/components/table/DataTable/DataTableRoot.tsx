@@ -1,3 +1,14 @@
+import {
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import type { ReactNode } from 'react';
 
 import {
@@ -26,6 +37,16 @@ export interface IDataTableRootProps<TRow> {
   columnPinning?: TColumnPinning;
   onColumnPinningChange?: (columnPinning: TColumnPinning) => void;
   getRowId?: (row: TRow, index: number) => string;
+  /**
+   * Set to let rows be dragged into a new order. Receives the dragged row's
+   * id and the id of the row it was dropped on, both from `getRowId`.
+   */
+  onRowReorder?: (activeId: string, overId: string) => void;
+  /**
+   * Id of the row to mark as the one being worked on, for example while a
+   * dialog edits it.
+   */
+  highlightedRowId?: string;
   isLoading?: boolean;
   isError?: boolean;
   /**
@@ -43,6 +64,8 @@ export interface IDataTableRootProps<TRow> {
 
 const IGNORE_VISIBILITY_CHANGE = (): void => undefined;
 const IGNORE_PINNING_CHANGE = (): void => undefined;
+
+const ROW_DRAG_START_DISTANCE_PX = 4;
 
 /**
  * Root of a server-paginated list table, exposed as `DataTable.Root`. Shares
@@ -66,16 +89,29 @@ const DataTableRoot = <TRow,>({
   columnPinning = {},
   onColumnPinningChange,
   getRowId = buildDefaultRowId,
+  onRowReorder,
+  highlightedRowId,
   isLoading = false,
   isError = false,
   isPageScroll = false,
   children,
   className
 }: IDataTableRootProps<TRow>) => {
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: ROW_DRAG_START_DISTANCE_PX } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
   const rows = buildDataTableRows(columns, data, getRowId);
   const isColumnPinnable = Boolean(onColumnPinningChange);
 
-  return (
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+    if (!over || over.id === active.id) return;
+
+    onRowReorder?.(String(active.id), String(over.id));
+  };
+
+  const table = (
     <DataTableContext.Provider
       value={{
         columns,
@@ -89,6 +125,8 @@ const DataTableRoot = <TRow,>({
         columnPinning,
         onColumnPinningChange: onColumnPinningChange ?? IGNORE_PINNING_CHANGE,
         isColumnPinnable,
+        onRowReorder,
+        highlightedRowId,
         isLoading,
         isError,
         isPageScroll
@@ -101,6 +139,19 @@ const DataTableRoot = <TRow,>({
         {children}
       </div>
     </DataTableContext.Provider>
+  );
+
+  if (!onRowReorder) return table;
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      modifiers={[restrictToVerticalAxis]}
+      onDragEnd={handleDragEnd}
+    >
+      {table}
+    </DndContext>
   );
 };
 
