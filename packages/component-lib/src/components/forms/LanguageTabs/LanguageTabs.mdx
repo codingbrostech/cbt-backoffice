@@ -1,0 +1,42 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as LanguageTabsStories from './LanguageTabs.stories';
+
+<Meta of={LanguageTabsStories} />
+
+<Title />
+
+**LanguageTabs** groups the fields of a multi-language value under one underlined tab per language. `languages` is a list of `{ value, label }` pairs in display order. Each label becomes a tab, and the first language starts selected.
+
+`children` is a function that receives one language and returns its panel, usually the form fields bound to that language's key such as `titles.en`. The panel lays its fields out like a `FieldGroup`. Only the selected panel is mounted, and react-hook-form keeps the values of the other languages while their fields are hidden.
+
+The component carries no form state of its own. Values, validation and the field labels all come from the form that renders it.
+
+## Usage
+
+```tsx
+import { LanguageTabs, TextField, TextareaField } from '@cbt-bo/component-lib/components/forms';
+
+<LanguageTabs languages={CONTENT_LANGUAGE_OPTIONS}>
+  {({ value }) => (
+    <>
+      <TextField control={form.control} name={`titles.${value}`} label={labels.title} />
+      <TextareaField
+        control={form.control}
+        name={`descriptions.${value}`}
+        label={labels.description}
+      />
+    </>
+  )}
+</LanguageTabs>;
+```
+
+## Stories
+
+Each story seeds one form with English and Chinese texts. `ThreeLanguages` adds a Korean tab whose fields start empty.
+
+<Story of={LanguageTabsStories.Default} />
+
+<Controls of={LanguageTabsStories.Default} />
+
+<Stories includePrimary={false} />

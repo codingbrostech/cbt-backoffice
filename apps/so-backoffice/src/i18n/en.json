@@ -58,7 +58,7 @@
         "custom": "Custom"
       }
     },
-    "nothingFound": "Nothing found",
+    "noResultFound": "No results found",
     "view": "View",
     "viewOption": {
       "simple": "Simple",
@@ -208,7 +208,6 @@
   "game": {
     "provider": "Provider",
     "game": "Game",
-    "searchPlaceholder": "Search by name or ID",
     "baccaratSide": {
       "player": "Player",
       "banker": "Banker",

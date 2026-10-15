@@ -25,6 +25,7 @@ export interface IAdminFormLabels {
   cancel: string;
   showPassword: string;
   hidePassword: string;
+  noResults: string;
   codeRequiredError: string;
   secretRequiredError: string;
   roleRequiredError: string;
@@ -115,6 +116,7 @@ const AdminForm = ({
           label={labels.role}
           options={roleOptions}
           placeholder={labels.rolePlaceholder}
+          noResultsLabel={labels.noResults}
           disabled={isPending}
         />
         {stateOptions && (
@@ -123,6 +125,7 @@ const AdminForm = ({
             name="state"
             label={labels.state}
             options={stateOptions}
+            noResultsLabel={labels.noResults}
             disabled={isPending}
           />
         )}

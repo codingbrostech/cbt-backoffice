@@ -9,16 +9,14 @@ export interface ISearchBarSelectFieldProps {
   name: string;
   label: string;
   options: readonly ISelectOption[];
-  /**
-   * Label of the first option, which clears the filter. Shown while nothing
-   * is picked, such as "All".
-   */
   allLabel?: string;
+  clearLabel?: string;
+  noResultsLabel?: string;
   className?: string;
 }
 
 /**
- * Select filter bound to `name` on the bar's form, exposed as
+ * Searchable select filter bound to `name` on the bar's form, exposed as
  * `SearchBar.SelectField`.
  */
 const SearchBarSelectField = ({
@@ -26,6 +24,8 @@ const SearchBarSelectField = ({
   label,
   options,
   allLabel,
+  clearLabel,
+  noResultsLabel,
   className
 }: ISearchBarSelectFieldProps) => {
   const { control } = useFormContext();
@@ -38,6 +38,8 @@ const SearchBarSelectField = ({
         label={label}
         options={options}
         emptyLabel={allLabel}
+        clearLabel={clearLabel}
+        noResultsLabel={noResultsLabel}
         size="sm"
       />
     </div>

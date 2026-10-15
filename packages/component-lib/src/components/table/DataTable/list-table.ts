@@ -7,6 +7,11 @@ export interface IDataTableColumnMeta {
   title: string;
   width?: number;
   fixed?: TColumnPin;
+  /**
+   * Classes added to every cell of the column, header included, such as a
+   * tighter padding.
+   */
+  cellClassName?: string;
 }
 
 export interface IDataTableColumn<TRow> extends IDataTableColumnMeta {

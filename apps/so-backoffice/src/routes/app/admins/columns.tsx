@@ -1,7 +1,8 @@
 import type { AdminResult } from '@cbt-bo/api-schema/bo/models';
+import { IconButton } from '@cbt-bo/component-lib/components/button';
 import type { IDataTableColumn } from '@cbt-bo/component-lib/components/table';
-import { Button } from '@cbt-bo/component-lib/components/ui/button';
 import type { TFunction } from 'i18next';
+import { PencilIcon } from 'lucide-react';
 
 const EMPTY_VALUE = '-';
 const ACTION_COLUMN_WIDTH_PX = 80;
@@ -38,17 +39,18 @@ export const buildAdminColumns = (
     title: t('common.action'),
     width: ACTION_COLUMN_WIDTH_PX,
     render: admin => (
-      <Button
+      <IconButton
         type="button"
+        label={t('common.edit')}
         variant="muted"
-        size="sm"
+        size="icon-xs"
         disabled={!isUpdateAllowed}
         onClick={() => {
           onEdit(admin);
         }}
       >
-        {t('common.edit')}
-      </Button>
+        <PencilIcon />
+      </IconButton>
     )
   }
 ];

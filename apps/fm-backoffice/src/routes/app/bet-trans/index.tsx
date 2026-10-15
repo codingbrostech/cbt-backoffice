@@ -68,12 +68,14 @@ const BetTransPage = () => {
               label={t('betTrans.betState')}
               options={betStateOptions}
               allLabel={t('common.all')}
+              noResultsLabel={t('common.noResultFound')}
             />
             <SearchBar.SelectField
               name="txnType"
               label={t('betTrans.txnType')}
               options={txnTypeOptions}
               allLabel={t('common.all')}
+              noResultsLabel={t('common.noResultFound')}
             />
             <ProviderGameSelect only={EProviderGameField.PROVIDER} />
             <SearchBar.TextField name="gameId" label={t('betTrans.gameId')} />
@@ -82,6 +84,7 @@ const BetTransPage = () => {
               label={t('betTrans.gameType')}
               options={gameTypeOptions}
               allLabel={t('common.all')}
+              noResultsLabel={t('common.noResultFound')}
             />
             <SearchBar.TextField name="extRoundId" label={t('betTrans.extRoundId')} />
             <SearchBar.TextField name="extTxnId" label={t('betTrans.extTxnId')} />

@@ -4,12 +4,12 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-  MoveRightIcon,
-  XIcon
+  MoveRightIcon
 } from 'lucide-react';
 import { Fragment, type KeyboardEvent, type MouseEvent, useEffect, useRef, useState } from 'react';
 import { type Matcher, type Modifiers, dateMatchModifiers, formatCaption } from 'react-day-picker';
 
+import FieldClearButton from '@cbt-bo/component-lib/components/forms/FieldClearButton';
 import SearchBarTimeColumn from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarTimeColumn';
 import { Button } from '@cbt-bo/component-lib/components/ui/button';
 import { Calendar } from '@cbt-bo/component-lib/components/ui/calendar';
@@ -313,14 +313,11 @@ const SearchBarDateRangePicker = ({
               )}
             />
             {isFilled && (
-              <button
-                type="button"
-                aria-label={labels.clear}
-                className="absolute inset-px flex items-center justify-center rounded-full bg-muted-foreground/50 text-background opacity-0 transition-[opacity,background-color] outline-none group-hover/range:opacity-100 hover:bg-muted-foreground/80 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring/50"
+              <FieldClearButton
+                label={labels.clear}
+                className="absolute opacity-0 transition-[opacity,background-color] group-hover/range:opacity-100 focus-visible:opacity-100"
                 onClick={clear}
-              >
-                <XIcon className="size-2.5" strokeWidth={3} />
-              </button>
+              />
             )}
           </span>
         </div>

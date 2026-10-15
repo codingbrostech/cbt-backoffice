@@ -33,6 +33,16 @@ export interface IDataTableContext {
   columnPinning: TColumnPinning;
   onColumnPinningChange: (columnPinning: TColumnPinning) => void;
   isColumnPinnable: boolean;
+  /**
+   * Set when rows can be dragged into a new order. Receives the dragged row's
+   * id and the id of the row it was dropped on.
+   */
+  onRowReorder?: (activeId: string, overId: string) => void;
+  /**
+   * Id of the row to mark as the one being worked on, for example while a
+   * dialog edits it.
+   */
+  highlightedRowId?: string;
   isLoading: boolean;
   isError: boolean;
   isPageScroll: boolean;

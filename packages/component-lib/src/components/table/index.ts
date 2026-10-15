@@ -42,7 +42,6 @@ export type {
   ISummaryCardsRootProps
 } from '@cbt-bo/component-lib/components/table/SummaryCards';
 export { default as CopyableValue } from '@cbt-bo/component-lib/components/table/CopyableValue';
-export type {
-  ICopyableValueLabels,
-  ICopyableValueProps
-} from '@cbt-bo/component-lib/components/table/CopyableValue';
+export type { ICopyableValueProps } from '@cbt-bo/component-lib/components/table/CopyableValue';
+export { default as TruncatedText } from '@cbt-bo/component-lib/components/table/TruncatedText';
+export type { ITruncatedTextProps } from '@cbt-bo/component-lib/components/table/TruncatedText';

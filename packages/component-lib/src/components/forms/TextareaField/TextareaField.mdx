@@ -1,0 +1,35 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as TextareaFieldStories from './TextareaField.stories';
+
+<Meta of={TextareaFieldStories} />
+
+<Title />
+
+**TextareaField** is the multi-line counterpart of `TextField`. It calls `useController` with the given `control` and `name`, so the textarea's value, change handler and blur handler all come from the form. The label sits above the textarea and is linked to it through `name`, which doubles as the textarea id. While the field carries an error, the textarea turns invalid (`aria-invalid` plus the destructive border) and the message renders below it.
+
+Reach for it over `TextField` when the value is prose that runs past one line, such as a teaser or a remark. `rows` sets the height before the textarea scrolls, and the underlying `Textarea` grows with its content. Every other prop is forwarded, such as `placeholder`, `maxLength`, `disabled` and `className`.
+
+The component carries no validation of its own. Rules and messages belong to the form's resolver.
+
+## Usage
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+import { TextareaField } from '@cbt-bo/component-lib/components/forms';
+
+const form = useForm<IEntryFormValues>({ defaultValues: { descriptions: { en: '' } } });
+
+<TextareaField control={form.control} name="descriptions.en" label={labels.description} rows={3} />;
+```
+
+## Stories
+
+Each story creates its own form. `value` seeds the bound field, and `errorMessage`, when set, is written to the field with `setError`, so the invalid rendering shows without a resolver.
+
+<Story of={TextareaFieldStories.Default} />
+
+<Controls of={TextareaFieldStories.Default} />
+
+<Stories includePrimary={false} />

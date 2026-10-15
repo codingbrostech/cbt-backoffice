@@ -54,6 +54,8 @@ export const buildAdminColumns = (t: TFunction): IDataTableColumn<AdminResult>[]
 ];
 ```
 
+`cellClassName` adds classes to every cell of the column, header included. A narrow utility column such as a drag handle passes `pr-0` so the next column sits closer.
+
 `fixed: 'start'` or `fixed: 'end'` pins a column to that edge by default, such as the login column or an action column. Pinned columns move to their edge, and several can share one edge. The pin and its edge line appear only while the grid is wider than its container and scrolls sideways. A pinned column sticks flush against the border of whichever element scrolls, the grid or the page with `isPageScroll`, so it also covers that element's side padding.
 
 ## Column pinning

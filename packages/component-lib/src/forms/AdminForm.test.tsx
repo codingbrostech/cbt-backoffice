@@ -14,6 +14,7 @@ const LABELS = {
   cancel: 'Cancel',
   showPassword: 'Show password',
   hidePassword: 'Hide password',
+  noResults: 'Nothing found',
   codeRequiredError: 'Login is required',
   secretRequiredError: 'Password is required',
   roleRequiredError: 'Role is required'

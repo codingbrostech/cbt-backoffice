@@ -45,7 +45,7 @@ const SearchBarTimeColumn = ({
       ref={listRef}
       role="group"
       aria-label={label}
-      className="relative flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain p-1 supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-color:var(--color-border)_transparent] supports-[not_selector(::-webkit-scrollbar)]:[scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border"
+      className="relative flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain p-1 supports-[selector(::-webkit-scrollbar)]:[scrollbar-color:auto] supports-[selector(::-webkit-scrollbar)]:[scrollbar-width:auto] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border"
     >
       {options.map(option => (
         <Button

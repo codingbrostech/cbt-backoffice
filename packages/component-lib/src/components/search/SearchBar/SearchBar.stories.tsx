@@ -24,6 +24,7 @@ interface IStoryArgs {
   stateLabel: string;
   roleLabel: string;
   allLabel: string;
+  noResultsLabel: string;
   resetLabel: string;
   submitLabel: string;
   viewLabel: string;
@@ -49,7 +50,7 @@ export const PART_CONTROLS = [
   { part: 'Root', include: ['onSubmit', 'className'] },
   { part: 'Header', include: ['title', 'isCreateShown', 'createLabel'] },
   { part: 'TextField', include: ['codeLabel'] },
-  { part: 'SelectField', include: ['stateLabel', 'roleLabel', 'allLabel'] },
+  { part: 'SelectField', include: ['stateLabel', 'roleLabel', 'allLabel', 'noResultsLabel'] },
   { part: 'Actions', include: ['resetLabel', 'submitLabel'] },
   { part: 'ViewToggle', include: ['viewLabel', 'simpleLabel', 'detailLabel'] }
 ] as const satisfies readonly IPartControls[];
@@ -95,6 +96,7 @@ const meta = {
     stateLabel: 'State',
     roleLabel: 'Role',
     allLabel: 'All',
+    noResultsLabel: 'Nothing found',
     resetLabel: 'Reset',
     submitLabel: 'Search',
     viewLabel: 'View',
@@ -145,6 +147,11 @@ const meta = {
       description: 'Placeholder of each `SelectField` while nothing is picked.',
       table: { category: 'SelectField' }
     },
+    noResultsLabel: {
+      type: { name: 'string', required: true },
+      description: 'Text each `SelectField` list shows when the search matches nothing.',
+      table: { category: 'SelectField' }
+    },
     resetLabel: {
       type: { name: 'string', required: true },
       description: 'Label of the reset button in `Actions`.',
@@ -181,6 +188,7 @@ const meta = {
     stateLabel,
     roleLabel,
     allLabel,
+    noResultsLabel,
     resetLabel,
     submitLabel,
     viewLabel,
@@ -203,12 +211,14 @@ const meta = {
           label={stateLabel}
           options={STATE_OPTIONS}
           allLabel={allLabel}
+          noResultsLabel={noResultsLabel}
         />
         <SearchBar.SelectField
           name="role"
           label={roleLabel}
           options={ROLE_OPTIONS}
           allLabel={allLabel}
+          noResultsLabel={noResultsLabel}
         />
         <SearchBar.Actions resetLabel={resetLabel} submitLabel={submitLabel}>
           <StoryViewToggle label={viewLabel} simpleLabel={simpleLabel} detailLabel={detailLabel} />

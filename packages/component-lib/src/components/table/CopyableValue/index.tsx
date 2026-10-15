@@ -1,17 +1,12 @@
-import { CopyIcon } from 'lucide-react';
-import { toast } from 'sonner';
-
+import CopyButton, {
+  type ICopyButtonLabels
+} from '@cbt-bo/component-lib/components/button/CopyButton';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger
 } from '@cbt-bo/component-lib/components/ui/tooltip';
 import { cn } from '@cbt-bo/component-lib/lib/utils';
-
-export interface ICopyableValueLabels {
-  copy: string;
-  copied: string;
-}
 
 export interface ICopyableValueProps {
   value: string;
@@ -21,7 +16,7 @@ export interface ICopyableValueProps {
    * SHORT_VALUE_MIN_LENGTH.
    */
   isShortened?: boolean;
-  labels: ICopyableValueLabels;
+  labels: ICopyButtonLabels;
   className?: string;
 }
 
@@ -43,10 +38,6 @@ const CopyableValue = ({ value, isShortened = false, labels, className }: ICopya
   const isTruncated = isShortened && value.length > SHORT_VALUE_MIN_LENGTH;
   const shortValue = buildShortValue(value);
 
-  const copy = () => {
-    void navigator.clipboard.writeText(value).then(() => toast.success(labels.copied));
-  };
-
   return (
     <span data-slot="copyable-value" className={cn('inline-flex items-center gap-2', className)}>
       {isTruncated ? (
@@ -59,14 +50,7 @@ const CopyableValue = ({ value, isShortened = false, labels, className }: ICopya
       ) : (
         <span className="min-w-0 [overflow-wrap:anywhere]">{value}</span>
       )}
-      <button
-        type="button"
-        aria-label={labels.copy}
-        className="shrink-0 cursor-pointer rounded-sm p-0.5 text-muted-foreground transition-colors outline-none hover:bg-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-ring"
-        onClick={copy}
-      >
-        <CopyIcon className="size-3.5" strokeWidth={1.5} />
-      </button>
+      <CopyButton value={value} labels={labels} />
     </span>
   );
 };

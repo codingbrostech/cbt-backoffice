@@ -58,7 +58,7 @@
         "custom": "自定义"
       }
     },
-    "nothingFound": "查無資料",
+    "noResultFound": "找不到結果",
     "view": "檢視",
     "viewOption": {
       "simple": "簡易",
@@ -208,7 +208,6 @@
   "game": {
     "provider": "遊戲廠商",
     "game": "遊戲",
-    "searchPlaceholder": "輸入名稱或編號搜尋",
     "baccaratSide": {
       "player": "閒",
       "banker": "莊",

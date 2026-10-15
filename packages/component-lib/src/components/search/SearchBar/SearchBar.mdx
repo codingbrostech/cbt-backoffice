@@ -89,12 +89,16 @@ The filter bar above a list page. It shows the page title with an optional actio
         <code>SelectField</code>
       </td>
       <td>
-        A single-value filter. <code>allLabel</code> adds a first option that clears the filter, and
-        an empty value is left out of the query by the page
+        A searchable single-value filter. Typing in it narrows the options by label.{' '}
+        <code>allLabel</code> adds a first option that clears the filter, and an empty value is left
+        out of the query by the page. <code>clearLabel</code> names a clear button that takes the
+        chevron's place while a value is picked, and <code>noResultsLabel</code> is the text the
+        list shows when the search matches nothing
       </td>
       <td>
         <code>name</code>, <code>label</code>, <code>options</code>, optionally{' '}
-        <code>allLabel</code> and <code>className</code>
+        <code>allLabel</code>, <code>clearLabel</code>, <code>noResultsLabel</code> and{' '}
+        <code>className</code>
       </td>
     </tr>
     <tr>
