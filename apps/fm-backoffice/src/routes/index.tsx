@@ -5,6 +5,7 @@ import AppLayout from '#/routes/app/Layout';
 import AdminsPage from '#/routes/app/admins';
 import BetTransPage from '#/routes/app/bet-trans';
 import DashboardPage from '#/routes/app/dashboard';
+import GameRankingPage from '#/routes/app/game-ranking';
 import NotFoundPage from '#/routes/app/not-found';
 import PlaceholderPage from '#/routes/app/placeholder';
 import LoginPage from '#/routes/login';
@@ -25,7 +26,6 @@ const PLACEHOLDER_PATHS = [
   PATH.PATRON_BET_HISTORY,
   PATH.GAMES,
   PATH.GAME_CATEGORIES,
-  PATH.GAME_RANKING,
   PATH.BANNERS,
   PATH.BONUSES,
   PATH.REBATE_SETTING,
@@ -59,6 +59,7 @@ const AppRoutes = () => (
       <Route path={PATH.DASHBOARD} element={<DashboardPage />} />
       <Route path={PATH.ADMINS} element={<AdminsPage />} />
       <Route path={PATH.BET_TRANS} element={<BetTransPage />} />
+      <Route path={PATH.GAME_RANKING} element={<GameRankingPage />} />
       {PLACEHOLDER_PATHS.map(path => (
         <Route key={path} path={path} element={<PlaceholderPage />} />
       ))}

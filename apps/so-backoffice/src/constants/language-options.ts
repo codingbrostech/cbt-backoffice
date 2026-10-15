@@ -4,3 +4,13 @@ export const LANGUAGE_OPTIONS = [
   { value: 'en', label: 'English', shortLabel: 'EN' },
   { value: 'zh', label: '繁體中文', shortLabel: '中' }
 ] as const satisfies ILanguageOption[];
+
+/**
+ * Languages Solaire Online content is written in. The portal UI languages are
+ * LANGUAGE_OPTIONS.
+ */
+export const CONTENT_LANGUAGE_OPTIONS = [
+  { value: 'en', label: 'English', shortLabel: 'EN' },
+  { value: 'zh', label: '简体中文', shortLabel: '中' },
+  { value: 'ko', label: '한국어', shortLabel: 'KO' }
+] as const satisfies ILanguageOption[];

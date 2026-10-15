@@ -36,6 +36,11 @@
     "all": "All",
     "action": "Action",
     "edit": "Edit",
+    "save": "Save",
+    "confirm": "Confirm",
+    "add": "Add",
+    "remove": "Remove",
+    "clear": "Clear",
     "dateRange": {
       "label": "Quick range",
       "from": "From",
@@ -158,6 +163,23 @@
     "updated": "Admin updated",
     "secretPlaceholder": "Leave blank to keep the current password"
   },
+  "gameRanking": {
+    "rank": "Rank",
+    "game": "Game",
+    "providerCode": "Provider",
+    "title": "Title",
+    "description": "Description",
+    "dragToReorder": "Drag to reorder",
+    "addGame": "Add Game",
+    "ranked": "This game is already in the ranking",
+    "editEntry": "Edit {{game}}",
+    "previousGame": "Previous game",
+    "nextGame": "Next game",
+    "position": "{{position}} / {{total}}",
+    "saved": "Ranking saved",
+    "unsavedHint": "Unsaved changes. Save to overwrite the whole ranking.",
+    "apply": "Apply"
+  },
   "state": {
     "active": "Active",
     "inactive": "Inactive",
@@ -207,6 +229,7 @@
   "game": {
     "provider": "Provider",
     "game": "Game",
+    "selectProviderFirst": "Select a provider first",
     "baccaratSide": {
       "player": "Player",
       "banker": "Banker",

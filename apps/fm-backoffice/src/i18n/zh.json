@@ -36,6 +36,11 @@
     "all": "全部",
     "action": "操作",
     "edit": "編輯",
+    "save": "儲存",
+    "confirm": "確認",
+    "add": "新增",
+    "remove": "移除",
+    "clear": "清除",
     "dateRange": {
       "label": "快捷范围",
       "from": "开始",
@@ -158,6 +163,23 @@
     "updated": "管理員已更新",
     "secretPlaceholder": "留空則保留目前密碼"
   },
+  "gameRanking": {
+    "rank": "排名",
+    "game": "遊戲",
+    "providerCode": "遊戲商",
+    "title": "標題",
+    "description": "短描述",
+    "dragToReorder": "拖曳調整排名",
+    "addGame": "新增遊戲",
+    "ranked": "此遊戲已在排行榜中",
+    "editEntry": "編輯 {{game}}",
+    "previousGame": "上一個遊戲",
+    "nextGame": "下一個遊戲",
+    "position": "{{position}} / {{total}}",
+    "saved": "榜單已儲存",
+    "unsavedHint": "有未儲存的變更，按儲存會覆蓋整個榜單。",
+    "apply": "套用"
+  },
   "state": {
     "active": "活躍",
     "inactive": "非活躍",
@@ -207,6 +229,7 @@
   "game": {
     "provider": "遊戲廠商",
     "game": "遊戲",
+    "selectProviderFirst": "請先選擇遊戲廠商",
     "baccaratSide": {
       "player": "閒",
       "banker": "莊",
