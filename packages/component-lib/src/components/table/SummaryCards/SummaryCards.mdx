@@ -1,0 +1,137 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cbt-bo/component-lib/components/ui/tabs';
+
+import * as SummaryCardsStories from './SummaryCards.stories';
+
+<Meta of={SummaryCardsStories} />
+
+# SummaryCards
+
+The row of total cards above a list, such as the sums of a filtered report. Each card shows a label, an optional info tooltip and one formatted value.
+
+<Canvas of={SummaryCardsStories.Default} />
+
+## Usage
+
+`SummaryCards` is a set of parts. Always nest them like this. Cards in one `Group` stay on one line together, and every part takes only what it shows.
+
+```tsx
+<SummaryCards.Root>
+  <SummaryCards.Group>
+    <SummaryCards.Card label="Total Bet Amount" value="1,000.00" tooltip="Sum of bet amounts." />
+    <SummaryCards.Card label="Total Transactions" value="12" />
+  </SummaryCards.Group>
+  <SummaryCards.Group>
+    <SummaryCards.Card label="Win Count" value="5" />
+    <SummaryCards.Card label="Loss Count" value="7" />
+  </SummaryCards.Group>
+</SummaryCards.Root>
+```
+
+<table className="w-full text-left text-sm [&_td]:py-2 [&_td]:pr-4 [&_th]:py-2 [&_th]:pr-4 [&_th]:font-medium [&_tr]:border-b">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>What it is</th>
+      <th>What to pass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Root</code>
+      </td>
+      <td>The row that wraps the groups</td>
+      <td>
+        The <code>Group</code> parts as children, optionally <code>className</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Group</code>
+      </td>
+      <td>Cards that stay on one line and wrap as a whole</td>
+      <td>
+        The <code>Card</code> parts as children, optionally <code>className</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Card</code>
+      </td>
+      <td>One total under its label</td>
+      <td>
+        <code>label</code> and <code>tooltip</code>, translated, the formatted <code>value</code>,
+        optionally <code>isLoading</code> and <code>className</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs defaultValue="Root">
+  <TabsList variant="line">
+    {SummaryCardsStories.PART_CONTROLS.map(({ part }) => (
+      <TabsTrigger key={part} value={part}>
+        {part}
+      </TabsTrigger>
+    ))}
+  </TabsList>
+  {SummaryCardsStories.PART_CONTROLS.map(({ part, include }) => (
+    <TabsContent key={part} value={part}>
+      <Controls of={SummaryCardsStories.Default} include={include} />
+    </TabsContent>
+  ))}
+</Tabs>
+
+A card with `tooltip` renders a Radix tooltip, so it needs a `TooltipProvider` above it. In the apps the `SidebarProvider` of the layout already provides one.
+
+## Values format
+
+`value` is the total already formatted for display. Format amounts and counts with the shared helpers before passing them.
+
+```tsx
+import { formatCount, formatMinorAmount } from '@cbt-bo/component-lib/lib/format';
+
+<SummaryCards.Card label={t('betTrans.summary.totalBetAmt')} value={formatMinorAmount(totalBetAmt)} />
+<SummaryCards.Card label={t('betTrans.summary.total')} value={formatCount(total)} />
+```
+
+## How the row shows
+
+Every card is at least as wide as its label and value, so neither is cut off. While the whole row fits, all groups share one line and every card gets the same width. When it does not fit, the last group that no longer fits moves to the next line as a whole, and each line stretches its cards to the full width. In a 56rem frame the cards above break into four and three. The space between cards is the `--summary-cards-gap` variable, set on `Root`. Pass a class such as `[--summary-cards-gap:calc(var(--spacing)*3)]` to change it.
+
+<Canvas of={SummaryCardsStories.Wrapped} />
+
+With `isLoading` each card keeps its label and shows a skeleton in place of the value.
+
+<Canvas of={SummaryCardsStories.Loading} />
+
+## Usage in the app
+
+Render it under `SearchBar.Root`, in the sticky wrapper above `DataTable.Root`. The page resolves `t()` for every label and tooltip and passes the summary query's pending state as `isLoading`.
+
+```tsx
+import { SummaryCards } from '@cbt-bo/component-lib/components/table';
+import { formatCount, formatMinorAmount } from '@cbt-bo/component-lib/lib/format';
+
+const totalCards = [
+  { key: 'totalBetAmt', value: formatMinorAmount(totalBetAmt) },
+  { key: 'total', value: formatCount(total) }
+] as const satisfies readonly ISummaryCard[];
+
+const renderCard = ({ key, value }: ISummaryCard) => (
+  <SummaryCards.Card
+    key={key}
+    label={t(`betTrans.summary.${key}`)}
+    tooltip={t(`betTrans.summary.${key}Tooltip`)}
+    value={value}
+    isLoading={isLoading}
+  />
+);
+
+<SummaryCards.Root>
+  <SummaryCards.Group>{totalCards.map(renderCard)}</SummaryCards.Group>
+  <SummaryCards.Group>{outcomeCards.map(renderCard)}</SummaryCards.Group>
+</SummaryCards.Root>;
+```

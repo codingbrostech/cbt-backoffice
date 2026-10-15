@@ -21,6 +21,11 @@ export const useTableLabels = (): TDataTableLabels => {
     go: t('table.go'),
     rowsPerPage: t('table.rowsPerPage'),
     columns: t('table.columns'),
+    columnMenu: t('table.columnMenu'),
+    pinColumn: t('table.pinColumn'),
+    noPin: t('table.noPin'),
+    pinLeft: t('table.pinLeft'),
+    pinRight: t('table.pinRight'),
     formatRange: (from, to, count) => t('table.range', { from, to, total: count.toLocaleString() })
   };
 };

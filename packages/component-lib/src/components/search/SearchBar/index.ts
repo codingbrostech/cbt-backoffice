@@ -1,16 +1,28 @@
 import SearchBarActions from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarActions';
+import SearchBarComboboxField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarComboboxField';
+import SearchBarDateRangeField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarDateRangeField';
 import SearchBarFields from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarFields';
 import SearchBarHeader from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarHeader';
 import SearchBarRoot from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarRoot';
 import SearchBarSelectField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarSelectField';
 import SearchBarTextField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarTextField';
+import SearchBarViewToggle from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarViewToggle';
 
 export type { ISearchBarActionsProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarActions';
+export type { ISearchBarComboboxFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarComboboxField';
+export type {
+  ISearchBarDateRangeFieldLabels,
+  ISearchBarDateRangeFieldProps
+} from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarDateRangeField';
 export type { ISearchBarFieldsProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarFields';
 export type { ISearchBarHeaderProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarHeader';
 export type { ISearchBarRootProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarRoot';
 export type { ISearchBarSelectFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarSelectField';
 export type { ISearchBarTextFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarTextField';
+export type {
+  ISearchBarViewOption,
+  ISearchBarViewToggleProps
+} from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarViewToggle';
 
 /**
  * Compound filter bar above a list, with no routing or data-fetching
@@ -35,7 +47,10 @@ const SearchBar = {
   Fields: SearchBarFields,
   TextField: SearchBarTextField,
   SelectField: SearchBarSelectField,
-  Actions: SearchBarActions
+  ComboboxField: SearchBarComboboxField,
+  DateRangeField: SearchBarDateRangeField,
+  Actions: SearchBarActions,
+  ViewToggle: SearchBarViewToggle
 };
 
 export default SearchBar;

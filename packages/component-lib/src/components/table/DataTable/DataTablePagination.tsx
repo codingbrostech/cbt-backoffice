@@ -48,7 +48,7 @@ const DISABLED_LINK_CLASS = 'pointer-events-none opacity-50';
  * Reports every page or page size change through the root's `onParamsChange`.
  */
 const DataTablePagination = () => {
-  const { labels, params, total, onParamsChange } = useDataTable();
+  const { labels, params, total, onParamsChange, isPageScroll } = useDataTable();
   const { page, pageSize } = params;
   const [pageInput, setPageInput] = useState(String(page));
   const [prevPage, setPrevPage] = useState(page);
@@ -84,7 +84,12 @@ const DataTablePagination = () => {
   };
 
   return (
-    <div className="grid w-full shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-3 border-t pt-3 text-sm">
+    <div
+      className={cn(
+        'grid w-full shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-3 border-t pt-3 text-sm',
+        isPageScroll && 'sticky left-0 w-[100cqw]'
+      )}
+    >
       <div className="min-w-0 truncate text-muted-foreground">
         {labels.formatRange(rangeFrom, rangeTo, total)}
       </div>

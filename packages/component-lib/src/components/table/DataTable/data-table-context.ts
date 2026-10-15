@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 
+import type { IDataTableColumnMenuLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnMenu';
 import type { IDataTableColumnToggleLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnToggle';
 import type { IDataTableGridLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTableGrid';
 import type { IDataTablePaginationLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTablePagination';
@@ -7,6 +8,7 @@ import type {
   IDataTableColumnMeta,
   IDataTableRow,
   IListParams,
+  TColumnPinning,
   TColumnVisibility
 } from '@cbt-bo/component-lib/components/table/DataTable/list-table';
 
@@ -16,7 +18,8 @@ import type {
  */
 export type TDataTableLabels = IDataTableGridLabels &
   IDataTablePaginationLabels &
-  IDataTableColumnToggleLabels;
+  IDataTableColumnToggleLabels &
+  IDataTableColumnMenuLabels;
 
 export interface IDataTableContext {
   labels: TDataTableLabels;
@@ -27,8 +30,12 @@ export interface IDataTableContext {
   onParamsChange: (params: IListParams) => void;
   columnVisibility: TColumnVisibility;
   onColumnVisibilityChange: (columnVisibility: TColumnVisibility) => void;
+  columnPinning: TColumnPinning;
+  onColumnPinningChange: (columnPinning: TColumnPinning) => void;
+  isColumnPinnable: boolean;
   isLoading: boolean;
   isError: boolean;
+  isPageScroll: boolean;
 }
 
 export const DataTableContext = createContext<IDataTableContext | undefined>(undefined);

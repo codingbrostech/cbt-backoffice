@@ -11,15 +11,15 @@ export interface ISearchBarFieldsProps {
 }
 
 /**
- * Wrapping row of fields, exposed as `SearchBar.Fields`. Aligns every
- * field to its bottom edge so the buttons in `SearchBar.Actions` line up
- * with the inputs.
+ * Grid of fields with equal columns at least 10rem wide, exposed as
+ * `SearchBar.Fields`. Aligns every field to its bottom edge so the buttons in
+ * `SearchBar.Actions` line up with the inputs.
  */
 const SearchBarFields = ({ children, className }: ISearchBarFieldsProps) => (
   <div
     data-slot="search-bar-fields"
     className={cn(
-      'flex flex-wrap items-end gap-x-2 gap-y-3 [&_[data-slot=field-label]]:text-xs [&_[data-slot=field]]:gap-0.5',
+      '@container grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] items-end gap-x-2 gap-y-3 [&_[data-slot=field-label]]:text-xs [&_[data-slot=field]]:gap-0.5',
       className
     )}
   >

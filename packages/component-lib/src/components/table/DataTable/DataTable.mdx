@@ -8,13 +8,29 @@ import * as DataTableStories from './DataTable.stories';
 
 **DataTable** is a compound list table for a server-paginated list. Use `DataTable.Root` as the frame and put the parts inside it. The root holds no state. The caller owns the one-based `{ page, pageSize }` params and the column visibility record, and the root shares them with every part through context, so the parts take no table props. The root takes every label once through `labels`, and no part carries copy of its own, so each app resolves `t()` and passes the result to the root.
 
-| Part                     | What it renders                                                                                          | Props beyond `className`                                                                                                                             |
-| ------------------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DataTable.Root`         | The frame that fills the height its parent gives it                                                      | `columns`, `data`, `total`, `labels`, `params`, `onParamsChange`, `columnVisibility`, `onColumnVisibilityChange`, `getRowId`, `isLoading`, `isError` |
-| `DataTable.Toolbar`      | Row above the grid that spreads its children between the two ends                                        | `children`                                                                                                                                           |
-| `DataTable.ColumnToggle` | Dropdown of checkboxes toggling each column                                                              | None                                                                                                                                                 |
-| `DataTable.Grid`         | Rows under a sticky header, with one message row while empty, loading or failed                          | None                                                                                                                                                 |
-| `DataTable.Pagination`   | First, previous, a five-page window, next and last, a page input, the page size select and the row count | None                                                                                                                                                 |
+| Part                     | What it renders                                                                                          | Props beyond `className`                                                                                                                                                                                       |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DataTable.Root`         | The frame that fills the height its parent gives it                                                      | `columns`, `data`, `total`, `labels`, `params`, `onParamsChange`, `columnVisibility`, `onColumnVisibilityChange`, `columnPinning`, `onColumnPinningChange`, `getRowId`, `isLoading`, `isError`, `isPageScroll` |
+| `DataTable.Toolbar`      | Row above the grid that spreads its children between the two ends                                        | `children`                                                                                                                                                                                                     |
+| `DataTable.ColumnToggle` | Dropdown of checkboxes toggling each column                                                              | None                                                                                                                                                                                                           |
+| `DataTable.Grid`         | Rows under a sticky header, with one message row while empty, loading or failed                          | None                                                                                                                                                                                                           |
+| `DataTable.Pagination`   | First, previous, a five-page window, next and last, a page input, the page size select and the row count | None                                                                                                                                                                                                           |
+
+A page with a tall header, such as a search bar plus summary cards, passes `isPageScroll` to the root and to `Page.Root` from `@cbt-bo/component-lib/components/layout`. The table then grows with its rows and columns and the page scrolls as a whole, both down and sideways, instead of the rows scrolling inside the grid. Columns with a `width` keep it, so a wide table overflows to the side.
+
+Scrolling sideways moves only the grid. `DataTable.Toolbar` and `DataTable.Pagination` keep the visible width and stay put under `isPageScroll`, and `Page.Header` does the same for the parts above the grid. The Page docs cover what the scrolling element needs.
+
+```tsx
+<Page.Root isPageScroll>
+  <Page.Header>
+    <SearchBar.Root>...</SearchBar.Root>
+  </Page.Header>
+  <DataTable.Root isPageScroll>
+    <DataTable.Grid />
+    <DataTable.Pagination />
+  </DataTable.Root>
+</Page.Root>
+```
 
 A page that shows every row leaves `DataTable.Pagination` out, and a page without column control leaves `DataTable.ColumnToggle` out. Params can live in state, in the route search, or in a query key, since the root only reports changes through `onParamsChange`.
 
@@ -38,7 +54,19 @@ export const buildAdminColumns = (t: TFunction): IDataTableColumn<AdminResult>[]
 ];
 ```
 
-`fixed: 'start'` or `fixed: 'end'` pins a column to that edge, such as the login column or an action column. The pin and its edge line appear only while the grid is wider than its container and scrolls sideways. Pin at most one column per edge.
+`fixed: 'start'` or `fixed: 'end'` pins a column to that edge by default, such as the login column or an action column. Pinned columns move to their edge, and several can share one edge. The pin and its edge line appear only while the grid is wider than its container and scrolls sideways. A pinned column sticks flush against the border of whichever element scrolls, the grid or the page with `isPageScroll`, so it also covers that element's side padding.
+
+## Column pinning
+
+A page that lets people pin columns keeps a `TColumnPinning` record and passes it to the root together with `onColumnPinningChange`. Every header then shows a menu with **Pin Column**, offering No Pin, Pin Left and Pin Right. An entry overrides the column's `fixed`, and `false` unpins it. Without `onColumnPinningChange` the headers carry no menu.
+
+```tsx
+const [columnPinning, setColumnPinning] = useState<TColumnPinning>({});
+
+<DataTable.Root columnPinning={columnPinning} onColumnPinningChange={setColumnPinning} {...rest}>
+  <DataTable.Grid />
+</DataTable.Root>;
+```
 
 ## Column visibility
 

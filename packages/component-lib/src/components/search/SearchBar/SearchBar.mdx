@@ -25,7 +25,14 @@ The filter bar above a list page. It shows the page title with an optional actio
     <SearchBar.TextField name="code" label="Login" />
     <SearchBar.SelectField name="state" label="State" options={stateOptions} allLabel="All" />
     <SearchBar.SelectField name="role" label="Role" options={roleOptions} allLabel="All" />
-    <SearchBar.Actions resetLabel="Reset" submitLabel="Search" />
+    <SearchBar.Actions resetLabel="Reset" submitLabel="Search">
+      <SearchBar.ViewToggle
+        label="View"
+        value={view}
+        options={viewOptions}
+        onValueChange={setView}
+      />
+    </SearchBar.Actions>
   </SearchBar.Fields>
 </SearchBar.Root>
 ```
@@ -101,6 +108,19 @@ The filter bar above a list page. It shows the page title with an optional actio
         controls as children
       </td>
     </tr>
+    <tr>
+      <td>
+        <code>ViewToggle</code>
+      </td>
+      <td>
+        A segmented switch between list views, placed in <code>Actions</code>. It is not a form
+        field, so reset and search leave it alone, and the page swaps its columns on change
+      </td>
+      <td>
+        <code>label</code>, <code>value</code>, <code>options</code> and <code>onValueChange</code>,
+        optionally <code>className</code>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -141,7 +161,7 @@ export const DEFAULT_ADMIN_LIST_FILTER = {
 
 ## How the bar shows
 
-The fields wrap onto a second line when the row is too narrow, and the buttons stay at the end of the last line. Without children, `Header` shows only the title.
+The fields sit in a grid of equal columns at least 10rem wide and wrap onto more rows when the panel narrows. The buttons stay at the end of the last row. Without children, `Header` shows only the title.
 
 <Canvas of={SearchBarStories.WithoutHeaderAction} />
 
