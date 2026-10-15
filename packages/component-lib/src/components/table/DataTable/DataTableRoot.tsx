@@ -7,6 +7,7 @@ import {
 import {
   type IDataTableColumn,
   type IListParams,
+  type TColumnPinning,
   type TColumnVisibility,
   buildDataTableRows,
   buildDefaultRowId
@@ -22,9 +23,16 @@ export interface IDataTableRootProps<TRow> {
   onParamsChange: (params: IListParams) => void;
   columnVisibility?: TColumnVisibility;
   onColumnVisibilityChange?: (columnVisibility: TColumnVisibility) => void;
+  columnPinning?: TColumnPinning;
+  onColumnPinningChange?: (columnPinning: TColumnPinning) => void;
   getRowId?: (row: TRow, index: number) => string;
   isLoading?: boolean;
   isError?: boolean;
+  /**
+   * Lets the page scroll as a whole instead of the rows scrolling inside the
+   * grid. Pass the same flag to `Page.Root`.
+   */
+  isPageScroll?: boolean;
   /**
    * The table's parts, usually `DataTable.Toolbar`, `DataTable.Grid` and
    * `DataTable.Pagination`.
@@ -34,6 +42,7 @@ export interface IDataTableRootProps<TRow> {
 }
 
 const IGNORE_VISIBILITY_CHANGE = (): void => undefined;
+const IGNORE_PINNING_CHANGE = (): void => undefined;
 
 /**
  * Root of a server-paginated list table, exposed as `DataTable.Root`. Shares
@@ -54,13 +63,17 @@ const DataTableRoot = <TRow,>({
   onParamsChange,
   columnVisibility = {},
   onColumnVisibilityChange = IGNORE_VISIBILITY_CHANGE,
+  columnPinning = {},
+  onColumnPinningChange,
   getRowId = buildDefaultRowId,
   isLoading = false,
   isError = false,
+  isPageScroll = false,
   children,
   className
 }: IDataTableRootProps<TRow>) => {
   const rows = buildDataTableRows(columns, data, getRowId);
+  const isColumnPinnable = Boolean(onColumnPinningChange);
 
   return (
     <DataTableContext.Provider
@@ -73,11 +86,18 @@ const DataTableRoot = <TRow,>({
         onParamsChange,
         columnVisibility,
         onColumnVisibilityChange,
+        columnPinning,
+        onColumnPinningChange: onColumnPinningChange ?? IGNORE_PINNING_CHANGE,
+        isColumnPinnable,
         isLoading,
-        isError
+        isError,
+        isPageScroll
       }}
     >
-      <div data-slot="data-table" className={cn('flex min-h-0 flex-1 flex-col', className)}>
+      <div
+        data-slot="data-table"
+        className={cn('flex flex-col', !isPageScroll && 'min-h-0 flex-1', className)}
+      >
         {children}
       </div>
     </DataTableContext.Provider>

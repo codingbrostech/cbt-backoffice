@@ -1,9 +1,14 @@
+import DataTableColumnMenu from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnMenu';
 import { useDataTable } from '@cbt-bo/component-lib/components/table/DataTable/data-table-context';
 import {
   type IDataTableColumnMeta,
+  buildPinOffsets,
+  buildPinnedColumns,
   buildVisibleColumns
 } from '@cbt-bo/component-lib/components/table/DataTable/list-table';
+import { useColumnWidths } from '@cbt-bo/component-lib/components/table/DataTable/use-column-widths';
 import { useIsOverflowingX } from '@cbt-bo/component-lib/components/table/DataTable/use-is-overflowing-x';
+import { useScrollPaddingX } from '@cbt-bo/component-lib/components/table/DataTable/use-scroll-padding-x';
 import { Spinner } from '@cbt-bo/component-lib/components/ui/spinner';
 import {
   Table,
@@ -27,13 +32,34 @@ export interface IDataTableGridProps {
   className?: string;
 }
 
-const FIXED_CELL_CLASS_NAMES = {
-  start: 'sticky left-0 z-[1]',
-  end: 'sticky right-0 z-[1]'
-} as const satisfies Record<NonNullable<IDataTableColumnMeta['fixed']>, string>;
+type TFixedEdge = NonNullable<IDataTableColumnMeta['fixed']>;
+
+const COLUMN_CELL_CLASS_NAME = 'px-4 first:pl-2 last:pr-2';
+
+const FIXED_CELL_CLASS_NAME = 'sticky z-[1]';
+
+const FIXED_EDGE_CLASS_NAMES = {
+  start: 'shadow-[inset_-1px_0_0_var(--color-border)]',
+  end: 'shadow-[inset_1px_0_0_var(--color-border)]'
+} as const satisfies Record<TFixedEdge, string>;
+
+const FIXED_OFFSET_PROPERTIES = {
+  start: 'left',
+  end: 'right'
+} as const satisfies Record<TFixedEdge, string>;
 
 const FIXED_BODY_CELL_CLASS_NAME =
   'bg-background [tr:hover>&]:bg-[color-mix(in_oklab,var(--background),var(--muted)_50%)]';
+
+const buildEdgeKeys = (columns: readonly IDataTableColumnMeta[]): Record<TFixedEdge, string> => {
+  const startColumns = columns.filter(({ fixed }) => fixed === 'start');
+  const endColumns = columns.filter(({ fixed }) => fixed === 'end');
+
+  const { key: start = '' } = startColumns.at(-1) ?? {};
+  const { key: end = '' } = endColumns.at(0) ?? {};
+
+  return { start, end };
+};
 
 const buildEmptyLabel = (
   labels: IDataTableGridLabels,
@@ -51,15 +77,45 @@ const buildEmptyLabel = (
  * message row while the list is empty, loading or failed.
  */
 const DataTableGrid = ({ className }: IDataTableGridProps) => {
-  const { labels, columns, rows, columnVisibility, isLoading, isError } = useDataTable();
+  const {
+    labels,
+    columns,
+    rows,
+    columnVisibility,
+    columnPinning,
+    isColumnPinnable,
+    isLoading,
+    isError,
+    isPageScroll
+  } = useDataTable();
+
+  const shownColumns = buildVisibleColumns(columns, columnVisibility);
+  const visibleColumns = buildPinnedColumns(shownColumns, columnPinning);
+  const visibleKeys = visibleColumns.map(({ key }) => key);
 
   const { ref: tableRef, isOverflowing } = useIsOverflowingX<HTMLTableElement>();
+  const { ref: headerRowRef, widths } = useColumnWidths<HTMLTableRowElement>(visibleKeys);
+  const scrollPadding = useScrollPaddingX(tableRef);
 
-  const visibleColumns = buildVisibleColumns(columns, columnVisibility);
+  const pinOffsets = buildPinOffsets(visibleColumns, widths, scrollPadding);
+  const edgeKeys = buildEdgeKeys(visibleColumns);
   const emptyLabel = buildEmptyLabel(labels, isLoading, isError);
 
+  const buildCellProps = ({ key, fixed }: IDataTableColumnMeta, fixedClassName: string) =>
+    isOverflowing && fixed
+      ? {
+          className: cn(
+            COLUMN_CELL_CLASS_NAME,
+            FIXED_CELL_CLASS_NAME,
+            edgeKeys[fixed] === key && FIXED_EDGE_CLASS_NAMES[fixed],
+            fixedClassName
+          ),
+          style: { [FIXED_OFFSET_PROPERTIES[fixed]]: pinOffsets[key] ?? 0 }
+        }
+      : { className: COLUMN_CELL_CLASS_NAME };
+
   return (
-    <div className={cn('relative flex min-h-0 flex-1 flex-col', className)}>
+    <div className={cn('relative flex flex-col', !isPageScroll && 'min-h-0 flex-1', className)}>
       {isLoading && (
         <div
           aria-busy="true"
@@ -72,34 +128,48 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
         ref={tableRef}
         className="table-fixed"
         style={{ minWidth: visibleColumns.length * MIN_COLUMN_WIDTH }}
-        containerClassName="min-h-0 flex-1 overflow-y-auto [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin]"
+        containerClassName={cn(
+          isPageScroll
+            ? 'overflow-x-visible'
+            : 'min-h-0 flex-1 overflow-y-auto [scrollbar-color:var(--color-border)_transparent] [scrollbar-width:thin]'
+        )}
       >
         <TableHeader className="sticky top-0 z-10 bg-card">
-          <TableRow>
-            {visibleColumns.map(({ key, title, width, fixed }) => (
-              <TableHead
-                key={key}
-                style={{ width }}
-                className={cn(isOverflowing && fixed && [FIXED_CELL_CLASS_NAMES[fixed], 'bg-card'])}
-              >
-                {title}
-              </TableHead>
-            ))}
+          <TableRow ref={headerRowRef}>
+            {visibleColumns.map(column => {
+              const { key, title, width, fixed } = column;
+              const { className: headClassName, style } = buildCellProps(column, 'bg-card');
+
+              return (
+                <TableHead
+                  key={key}
+                  data-column-key={key}
+                  style={{ width, ...style }}
+                  className={headClassName}
+                >
+                  {isColumnPinnable ? (
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="truncate">{title}</span>
+                      <DataTableColumnMenu columnKey={key} title={title} pin={fixed} />
+                    </div>
+                  ) : (
+                    title
+                  )}
+                </TableHead>
+              );
+            })}
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.length ? (
             rows.map(({ id, cells }) => (
               <TableRow key={id}>
-                {visibleColumns.map(({ key, fixed }) => (
+                {visibleColumns.map(column => (
                   <TableCell
-                    key={key}
-                    className={cn(
-                      isOverflowing &&
-                        fixed && [FIXED_CELL_CLASS_NAMES[fixed], FIXED_BODY_CELL_CLASS_NAME]
-                    )}
+                    key={column.key}
+                    {...buildCellProps(column, FIXED_BODY_CELL_CLASS_NAME)}
                   >
-                    {cells[key]}
+                    {cells[column.key]}
                   </TableCell>
                 ))}
               </TableRow>

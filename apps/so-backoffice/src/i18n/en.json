@@ -152,6 +152,11 @@
     "previous": "Previous",
     "nextPage": "Next page",
     "next": "Next",
-    "lastPage": "Last page"
+    "lastPage": "Last page",
+    "columnMenu": "Column menu",
+    "pinColumn": "Pin Column",
+    "noPin": "No Pin",
+    "pinLeft": "Pin Left",
+    "pinRight": "Pin Right"
   }
 }

@@ -1,19 +1,22 @@
 import { type RefObject, useEffect, useRef, useState } from 'react';
 
+import { findScrollContainer } from '@cbt-bo/component-lib/components/table/DataTable/find-scroll-container';
+
 export interface IUseIsOverflowingXResult<TElement extends HTMLElement> {
   /**
-   * Attach to the element whose width is compared with its parent's.
+   * Attach to the element whose width is compared with its scroll container's.
    */
   ref: RefObject<TElement | null>;
   /**
-   * The element is wider than its parent, so the parent scrolls sideways.
+   * The element is wider than the content box of its nearest scroll
+   * container, so that container scrolls sideways.
    */
   isOverflowing: boolean;
 }
 
 /**
- * Tells whether the referenced element is wider than its parent. Re-measures
- * whenever either one is resized.
+ * Tells whether the referenced element is wider than the content box of its
+ * nearest scroll container. Re-measures whenever either one is resized.
  *
  * @example
  * const { ref, isOverflowing } = useIsOverflowingX<HTMLTableElement>();
@@ -26,16 +29,20 @@ export const useIsOverflowingX = <
 
   useEffect(() => {
     const { current: element } = ref;
-    const parent = element?.parentElement;
-    if (!element || !parent) return undefined;
+    const container = findScrollContainer(element?.parentElement ?? null);
+    if (!element || !container) return undefined;
 
     const measure = () => {
-      setIsOverflowing(element.offsetWidth > parent.clientWidth);
+      const { paddingLeft, paddingRight } = getComputedStyle(container);
+      const paddingWidth = Number.parseFloat(paddingLeft) + Number.parseFloat(paddingRight);
+      const contentWidth = container.clientWidth - paddingWidth;
+
+      setIsOverflowing(element.offsetWidth > contentWidth);
     };
 
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    observer.observe(parent);
+    observer.observe(container);
     measure();
 
     return () => {

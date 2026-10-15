@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 import { expect, fn, screen, userEvent, within } from 'storybook/test';
 
+import { ETableView } from '@cbt-bo/component-lib/components/table';
 import { Button } from '@cbt-bo/component-lib/components/ui/button';
 
 import SearchBar from '.';
@@ -24,6 +26,15 @@ interface IStoryArgs {
   allLabel: string;
   resetLabel: string;
   submitLabel: string;
+  viewLabel: string;
+  simpleLabel: string;
+  detailLabel: string;
+}
+
+interface IStoryViewToggleProps {
+  label: string;
+  simpleLabel: string;
+  detailLabel: string;
 }
 
 interface IPartControls {
@@ -39,7 +50,8 @@ export const PART_CONTROLS = [
   { part: 'Header', include: ['title', 'isCreateShown', 'createLabel'] },
   { part: 'TextField', include: ['codeLabel'] },
   { part: 'SelectField', include: ['stateLabel', 'roleLabel', 'allLabel'] },
-  { part: 'Actions', include: ['resetLabel', 'submitLabel'] }
+  { part: 'Actions', include: ['resetLabel', 'submitLabel'] },
+  { part: 'ViewToggle', include: ['viewLabel', 'simpleLabel', 'detailLabel'] }
 ] as const satisfies readonly IPartControls[];
 
 const DEFAULT_FILTER = { code: '', state: '', role: '' } as const satisfies IFilterValues;
@@ -51,6 +63,24 @@ const ROLE_OPTIONS = [
   { value: 'super', label: 'Super' },
   { value: 'admin', label: 'Admin' }
 ];
+
+const StoryViewToggle = ({ label, simpleLabel, detailLabel }: IStoryViewToggleProps) => {
+  const [view, setView] = useState(ETableView.SIMPLE);
+
+  const viewOptions = [
+    { value: ETableView.SIMPLE, label: simpleLabel },
+    { value: ETableView.DETAIL, label: detailLabel }
+  ] as const satisfies readonly { value: ETableView; label: string }[];
+
+  return (
+    <SearchBar.ViewToggle
+      label={label}
+      value={view}
+      options={viewOptions}
+      onValueChange={setView}
+    />
+  );
+};
 
 const meta = {
   title: 'Search/SearchBar',
@@ -66,7 +96,10 @@ const meta = {
     roleLabel: 'Role',
     allLabel: 'All',
     resetLabel: 'Reset',
-    submitLabel: 'Search'
+    submitLabel: 'Search',
+    viewLabel: 'View',
+    simpleLabel: 'Simple',
+    detailLabel: 'Detail'
   },
   argTypes: {
     onSubmit: {
@@ -121,6 +154,21 @@ const meta = {
       type: { name: 'string', required: true },
       description: 'Label of the search button in `Actions`.',
       table: { category: 'Actions' }
+    },
+    viewLabel: {
+      type: { name: 'string', required: true },
+      description: 'Accessible name of the `ViewToggle` group.',
+      table: { category: 'ViewToggle' }
+    },
+    simpleLabel: {
+      type: { name: 'string', required: true },
+      description: 'Story-only. Label of the first `ViewToggle` option.',
+      table: { category: 'ViewToggle' }
+    },
+    detailLabel: {
+      type: { name: 'string', required: true },
+      description: 'Story-only. Label of the second `ViewToggle` option.',
+      table: { category: 'ViewToggle' }
     }
   },
   render: ({
@@ -134,7 +182,10 @@ const meta = {
     roleLabel,
     allLabel,
     resetLabel,
-    submitLabel
+    submitLabel,
+    viewLabel,
+    simpleLabel,
+    detailLabel
   }) => (
     <SearchBar.Root defaultValues={DEFAULT_FILTER} onSubmit={onSubmit} className={className}>
       <SearchBar.Header title={title}>
@@ -159,7 +210,9 @@ const meta = {
           options={ROLE_OPTIONS}
           allLabel={allLabel}
         />
-        <SearchBar.Actions resetLabel={resetLabel} submitLabel={submitLabel} />
+        <SearchBar.Actions resetLabel={resetLabel} submitLabel={submitLabel}>
+          <StoryViewToggle label={viewLabel} simpleLabel={simpleLabel} detailLabel={detailLabel} />
+        </SearchBar.Actions>
       </SearchBar.Fields>
     </SearchBar.Root>
   )
@@ -189,6 +242,11 @@ export const Default: TStory = {
 
     await expect(args.onSubmit).toHaveBeenLastCalledWith(DEFAULT_FILTER);
     await expect(canvas.getByLabelText('Login')).toHaveValue('');
+
+    await userEvent.click(canvas.getByRole('radio', { name: 'Detail' }));
+
+    await expect(canvas.getByRole('radio', { name: 'Detail' })).toBeChecked();
+    await expect(args.onSubmit).toHaveBeenCalledTimes(2);
   }
 };
 

@@ -31,7 +31,7 @@ const SearchBarSelectField = ({
   const { control } = useFormContext();
 
   return (
-    <div data-slot="search-bar-select-field" className={cn('w-40', className)}>
+    <div data-slot="search-bar-select-field" className={cn('min-w-0', className)}>
       <SelectField
         control={control}
         name={name}

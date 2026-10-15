@@ -7,6 +7,7 @@ import {
   DEFAULT_PAGE_SIZE,
   type IDataTableColumn,
   type IListParams,
+  type TColumnPinning,
   type TColumnVisibility
 } from './list-table';
 
@@ -40,6 +41,11 @@ const LABELS = {
   go: 'Go',
   rowsPerPage: 'Rows per page',
   columns: 'Columns',
+  columnMenu: 'Column menu',
+  pinColumn: 'Pin Column',
+  noPin: 'No Pin',
+  pinLeft: 'Pin Left',
+  pinRight: 'Pin Right',
   formatRange: (from, to, total) => `Showing ${from}-${to} out of ${total}`
 } as const satisfies TDataTableLabels;
 
@@ -64,6 +70,7 @@ const COLUMNS: IDataTableColumn<IAdminRow>[] = [
 const Render = ({ rows, isLoading, isError, isPaginated, labels }: IStoryArgs) => {
   const [params, setParams] = useState<IListParams>({ page: 1, pageSize: DEFAULT_PAGE_SIZE });
   const [columnVisibility, setColumnVisibility] = useState<TColumnVisibility>({});
+  const [columnPinning, setColumnPinning] = useState<TColumnPinning>({});
 
   const data = useMemo(() => {
     const start = (params.page - 1) * params.pageSize;
@@ -81,6 +88,8 @@ const Render = ({ rows, isLoading, isError, isPaginated, labels }: IStoryArgs) =
       onParamsChange={setParams}
       columnVisibility={columnVisibility}
       onColumnVisibilityChange={setColumnVisibility}
+      columnPinning={columnPinning}
+      onColumnPinningChange={setColumnPinning}
       isLoading={isLoading}
       isError={isError}
     >
@@ -127,7 +136,7 @@ export const Default: TStory = {
     await userEvent.click(await screen.findByRole('menuitemcheckbox', { name: 'Role' }));
     await userEvent.keyboard('{Escape}');
 
-    await expect(canvas.queryByRole('columnheader', { name: 'Role' })).not.toBeInTheDocument();
+    await expect(canvas.queryByRole('columnheader', { name: /^Role/ })).not.toBeInTheDocument();
   }
 };
 
@@ -178,5 +187,30 @@ export const NotFixedWhenFits: TStory = {
     const cell = await canvas.findByText('admin01');
 
     await waitFor(() => expect(cell.closest('td')).not.toHaveStyle({ position: 'sticky' }));
+  }
+};
+
+export const PinColumnRight: TStory = {
+  decorators: [
+    Story => (
+      <div className="w-[420px]">
+        <Story />
+      </div>
+    )
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByRole('button', { name: 'Column menu Name' }));
+    await userEvent.click(await screen.findByRole('menuitem', { name: 'Pin Column' }));
+    await userEvent.click(await screen.findByRole('menuitemradio', { name: 'Pin Right' }));
+
+    await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
+
+    const headers = canvas.getAllByRole('columnheader');
+    const lastHeader = headers.at(-1);
+
+    await expect(lastHeader).toHaveTextContent('Name');
+    await waitFor(() => expect(lastHeader).toHaveStyle({ position: 'sticky', right: '0px' }));
   }
 };

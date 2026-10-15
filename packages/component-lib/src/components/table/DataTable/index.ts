@@ -4,6 +4,10 @@ import DataTablePagination from '@cbt-bo/component-lib/components/table/DataTabl
 import DataTableRoot from '@cbt-bo/component-lib/components/table/DataTable/DataTableRoot';
 import DataTableToolbar from '@cbt-bo/component-lib/components/table/DataTable/DataTableToolbar';
 
+export type {
+  IDataTableColumnMenuLabels,
+  IDataTableColumnMenuProps
+} from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnMenu';
 export type { IDataTableColumnToggleLabels } from '@cbt-bo/component-lib/components/table/DataTable/DataTableColumnToggle';
 export type {
   IDataTableGridLabels,
