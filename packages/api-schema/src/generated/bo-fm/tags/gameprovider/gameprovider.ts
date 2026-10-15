@@ -7,7 +7,9 @@
  */
 import type {
   GameProviderListInput,
-  GameProviderListResult
+  GameProviderListResult,
+  GameProviderRetryLogoutInput,
+  Noop
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
@@ -41,6 +43,42 @@ export const mgtServiceGameProviderList = async (gameProviderListInput: GameProv
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       gameProviderListInput,)
+  }
+);}
+
+
+/**
+ * 觸發目前設定的 eslot CloudAgentId 補打失敗登出 callback，無單一玩家篩選。
+ */
+export type mgtServiceGameProviderRetryLogoutResponse200 = {
+  data: Noop
+  status: 200
+}
+
+export type mgtServiceGameProviderRetryLogoutResponseSuccess = (mgtServiceGameProviderRetryLogoutResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceGameProviderRetryLogoutResponse = (mgtServiceGameProviderRetryLogoutResponseSuccess)
+
+export const getMgtServiceGameProviderRetryLogoutUrl = () => {
+
+
+
+
+  return `/mgt/v1/gameprovider/retrylogout`
+}
+
+export const mgtServiceGameProviderRetryLogout = async (gameProviderRetryLogoutInput: GameProviderRetryLogoutInput, options?: RequestInit): Promise<mgtServiceGameProviderRetryLogoutResponse> => {
+
+  return customFetch<mgtServiceGameProviderRetryLogoutResponse>(getMgtServiceGameProviderRetryLogoutUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      gameProviderRetryLogoutInput,)
   }
 );}
 

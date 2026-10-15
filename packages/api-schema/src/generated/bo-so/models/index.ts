@@ -590,7 +590,8 @@ export interface BatchCancelPlayerPromotionResult {
   total?: number;
   okCount?: number;
   failCount?: number;
-  items?: BatchPlayerPromotionOpItem[];
+  failGroups?: BatchPlayerPromotionFailGroup[];
+  batchId?: string;
 }
 
 export interface BatchGrantPlayerPromotionInput {
@@ -606,11 +607,23 @@ export interface BatchGrantPlayerPromotionResult {
   total?: number;
   okCount?: number;
   failCount?: number;
+  failGroups?: BatchPlayerPromotionFailGroup[];
+  batchId?: string;
+}
+
+/**
+ * 失敗筆依 code 分組（count 大者在前，同 count 依 code 升冪），供 BO 分組顯示與 failed CSV 下載。
+ response 只回失敗筆；成功筆不逐筆回傳，只反映在 okCount。
+ */
+export interface BatchPlayerPromotionFailGroup {
+  code?: number;
+  reason?: string;
+  count?: number;
   items?: BatchPlayerPromotionOpItem[];
 }
 
 /**
- * MF-585 BO 批量發放/取消 fasttrack promotion（逐筆結果）
+ * MF-585 BO 批量發放/取消 promotion 逐筆結果（grant 限 fasttrack；cancel 不限方案類型）
  */
 export interface BatchPlayerPromotionOpItem {
   mobile?: string;
@@ -621,6 +634,7 @@ export interface BatchPlayerPromotionOpItem {
   playerPromotionId?: string;
   bonusAmt?: string;
   code?: number;
+  dialCode?: string;
 }
 
 export interface BonusListInput {
@@ -883,9 +897,19 @@ export interface FeatureFlagResult {
   /** 出金前須通過 OTP 驗證 (default: false)。
    欄位 20 保留給 rewardShopEnabled（其他分支已使用），此處自 21 起編號以避免合併撞號。 */
   withdrawOtpRequired?: boolean;
-  /** 出金前須完成入金 1x 週轉 (default: false)。
-   欄位 22 已被 FeatureFlagUpsertInput 使用，此處跳號至 23 以避免跨分支合併撞號。 */
+  /** 已棄用：入金 1x 週轉於 2026-08-27 全面停用，改由 withdrawQuotaEnabled 的提領額度取代。
+   後端已不再依此旗標攔截提款；後台請隱藏此開關，改用 withdrawQuotaEnabled。 */
   depositTurnoverEnabled?: boolean;
+  /** 出金前須有提領額度 (default: false)。
+   為 true 時，PlayerWithdraw 檢查提領額度是否足夠，不足回 21018。
+   額度累積永遠進行，只有攔截受此旗標控制；所有玩家從 0 起算，
+   開啟前務必留預熱期，否則全體玩家可提金額會瞬間歸零。 */
+  withdrawQuotaEnabled?: boolean;
+  /** 玩家端 /gsi/v1/payment/entry/list 的 entryType 相容轉換 (default: true)。
+   開啟時把三分類 e-wallet / local_bank / partner_bank 降級成舊版 App 看得懂的 wallet / bank；
+   後台（mgt）一律回真值，不受影響。App 全面支援三分類後才關閉。
+   欄位 24 已被 FeatureFlagUpsertInput 使用、25 已被 withdrawQuotaEnabled 使用，此處跳號至 26。 */
+  paymentLegacyEntryTypeCompat?: boolean;
 }
 
 /**
@@ -913,13 +937,75 @@ export interface FeatureFlagUpsertInput {
    後台表單若要關閉此旗標，必須明確送出 false。
    欄位 21 保留給 rewardShopEnabled（其他分支已使用），此處自 22 起編號以避免合併撞號。 */
   withdrawOtpRequired?: boolean;
-  /** 出金前須完成入金 1x 週轉 (default: false)。
-   同樣採 optional（presence 語意）：此旗標開啟後會攔截提款，屬資金流程控制，
-   前端漏送不應被當成 false 而靜默關閉；未傳時維持 DB 原值。
-   欄位 23 已被 FeatureFlagResult 使用，此處跳號至 24 以避免跨分支合併撞號。 */
+  /** 已棄用：入金 1x 週轉已全面停用，送出後仍會寫入 DB 但**不影響任何行為**。
+   後台請隱藏此欄位，改送 withdrawQuotaEnabled。 */
   depositTurnoverEnabled?: boolean;
+  /** 出金前須有提領額度 (default: false)。
+   採 optional（presence 語意）：此旗標開啟後會攔截提款，屬資金流程控制，
+   前端漏送不應被當成 false 而靜默關閉；未傳時維持 DB 原值。
+   欄位 24 已被 depositTurnoverEnabled 使用、25 已被 FeatureFlagResult 使用，此處自 26 起編號。 */
+  withdrawQuotaEnabled?: boolean;
+  /** 玩家端 entry list 的 entryType 相容轉換 (default: true)。
+   同樣採 optional（presence 語意）：此旗標關閉會讓三分類直接回給舊版 App（#398 的事故），
+   前端漏送不應被當成 false 而靜默關閉；未傳時維持 DB 原值，租戶尚無設定列時預設 true。
+   欄位 26 已被 withdrawQuotaEnabled 使用，此處跳號至 27。 */
+  paymentLegacyEntryTypeCompat?: boolean;
   /** （選填）稽核備註（僅寫入 admin_ops_log） */
   opsRemark?: string;
+}
+
+/**
+ * GameBatchUpdateInput 依 game id 批次更新共用欄位；未傳（optional 無 presence）的欄位保持不變。
+ */
+export interface GameBatchUpdateInput {
+  /** （必填）要更新的遊戲 id 清單（去重後單次最多 500 筆；超出時回參數錯誤，請由前端拆批） */
+  gameIds: string[];
+  /** （選填）RTP 基點（60-10000，例：9800 = 98%）；未傳則不變。低於 60 視為未設定、會被遊戲同步覆寫回預設，故拒絕 */
+  rtpBps?: number;
+  /** （選填）遊戲 UI 分類（大小寫不敏感，存小寫）；未傳則不變；空字串表示 DB NULL（未設定）。
+   type 與現值不同且未帶 rtpBps 時依 provider/type 重算 rtp（同 GameUpsert）；type 與現值相同則保留現有 rtp */
+  type?: string;
+  /** （選填）active / inactive；未傳則不變 */
+  state?: string;
+  /** （選填）是否有 Buy Bonus；未傳則不變 */
+  haveBuyBonus?: boolean;
+  /** （選填）是否僅 staff 玩家可見/啟動；未傳則不變 */
+  staffTestOnly?: boolean;
+  /** （選填）是否為 VIP 桌台（SO 獎勵 BP 只計 VIP 桌）；未傳則不變 */
+  isVipTable?: boolean;
+  /** （選填）操作備註，寫入 admin_ops_log */
+  opsRemark?: string;
+}
+
+export interface GameBatchUpdateResult {
+  /** 實際被 UPDATE 的遊戲筆數（已是目標值的不計入） */
+  affected?: string;
+  /** 去重後請求的 game id 筆數 */
+  requested?: string;
+}
+
+/**
+ * GameFlagInput 只改 game.staff_test_only 的輕量端點。
+ gameId 與 providerCode 擇一必填（同時帶會被拒絕，避免誤觸整個 provider）。
+ */
+export interface GameFlagInput {
+  /** （選填）單一遊戲 ID；與 providerCode 擇一必填 */
+  gameId?: string;
+  /** （選填）遊戲商代碼；帶此值會一次改該 provider 底下所有遊戲，與 gameId 擇一必填 */
+  providerCode?: string;
+  /** （必填）是否僅 staff 玩家可見/啟動；未帶會被拒絕（不預設 false，避免誤關） */
+  staffTestOnly: boolean;
+  /** （選填）稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+export interface GameFlagResult {
+  /** 實際變更的遊戲筆數（已是目標值的不計入） */
+  affected?: string;
+  /** 單一遊戲模式回傳該 game id；provider 模式為 0 */
+  id?: string;
+  /** 套用後的值（回作確認） */
+  staffTestOnly?: boolean;
 }
 
 /**
@@ -1063,7 +1149,7 @@ export interface GameListInput {
   state?: string;
   /** （選填）遊戲商代碼過濾；可用逗號分隔多值 */
   providerCode?: string;
-  /** （選填）遊戲 UI 分類（db.game.type），與 GameResult.type 相同；合法值同 GameTypeList（perya, slot, casino, egame, sport, bingo）。
+  /** （選填）遊戲 UI 分類（db.game.type），與 GameResult.type 相同；合法值同 GameTypeList（perya, slot, liveslot, casino, egame, sport, bingo）。
    可用逗號分隔多值（IN）。查「未設定」（NULL）請傳保留字 __unset__（大小寫不敏感）；可與合法 type 並列，例如 slot,__unset__ */
   gameType?: string;
   /** （選填）頁碼，未傳時由服務端預設 */
@@ -1104,6 +1190,73 @@ export interface GameProviderResult {
   endpointCurrency?: string;
 }
 
+export interface GameProviderRetryLogoutInput {
+  /** 必填，目前僅支援 eslot；補打設定的 CloudAgentId，不提供單一玩家篩選。 */
+  gameProviderCode?: string;
+}
+
+export interface GameRankingItemInput {
+  /** （必填）遊戲 ID */
+  gameId: string;
+  /** 多語系標題 */
+  titles?: GameRankingItemInputTitles;
+  /** 多語系短描述（teaser） */
+  descriptions?: GameRankingItemInputDescriptions;
+}
+
+/**
+ * 多語系短描述（teaser）
+ */
+export type GameRankingItemInputDescriptions = {[key: string]: string};
+
+/**
+ * 多語系標題
+ */
+export type GameRankingItemInputTitles = {[key: string]: string};
+
+export interface GameRankingListInput {
+  /** （選填）租戶 id；未傳時以登入租戶為準 */
+  tenantId?: string;
+}
+
+export interface GameRankingListResult {
+  data?: GameRankingResult[];
+  total?: number;
+}
+
+/**
+ * 整表批次覆寫：items 陣列順序即為排名（1-based），未列出的既有遊戲視為移除
+ */
+export interface GameRankingMutateInput {
+  /** （選填）租戶 id；未傳或 0 時以登入租戶為準；帶入非登入租戶的值會被拒絕（tenant_id mismatch） */
+  tenantId?: string;
+  items?: GameRankingItemInput[];
+  /** 選填：稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+export interface GameRankingResult {
+  /** 排名（1起，值越小越前面；由陣列順序決定） */
+  rank?: number;
+  gameId?: string;
+  /** 多語系標題 */
+  titles?: GameRankingResultTitles;
+  /** 多語系短描述（teaser） */
+  descriptions?: GameRankingResultDescriptions;
+  /** 遊戲基本資訊，供後台預覽 */
+  game?: GameResult;
+}
+
+/**
+ * 多語系短描述（teaser）
+ */
+export type GameRankingResultDescriptions = {[key: string]: string};
+
+/**
+ * 多語系標題
+ */
+export type GameRankingResultTitles = {[key: string]: string};
+
 export interface GameResult {
   /** 遊戲 ID */
   id?: string;
@@ -1113,7 +1266,7 @@ export interface GameResult {
   code?: string;
   /** 遊戲類型 */
   genre?: string;
-  /** 遊戲 UI 分類（db.game.type ENUM）：perya / slot / casino / egame / sport / bingo；未設定時回空字串（DB 為 NULL） */
+  /** 遊戲 UI 分類（db.game.type ENUM）：perya / slot / liveslot / casino / egame / sport / bingo；未設定時回空字串（DB 為 NULL） */
   type?: string;
   /** 排序權重 */
   weight?: number;
@@ -1188,7 +1341,7 @@ export interface GameSyncInput {
 }
 
 /**
- * GameTypeListResult db.game.type 允許值（固定順序：perya, slot, casino, egame, sport, bingo；與 model.GameTypesOrdered 一致）
+ * GameTypeListResult db.game.type 允許值（固定順序：perya, slot, liveslot, casino, egame, sport, bingo；與 model.GameTypesOrdered 一致）
  */
 export interface GameTypeListResult {
   data?: string[];
@@ -1203,7 +1356,7 @@ export interface GameUpsertInput {
   providerCode: string;
   /** （必填）遊戲分類 genre：live/lottery/chain/elec/chess/sport/slot/mini/fish/bingo/perya */
   genre: string;
-  /** （選填）遊戲 UI 分類（db.game.type ENUM）：perya / slot / casino / egame / sport / bingo；未傳或空字串為 NULL（未設定） */
+  /** （選填）遊戲 UI 分類（db.game.type ENUM）：perya / slot / liveslot / casino / egame / sport / bingo；未傳或空字串為 NULL（未設定） */
   type?: string;
   /** （必填）遊戲狀態，active / inactive */
   state: string;
@@ -1223,7 +1376,7 @@ export interface GameUpsertInput {
   haveBuyBonus?: boolean;
   /** （選填）是否僅 staff 玩家可見/啟動；更新時未傳則保留原值 */
   staffTestOnly?: boolean;
-  /** （選填）RTP 基點（0-10000，9600=96%）；更新時未傳則保留原值，新建預設 0 */
+  /** （選填）RTP 基點（0-10000，9600=96%）；未帶時依 type 填入該分類預設值（改分類亦會重置）；僅改其他欄位則保留手調值 */
   rtpBps?: number;
   /** （選填）是否 VIP 桌台（Bonus Peso 資格）；更新時未傳則保留原值，新建預設 false */
   isVipTable?: boolean;
@@ -1499,8 +1652,30 @@ export interface GameWalletTransferResult {
 }
 
 export interface GameWalletTransferWithdrawInput {
+  /** 玩家 ID；與 patronNumber 擇一，兩個都給時以 playerId 為準 */
   playerId?: string;
   gameProviderCode?: string;
+  /** （選填）ACSC Patron 號碼；玩家已綁定 patron 時可代替 playerId 指定玩家 */
+  patronNumber?: string;
+}
+
+/**
+ * 強制取回結果。讓維運分得出「玩家仍在機台」與「遊戲商錢包真的是 0」兩種情況，
+ 不再只回一個空的成功。
+ */
+export interface GameWalletTransferWithdrawResult {
+  /** 取回結果：transferred（已建立取回轉帳）／zero_balance（遊戲商錢包為 0，未建立轉帳） */
+  outcome?: string;
+  /** 玩家是否仍在機台。在機台時錢在機台 credit，遊戲商錢包餘額會是 0 */
+  isAtMachine?: boolean;
+  /** 機台 credit 總額(單位:分) */
+  machineTotalBalance?: string;
+  /** 遊戲商錢包餘額(單位:分) */
+  providerBalance?: string;
+  /** 實際建立的取回轉帳；outcome=zero_balance 時不帶 */
+  transfer?: GameWalletTransferResult;
+  /** 玩家的 ACSC Patron 號碼；未綁定 patron 時為空字串。不論以 playerId 或 patronNumber 呼叫都會回 */
+  patronNumber?: string;
 }
 
 export interface GenRescueOtpInput {
@@ -1735,7 +1910,7 @@ export interface ListPromotionsInput {
   state?: string;
   /** 選填。目標遊戲類別篩選（對應 db.game.type）；與方案 target_game_types 有交集即命中；未設定限制的方案亦會列出 */
   targetGameTypes?: string[];
-  /** 選填。方案類型篩選。允許值：normal | gig_migration | leaderboard | fasttrack；未傳或空表示不篩選 */
+  /** 選填。方案類型篩選。允許值：normal | gig_migration | leaderboard | fasttrack | daily；未傳或空表示不篩選 */
   promoType?: string;
 }
 
@@ -1752,6 +1927,30 @@ export interface ManualDistributeRebateInput {
   playerBonusIds: string[];
   /** 選填：稽核備註（僅寫入 admin_ops_log） */
   opsRemark?: string;
+}
+
+/**
+ * 玩家註冊當下的行銷歸因快照，不隨之後的活動改變。
+ */
+export interface MarketingAttribution {
+  /** 玩家 ID */
+  playerId?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  /** 各平台 Click ID，各自獨立 */
+  gclid?: string;
+  fbclid?: string;
+  ttclid?: string;
+  msclkid?: string;
+  wbraid?: string;
+  gbraid?: string;
+  /** 聯盟行銷 ID */
+  affiliateId?: string;
+  /** 歸因擷取時間（RFC3339，UTC+8） */
+  capturedAt?: string;
 }
 
 export interface MessagingAppProviderEntry {
@@ -1785,6 +1984,7 @@ export interface MessagingProviderListResult {
 export interface MessagingProviderResult {
   code?: string;
   name?: string;
+  /** active/inactive。只影響文字簡訊路由（含 Fasttrack 指定 provider）；voice / viber 不受影響 */
   state?: string;
   endpoint?: string;
   apiKey?: string;
@@ -1798,6 +1998,7 @@ export interface MessagingProviderUpsertInput {
   /** 必填。handler 檢查 code == "" 即回 ErrInvalidParam */
   code: string;
   name?: string;
+  /** active/inactive。只影響文字簡訊路由（含 Fasttrack 指定 provider）；voice / viber 不受影響 */
   state?: string;
   endpoint?: string;
   apiKey?: string;
@@ -1841,6 +2042,41 @@ export interface MgtAcscBindBatchEntry {
   playerId: string;
   /** 指定 ACSC patron 號（名單驅動；空=該筆按手機探測） */
   patronNumber?: string;
+}
+
+export interface MgtAcscBindBatchItem {
+  playerId?: string;
+  /** 名單驅動模式指定的 patron 號（空=該筆按手機探測） */
+  requestedPatron?: string;
+  state?: string;
+  probeState?: string;
+  outcome?: string;
+  patronNumber?: string;
+  failCode?: string;
+  /** 失敗原因**完整**描述。後台專用——玩家端只拿類別（2026-09-10 揭露原則） */
+  failReason?: string;
+  kycBefore?: string;
+  kycAfter?: string;
+  attempts?: number;
+  updTime?: string;
+}
+
+export interface MgtAcscBindBatchItemListInput {
+  /** 批次 ID（必填） */
+  batchId: string;
+  /** 以下皆選填；不帶＝不篩該維度。前三個對齊 Status 的 stats 維度（供從統計下鑽）。 */
+  state?: string;
+  outcome?: string;
+  failCode?: string;
+  /** 單一玩家直查（客服接到客訴時的主要入口，不必先知道 state/outcome） */
+  playerId?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface MgtAcscBindBatchItemListResult {
+  data?: MgtAcscBindBatchItem[];
+  total?: string;
 }
 
 export interface MgtAcscBindBatchPauseInput {
@@ -1982,6 +2218,58 @@ export interface MgtAcscBindResult {
 }
 
 /**
+ * 一個 acscsyncsrv pod 的即時狀態（asynq 心跳 + 本服務的延遲心跳）。
+ */
+export interface MgtAcscCapacityPod {
+  host?: string;
+  pid?: number;
+  concurrency?: number;
+  activeWorkers?: number;
+  queues?: string;
+  started?: string;
+  status?: string;
+  /** 該 pod 的執行期設定（皆需重啟才會變） */
+  redisPool?: number;
+  dbPool?: number;
+  maxIdleConnsPerHost?: number;
+  breakerFailThreshold?: number;
+  breakerCooldownSec?: number;
+}
+
+/**
+ * ACSC 同步容量體檢：把「設定的速率上限」與「實際跑得動的速率」並排。
+ 可達速率 = worker 總數 ÷ 平均延遲(秒)；所需 worker = 目標速率 × 平均延遲(秒)。
+ */
+export interface MgtAcscCapacityResult {
+  /** 目前設定（DB 旋鈕，熱更新 15 秒生效） */
+  ratePerSec?: string;
+  burst?: string;
+  distributed?: boolean;
+  /** 實際部署（asynq 心跳） */
+  pods?: number;
+  totalWorkers?: number;
+  activeWorkers?: number;
+  podList?: MgtAcscCapacityPod[];
+  /** 實測延遲（samples=0 時其餘延遲欄位不可信）。
+   全部出自同一組樣本；latencyWindowSec 是這組樣本橫跨的秒數，樣本少時先看它。 */
+  samples?: string;
+  errors?: string;
+  meanLatencyMs?: number;
+  p95LatencyMs?: number;
+  opLatency?: MgtAcscOpLatency[];
+  p50LatencyMs?: number;
+  latencyWindowSec?: number;
+  /** 推算。以平均算的是保守值（少數超慢呼叫會拉高平均），以中位數算的是樂觀值；
+   兩者差距大 = 延遲分布有離群值，真實能力落在中間（advice 會點出來）。 */
+  achievableRatePerSec?: number;
+  requiredWorkers?: number;
+  achievableRatePerSecP50?: number;
+  requiredWorkersP50?: number;
+  verdict?: string;
+  advice?: string[];
+}
+
+/**
  * ACSC exclusion_code 目錄 + player_label 對照（全域；online 只讀，權威為 ACSC）。
  能力矩陣(login/gameplay/deposit/withdraw) seed 自 ACSC 定義；playerLabelCode 由 mgt 指定（空=不連動 label）。
  */
@@ -2037,6 +2325,21 @@ export interface MgtAcscKycWritebackResult {
 }
 
 /**
+ * 單一操作（PatronInquiry / CreditOnPrem / ...）的延遲摘要。
+ 所有欄位出自同一組樣本（最近 256 筆、10 分鐘內），故可並排比較。
+ */
+export interface MgtAcscOpLatency {
+  op?: string;
+  count?: string;
+  errors?: string;
+  meanMs?: number;
+  p50Ms?: number;
+  p95Ms?: number;
+  maxMs?: number;
+  windowSec?: number;
+}
+
+/**
  * 玩家 ACSC 總覽(後台查單一玩家的 ACSC 狀態:綁定/卡等/升等/餘額/排除/建會員狀態)。
  */
 export interface MgtAcscPlayerOverviewInput {
@@ -2079,6 +2382,75 @@ export interface MgtAcscPlayerOverviewResult {
   pendingUpgrade?: boolean;
   /** 目前 exclusion_code 的生效時間 RFC3339(碼異動時記錄;空=無排除或尚未記錄) */
   exclusionDate?: string;
+  /** ---- 綁定既有會員的現況（未綁時有意義；來源 player_acsc_probe）----
+   探測狀態 matched/no_match（空=尚未探測）。gsi 早有此欄，後台原本沒有，
+   導致客服看不出「ACSC 到底查不查得到這個人」。 */
+  probeState?: string;
+  /** 登入自動綁定的終局結果：patron_conflict / player_conflict（空=無失敗） */
+  bindOutcome?: string;
+  /** 失敗原因**完整**描述，含涉及的 patron 號——供客服追出佔用該 patron 的另一名玩家。
+   玩家端（gsi）只拿得到類別，細節僅此處揭露（2026-09-10 揭露原則）。 */
+  bindFailReason?: string;
+  bindFailTime?: string;
+}
+
+export interface MgtAcscRebindCheckInput {
+  /** 玩家 ID（必填） */
+  playerId: string;
+  /** 要換到的新 ACSC patron 號碼（必填） */
+  patronNumber: string;
+}
+
+export interface MgtAcscRebindCheckResult {
+  /** 對新 patron 的探測結果：matched / no_match / unavailable / 空（未探測：not_linked、same_patron、acsc_disabled） */
+  probeState?: string;
+  /** 是否可執行換綁。false 時看 blockReason */
+  rebindable?: boolean;
+  /** 不可換綁的原因：
+     not_linked（玩家尚未綁定任何 patron → 請改用 bind）
+     same_patron（目標就是現綁的 patron，無事可做）
+     no_match / unavailable / multiple_match（新 patron 在 ACSC 查無／不可用）
+     phone_mismatch（新 patron 在 ACSC 的電話與玩家手機不符 → 請 ACSC 端先改電話）
+     patron_conflict（新 patron 已綁在別的玩家名下）
+     acsc_disabled（本環境未啟用 ACSC） */
+  blockReason?: string;
+  /** ---- online 端現況 ---- */
+  linked?: boolean;
+  /** 現綁的（舊）patron */
+  linkedPatronNumber?: string;
+  /** ---- ACSC 端新 patron（僅 phoneMatched=true 時回傳）----
+   新 patron 號碼（回顯） */
+  patronNumber?: string;
+  /** 新 patron 的 ACSC 排除碼（0=無排除）。非 0 代表換過去後玩家會立刻受該排除碼限制 */
+  exclusionCode?: number;
+  /** 新 patron 在 ACSC 的電話與玩家手機是否一致（身分閘門；原值不回傳） */
+  phoneMatched?: boolean;
+}
+
+export interface MgtAcscRebindInput {
+  /** 玩家 ID（必填） */
+  playerId: string;
+  /** 要換到的新 ACSC patron 號碼（必填） */
+  patronNumber: string;
+  /** 二次確認；須為 true 才實際執行（先呼叫 rebind/check） */
+  confirm: boolean;
+  /** 備註（寫入 admin_ops_log） */
+  remark?: string;
+}
+
+export interface MgtAcscRebindResult {
+  playerId?: string;
+  /** 執行結果：rebound（已換綁）/ already_self（目標即現綁 patron，冪等）
+   / patron_conflict（寫入時撞唯一鍵：新 patron 剛被別人綁走）
+   / link_changed（寫入時發現 mapping 已非 check 時的那張，未變更任何資料，請重新 check）。
+   blockReason 非空時本欄為空（代表根本沒有執行）。 */
+  outcome?: string;
+  /** 換綁前的 patron */
+  oldPatronNumber?: string;
+  /** 換綁後的 patron（被擋下時為空） */
+  newPatronNumber?: string;
+  /** 未執行的原因（前置條件擋下）；值同 rebind/check 的 blockReason。非空即代表未寫入任何資料 */
+  blockReason?: string;
 }
 
 export interface MgtAcscRegisterFailed {
@@ -2106,6 +2478,13 @@ export interface MgtAcscRegisterRetryInput {
   playerId: string;
   /** 備註（寫入 admin_ops_log） */
   remark?: string;
+  /** 新的 4 碼 PIN（選填；不可為弱 PIN 1111/1234/4321）。
+   帶入 → 以此 PIN 重新暫存後重排（供「玩家從未設過 PIN」或弱 PIN 被 ACSC 退回時人工介入）；
+   不帶 → 沿用既有 encrypted_pin 純重排（缺 encrypted_pin 會回錯）。
+   PIN 不寫入 admin_ops_log（僅記布林 pinReset）。 */
+  pin?: string;
+  /** 再次輸入確認（帶 pin 時必填、須一致） */
+  confirmPin?: string;
 }
 
 export interface MgtAcscRegisterRetryResult {
@@ -2167,6 +2546,12 @@ export interface MgtAcscRewardPushLogItem {
   taskId?: string;
   updTime?: string;
   mobile?: string;
+  /** 明細彙總(acsc_reward_push_wager 回填;無明細時為空/0:上線前的推送、補發工具的 PendingCredit) */
+  windowFrom?: string;
+  wagerCount?: string;
+  betAdjSum?: string;
+  theoSum?: string;
+  theoMismatch?: boolean;
 }
 
 /**
@@ -2195,20 +2580,74 @@ export interface MgtAcscRewardPushLogListResult {
 }
 
 /**
- * 後台手動刷新 ACSC 快照（player_acsc_patron 的餘額三桶 + VIP 卡等/status points）。
- 只排背景任務（asynq），不同步等 ACSC；實際結果看 balance_sync_time / vip_sync_time 是否更新。
+ * 一筆推送的注單明細(acsc_reward_push_wager;每輪每筆合格注單一列,推送後回填 push_log_id)
  */
-export interface MgtAcscSnapshotRefreshInput {
-  /** 玩家 ID（必填） */
-  playerId: string;
-  /** 備註（寫入 admin_ops_log） */
-  remark?: string;
+export interface MgtAcscRewardPushLogWagersInput {
+  /** 推送流水 id(必填;acsc_reward_push_log.id) */
+  pushLogId: string;
+  page?: number;
+  pageSize?: number;
 }
 
-export interface MgtAcscSnapshotRefreshResult {
+export interface MgtAcscRewardPushLogWagersResult {
+  data?: MgtAcscRewardPushWagerItem[];
+  total?: string;
+}
+
+export interface MgtAcscRewardPushWagerItem {
+  id?: string;
+  wagerId?: string;
   playerId?: string;
-  patronNumber?: string;
+  businessDay?: string;
+  runCutoff?: string;
+  sweepKey?: string;
+  gameProviderCode?: string;
+  gameCode?: string;
+  betAdjAmt?: string;
+  rtpBps?: number;
+  theoCents?: string;
+  bpEligible?: boolean;
+  pushLogId?: string;
+  discardedAt?: string;
+  crtTime?: string;
+  settleTime?: string;
+  wagerCrtTime?: string;
+}
+
+/**
+ * 注單追蹤:這筆注單有沒有算到 Status Point、算在哪筆推送、沒算的原因(客服「這注為什麼沒點數」)
+ */
+export interface MgtAcscRewardWagerTraceInput {
+  /** 注單 id(必填;txn_wager.id) */
+  wagerId: string;
+}
+
+export interface MgtAcscRewardWagerTraceResult {
+  found?: boolean;
+  /** pushed=已推送 | pending=已算到,等推送 | discarded=已算到但該輪零頭不足 1 點被丟棄
+   | not_qualified=不合格(見 reasons) | not_scanned=合格但尚未被掃到(等下一輪) | not_recorded=掃描時點早於明細功能上線,無明細可查 */
   status?: string;
+  reasons?: string[];
+  /** 注單摘要 */
+  playerId?: string;
+  gameProviderCode?: string;
+  gameCode?: string;
+  currency?: string;
+  betState?: string;
+  roundClosed?: boolean;
+  betAdjAmt?: string;
+  settleTime?: string;
+  wagerCrtTime?: string;
+  sweepKey?: string;
+  sweepAt?: string;
+  currentRtpBps?: number;
+  detail?: MgtAcscRewardPushWagerItem;
+  /** 歸屬推送(status=pushed 時) */
+  pushLogId?: string;
+  pushCrtTime?: string;
+  pushPoints?: string;
+  pushState?: string;
+  pushExtTxnId?: string;
 }
 
 /**
@@ -2349,6 +2788,329 @@ export interface MgtAcscTransferResult {
   state?: string;
 }
 
+export interface MgtBalanceAdjustBatchCreateInput {
+  /** 批次名稱（必填），例：Cashback week 36 */
+  title: string;
+  /** 幣別（必填），目前僅接受 PHP */
+  currency: string;
+  /** dry-run：只驗證名單（patron 是否存在、有無錢包、金額合法），不動任何錢。
+   **未帶視同 true**（安全預設）；實跑必須明確帶 dryRun=false */
+  dryRun?: boolean;
+  /** 名單。單次上限 20000 筆。REQUIRED 只保證 key 存在，server 另檢查 len > 0 */
+  rows: MgtBalanceAdjustBatchInputRow[];
+  /** 稽核備註（寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+export interface MgtBalanceAdjustBatchCreateResult {
+  batchId?: string;
+  /** 若本批次由 Execute 產生，為對應的 dry-run 批次 ID；否則 0 */
+  sourceBatchId?: string;
+  /** scheduled：已入列背景執行 */
+  status?: string;
+  /** 本次納入筆數（已扣除同批重送而被忽略的重複列） */
+  acceptedCount?: string;
+  /** 可發放列金額合計（單位：分；不含驗證 failed 列），供 ops 覆核 */
+  totalAmountMinor?: string;
+  /** 可發放列內重複出現的 patron 數（week 36 實測 146）。非錯誤，但 ops 應覆核是否為預期 */
+  dupPatronCount?: string;
+}
+
+/**
+ * 可發放列內同一 patron 出現多列（每列仍各發一筆，供 ops 覆核）。
+ */
+export interface MgtBalanceAdjustBatchDupPatron {
+  patronNumber?: string;
+  rowNos?: string[];
+}
+
+/**
+ * 依已完成的 dry-run 批次建立實跑批次（BO Import 第二步；不重送 rows，防重複發錢）。
+ */
+export interface MgtBalanceAdjustBatchExecuteInput {
+  /** dry-run 批次 ID（必填） */
+  batchId: string;
+  opsRemark?: string;
+}
+
+/**
+ * 欄位與 upload 回應對齊，前端可共用同一段顯示邏輯。
+ 入帳由 worker 非同步處理：okCount 是「已排入入帳」的列數，最終結果須輪詢 batch/status。
+ */
+export interface MgtBalanceAdjustBatchExecuteResult {
+  batchId?: string;
+  sourceBatchId?: string;
+  status?: string;
+  acceptedCount?: string;
+  /** 可發放列金額合計（分） */
+  totalAmountMinor?: string;
+  /** 可發放列內重複 patron 數 */
+  dupPatronCount?: string;
+  /** 固定 false（upload 回應為 true），前端以此區分預覽與實跑 */
+  dryRun?: boolean;
+  /** 同 acceptedCount */
+  totalCount?: string;
+  /** 通過重新驗證、已排入入帳的列數（尚未入帳） */
+  okCount?: string;
+  /** 重新驗證失敗的列數（不含之後 worker 入帳失敗的列） */
+  failCount?: string;
+  stats?: MgtBalanceAdjustBatchStat[];
+  failGroups?: MgtBalanceAdjustBatchFailGroup[];
+  /** 失敗明細超過 500 筆被截斷時為 true，完整明細走 batch/status 或 result/export */
+  failGroupsTruncated?: boolean;
+  dupPatrons?: MgtBalanceAdjustBatchDupPatron[];
+}
+
+/**
+ * 失敗列依 failCode 分組；count 為該組全批筆數，items 超過 500 筆時截斷。
+ */
+export interface MgtBalanceAdjustBatchFailGroup {
+  failCode?: string;
+  count?: string;
+  items?: MgtBalanceAdjustBatchFailItem[];
+}
+
+/**
+ * 失敗列摘要（upload / execute 回應的 failGroups.items）。int64 在 JSON 以字串輸出，與 upload 一致。
+ */
+export interface MgtBalanceAdjustBatchFailItem {
+  rowNo?: string;
+  patronNumber?: string;
+  amountMinor?: string;
+  amountSrc?: string;
+  failReason?: string;
+}
+
+export interface MgtBalanceAdjustBatchInputRow {
+  /** 名單原始列號（Excel row；必填）。與 batchId 組成冪等鍵，**重送同列不會重複發錢** */
+  rowNo: number;
+  /** ACSC Patron 號碼（名單 A 欄；必填） */
+  patronNumber: string;
+  /** 調整金額，**單位：分**，須為正整數（必填）。
+   int64 以 string 傳遞，避免 JS 超過 2^53-1 的精度問題 */
+  amountMinor: string;
+  /** 名單原始金額字串（B 欄未取整的原值），僅作稽核軌跡；不參與計算 */
+  amountSrc?: string;
+  /** 名單備註（C 欄），寫入 txn_payment.remark 與 admin_ops_log */
+  remark?: string;
+}
+
+/**
+ * 明細一列。
+ */
+export interface MgtBalanceAdjustBatchItem {
+  rowNo?: number;
+  patronNumber?: string;
+  playerId?: string;
+  playerCode?: string;
+  amountMinor?: string;
+  amountSrc?: string;
+  remark?: string;
+  state?: string;
+  /** 成功入帳的 txn_payment.id（0=未入帳） */
+  txnPaymentId?: string;
+  failCode?: string;
+  failReason?: string;
+  attempts?: number;
+  /** 扣回（revert）：空=非扣回目標；pending/claimed/done(扣足)/short(扣不足)/failed */
+  revertState?: string;
+  /** 已扣回金額（分，累計） */
+  revertAmountMinor?: string;
+  /** 最近一筆扣款 txn_payment.id（0=沒扣到） */
+  revertTxnPaymentId?: string;
+  revertFailCode?: string;
+  revertFailReason?: string;
+  revertAttempts?: number;
+}
+
+export interface MgtBalanceAdjustBatchListInput {
+  status?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface MgtBalanceAdjustBatchListResult {
+  data?: MgtBalanceAdjustBatchSummary[];
+  total?: string;
+}
+
+export interface MgtBalanceAdjustBatchPauseInput {
+  batchId: string;
+  opsRemark?: string;
+}
+
+export interface MgtBalanceAdjustBatchPauseResult {
+  batchId?: string;
+  status?: string;
+}
+
+export interface MgtBalanceAdjustBatchResumeInput {
+  batchId: string;
+  opsRemark?: string;
+}
+
+export interface MgtBalanceAdjustBatchResumeResult {
+  batchId?: string;
+  status?: string;
+}
+
+export interface MgtBalanceAdjustBatchRetryInput {
+  batchId: string;
+  /** 只重跑指定失敗碼（空=全部 failed）。**已成功入帳（done）的筆永不重跑** */
+  failCodes?: string[];
+  opsRemark?: string;
+}
+
+export interface MgtBalanceAdjustBatchRetryResult {
+  batchId?: string;
+  /** 撥回 pending 的筆數 */
+  resetCount?: string;
+  status?: string;
+}
+
+/**
+ * 批次扣回（revert）：把整個批次已入帳的列逐筆扣回。設計見
+ docs/admin-mgt/bo-batch-balance-adjust-revert-plan.md。
+   * 一律扣回整批（R5），不提供挑列；
+   * 餘額不足扣到 0、不中斷，記 short 與差額（R2）；
+   * 不檢查 withdrawal_review 標籤、也不動標籤（R3）；
+   * 一個批次只能發起一次；之後只能 revert/retry（R4），且發錢方向的 resume/retry 一律拒絕（R6）。
+ */
+export interface MgtBalanceAdjustBatchRevertInput {
+  batchId: string;
+  /** 扣回原因（必填），寫入每筆扣款 txn_payment.remark，例：wrong file */
+  reason: string;
+  /** 試算：只回預估、不動錢。**未帶視同 true**；實跑必須明確帶 dryRun=false */
+  dryRun?: boolean;
+  opsRemark?: string;
+}
+
+/**
+ * 試算中預估扣不足的一列。
+ */
+export interface MgtBalanceAdjustBatchRevertPreviewRow {
+  rowNo?: number;
+  patronNumber?: string;
+  playerId?: string;
+  /** 應扣（分，已扣過的不算） */
+  targetAmountMinor?: string;
+  /** 預估可扣（分） */
+  expectedDeductMinor?: string;
+  /** 預估差額（分） */
+  shortAmountMinor?: string;
+}
+
+export interface MgtBalanceAdjustBatchRevertResult {
+  batchId?: string;
+  /** dry-run：試算完成；running：已發起並入列 */
+  status?: string;
+  targetCount?: string;
+  /** 應扣回合計（分） */
+  targetAmountMinor?: string;
+  /** 以下為試算才有：試算讀 read replica，與實跑有時間差，僅供參考 */
+  expectedDeductMinor?: string;
+  expectedShortCount?: string;
+  expectedShortAmountMinor?: string;
+  shortRows?: MgtBalanceAdjustBatchRevertPreviewRow[];
+}
+
+export interface MgtBalanceAdjustBatchRevertRetryInput {
+  batchId: string;
+  opsRemark?: string;
+}
+
+export interface MgtBalanceAdjustBatchRevertRetryResult {
+  batchId?: string;
+  /** 撥回 pending 的筆數（short + failed） */
+  resetCount?: string;
+  status?: string;
+}
+
+/**
+ * 對帳統計一列：state × failCode 各幾筆。
+ */
+export interface MgtBalanceAdjustBatchStat {
+  state?: string;
+  failCode?: string;
+  count?: string;
+}
+
+export interface MgtBalanceAdjustBatchStatusInput {
+  batchId: string;
+  /** 明細篩選（選填） */
+  state?: string;
+  failCode?: string;
+  patronNumber?: string;
+  page?: number;
+  pageSize?: number;
+  revertState?: string;
+}
+
+export interface MgtBalanceAdjustBatchStatusResult {
+  batchId?: string;
+  /** 若為 Execute 產生的實跑批次，為 dry-run 批次 ID */
+  sourceBatchId?: string;
+  title?: string;
+  currency?: string;
+  status?: string;
+  dryRun?: boolean;
+  totalCount?: string;
+  doneCount?: string;
+  okCount?: string;
+  failCount?: string;
+  /** 可發放列金額合計（分；不含驗證 failed 列） */
+  totalAmountMinor?: string;
+  /** **實際已入帳**金額合計（分）——與 totalAmountMinor 的差就是還沒發或發失敗的 */
+  paidAmountMinor?: string;
+  /** 可發放列內重複 patron 數 */
+  dupPatronCount?: string;
+  startedAt?: string;
+  finishedAt?: string;
+  errorMsg?: string;
+  stats?: MgtBalanceAdjustBatchStat[];
+  /** 明細分頁 */
+  data?: MgtBalanceAdjustBatchItem[];
+  total?: string;
+  /** 扣回（revert）彙總；revertStatus 空=未扣回 */
+  revertStatus?: string;
+  revertReason?: string;
+  revertAdminCode?: string;
+  revertTotalCount?: string;
+  /** 應扣回合計（分） */
+  revertTargetAmountMinor?: string;
+  /** 實際扣回合計（分） */
+  revertedAmountMinor?: string;
+  /** 扣不足筆數（short+failed）與差額（分） */
+  revertShortCount?: string;
+  revertShortAmountMinor?: string;
+  revertStartedAt?: string;
+  revertFinishedAt?: string;
+  /** 各扣回狀態筆數（state 欄放 revertState） */
+  revertStats?: MgtBalanceAdjustBatchStat[];
+}
+
+/**
+ * 列表一列（不含明細）。
+ */
+export interface MgtBalanceAdjustBatchSummary {
+  batchId?: string;
+  sourceBatchId?: string;
+  title?: string;
+  currency?: string;
+  status?: string;
+  dryRun?: boolean;
+  totalCount?: string;
+  okCount?: string;
+  failCount?: string;
+  /** 可發放列金額合計（分） */
+  totalAmountMinor?: string;
+  adminCode?: string;
+  crtTime?: string;
+  finishedAt?: string;
+  revertStatus?: string;
+  revertedAmountMinor?: string;
+}
+
 export type MgtServiceCronSchedulerEnqueueParams = {
 /**
  * 必填。排程項目 ID（指定要 enqueue 的 scheduler entry，必要查詢鍵）
@@ -2380,6 +3142,28 @@ export interface OperationalStatResult {
   yesterday?: OperationalStat;
   week?: OperationalStat;
   month?: OperationalStat;
+}
+
+export interface OptionGroup {
+  /** 對應 list API 路由，例如 /mgt/v1/payment/entry/list */
+  router?: string;
+  /** list API filter 欄位名，例如 entryType、txnType */
+  field?: string;
+  items?: OptionItem[];
+}
+
+/**
+ * BO 下拉／篩選用選項（FM/SO 共用；value + 顯示 label）
+ */
+export interface OptionItem {
+  /** filter／API 用的 code */
+  value?: string;
+  /** BO 顯示名稱 */
+  label?: string;
+}
+
+export interface OptionsListResult {
+  groups?: OptionGroup[];
 }
 
 export interface PageDivListInput {
@@ -2524,6 +3308,8 @@ export interface PatronBetHistoryItem {
   patronNumber?: string;
   /** 玩家 ID（供 drill-down / 回鏈） */
   playerId?: string;
+  /** 手機號（來自 player.mobile；無則空字串） */
+  mobile?: string;
 }
 
 export type PatronBetHistoryItemGameName = {[key: string]: string};
@@ -2531,9 +3317,9 @@ export type PatronBetHistoryItemGameName = {[key: string]: string};
 export interface PatronBetHistoryListInput {
   page?: number;
   pageSize?: number;
-  /** 玩家 ID（與 accountNumber / patronNumber 至少其一） */
+  /** 玩家 ID（與 accountNumber / patronNumber / mobile 至少其一） */
   playerId?: string;
-  /** 玩家帳號 player_code（與 playerId / patronNumber 至少其一） */
+  /** 玩家帳號 player_code（與 playerId / patronNumber / mobile 至少其一） */
   accountNumber?: string;
   /** 遊戲供應商（選填） */
   gameProvider?: string;
@@ -2553,8 +3339,10 @@ export interface PatronBetHistoryListInput {
   gamingDate?: string;
   /** 遊戲名稱（選填，模糊搜尋 game.descriptions；支援 like: 前綴） */
   gameName?: string;
-  /** ACSC Patron 號碼（選填，與 playerId/accountNumber 擇一） */
+  /** ACSC Patron 號碼（選填，與 playerId/accountNumber/mobile 擇一） */
   patronNumber?: string;
+  /** 玩家手機號（選填，篩選 player.mobile，精確比對；可替代 playerId/accountNumber/patronNumber 作身分條件） */
+  mobile?: string;
 }
 
 export interface PatronBetHistoryListResult {
@@ -2596,6 +3384,10 @@ export interface PaymentAmountLimitResult {
   depositMax?: string;
   withdrawMin?: string;
   withdrawMax?: string;
+  /** 玩家每日累計出金上限(單位:分；UTC+8 日曆日、PHP)。僅 tenantId=0 的 PHP 列生效，其他列恆為 0 */
+  withdrawDailyMax?: string;
+  /** 每日累計出金上限開關；false=不限制（保留 withdrawDailyMax，重開即恢復）。僅 tenantId=0 的 PHP 列生效 */
+  withdrawDailyLimitEnabled?: boolean;
 }
 
 /**
@@ -2614,6 +3406,78 @@ export interface PaymentAmountLimitUpsertInput {
   withdrawMax?: string;
   /** （選填）稽核備註（僅寫入 admin_ops_log） */
   opsRemark?: string;
+  /** （選填）玩家每日累計出金上限(單位:分)。僅 tenantId=0 且 currency=PHP 可帶；未帶=保留原值 */
+  withdrawDailyMax?: string;
+  /** （選填）每日累計出金上限開關。僅 tenantId=0 且 currency=PHP 可帶；未帶=保留原值；
+   開啟時（合併後）withdrawDailyMax 必須 > 0 */
+  withdrawDailyLimitEnabled?: boolean;
+}
+
+/**
+ * PaymentChannelGroup 支付通道群組（對應 payment_channel_group 表）
+ */
+export interface PaymentChannelGroup {
+  id?: string;
+  crtTime?: string;
+  updTime?: string;
+  name?: string;
+  images?: PaymentChannelGroupImages;
+  /** 狀態。允許值：active | inactive */
+  state?: string;
+}
+
+export interface PaymentChannelGroupDeleteInput {
+  /** 必填。群組 ID */
+  id: string;
+  /** 選填：稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+export interface PaymentChannelGroupGetInput {
+  /** 必填。群組 ID */
+  id: string;
+}
+
+export type PaymentChannelGroupImages = {[key: string]: string};
+
+export interface PaymentChannelGroupListInput {
+  /** 選填。名稱篩選 */
+  name?: string;
+  /** 選填。狀態篩選。允許值：active | inactive */
+  state?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface PaymentChannelGroupListResult {
+  total?: number;
+  data?: PaymentChannelGroup[];
+}
+
+/**
+ * PaymentChannelGroupUpsertInput 新增／更新通道群組。
+ 帶 id>0 = 更新；id=0 或不帶 = 新增。
+ */
+export interface PaymentChannelGroupUpsertInput {
+  /** 選填。0 或不帶 = 新增, >0 = 更新 */
+  id?: string;
+  /** 新增時必填；更新時選填（有帶不可為空） */
+  name?: string;
+  /** 選填；新增未帶時預設 active。有帶時只接受 active / inactive */
+  state?: string;
+  /** 選填；map 無 presence 語意，未帶（null）時更新沿用既有值 */
+  images?: PaymentChannelGroupUpsertInputImages;
+  /** 選填：稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+/**
+ * 選填；map 無 presence 語意，未帶（null）時更新沿用既有值
+ */
+export type PaymentChannelGroupUpsertInputImages = {[key: string]: string};
+
+export interface PaymentChannelGroupUpsertResult {
+  id?: string;
 }
 
 /**
@@ -2635,7 +3499,7 @@ export interface PaymentEntry {
   depositEnabled?: boolean;
   withdrawEnabled?: boolean;
   isAccountNumber?: boolean;
-  /** 入口類型：e-wallet / local_bank / partner_bank */
+  /** 入口類型：e-wallet / local_bank / partner_bank / direct_deposit */
   entryType?: string;
   /** 唯讀。管道在 vendor 目錄宣告支援的方向（由 payment_entry.api_properties 的
    deposit / payout 區塊推導），供 BO 決定 depositEnabled / withdrawEnabled 的
@@ -2645,6 +3509,16 @@ export interface PaymentEntry {
    （未知即不設限，與 gsi 建單 gate validateChannelDirection 的語意一致）。 */
   depositSupported?: boolean;
   withdrawSupported?: boolean;
+  /** 入金 pending 逾時分鐘數；虛擬 mgt entry 固定 2880 */
+  pendingExpireMinutes?: number;
+  /** 所屬通道群組 ID；0 或未設 = 未分組 */
+  groupId?: string;
+  /** 所屬群組摘要（list/get 回傳；供 BO 顯示名稱與圖示） */
+  group?: PaymentChannelGroup;
+  /** 可見玩家標籤 id；空 = All（SO-117） */
+  labelIds?: string[];
+  /** 可見玩家標籤名稱（BO 列表顯示；空 = All） */
+  labelNames?: string[];
 }
 
 export interface PaymentEntryDeleteInput {
@@ -2668,14 +3542,35 @@ export interface PaymentEntryListInput {
   isTest?: boolean;
   page?: number;
   pageSize?: number;
-  /** 選填。依 payment_entry.entry_type 過濾（e-wallet / local_bank / partner_bank）。
+  /** 選填。依 payment_entry.entry_type 過濾（e-wallet / local_bank / partner_bank / direct_deposit）。
    未帶或空字串不過濾。legacy 值 wallet / bank 會正規化成 e-wallet / local_bank。 */
   entryType?: string;
+  /** 選填。依 payment_entry.group_id 過濾；未帶或 0 = 不過濾 */
+  groupId?: string;
+  /** 選填。入金開關篩選：`-` / 空 / 未帶 = 不篩選；active = deposit_enabled=true；inactive = false */
+  depositFilter?: string;
+  /** 選填。出金開關篩選：語意同 depositFilter。與 depositFilter 同時有值時以 OR 合併 */
+  withdrawFilter?: string;
+  /** 選填。依 payment_entry.name 過濾。
+   模糊搜尋請帶 like: 前綴，例如 like:PayMongo → LIKE '%PayMongo%'（大小寫不敏感） */
+  name?: string;
 }
 
 export interface PaymentEntryListResult {
   total?: number;
   data?: PaymentEntry[];
+}
+
+/**
+ * PaymentEntryMutateInput 批次更新 payment_entry.weight。
+ items 必須包含 DB 中「全部」payment_entry 的 id（與 list 篩選無關），
+ 陣列順序即 BO 顯示順序（index 0 = 最前面 = 最大 weight）；只更新 weight，不動其他欄位。
+ 不可只送子集——部分更新會與未列出的 entry 舊 weight 衝突，全表排序會錯亂。
+ */
+export interface PaymentEntryMutateInput {
+  items?: PaymentEntryWeightItem[];
+  /** 選填：稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
 }
 
 /**
@@ -2718,6 +3613,18 @@ export interface PaymentEntrySyncNowResult {
 }
 
 /**
+ * PaymentEntryUpdateLabelsInput 更新支付入口的可見玩家標籤（SO-117）。
+ */
+export interface PaymentEntryUpdateLabelsInput {
+  /** 必填。payment_entry.id */
+  id: string;
+  /** 可見標籤 id；空 = All（刪除全部限制） */
+  labelIds?: string[];
+  /** 選填：稽核備註（僅寫入 admin_ops_log） */
+  opsRemark?: string;
+}
+
+/**
  * PaymentEntryUpsertInput 新增／更新支付入口。
  帶 id = 更新：所有欄位皆為選填，只更新有帶的欄位，未帶者沿用 DB 既有值
 （例如只帶 id + withdrawEnabled 即可單獨切換出金開關）。
@@ -2751,11 +3658,14 @@ export interface PaymentEntryUpsertInput {
   withdrawEnabled?: boolean;
   isAccountNumber?: boolean;
   /** 選填；新增未帶時預設 e-wallet，更新未帶則沿用既有值。
-   有帶時只接受 e-wallet / local_bank / partner_bank，其餘回 ErrInvalidParam
+   有帶時只接受 e-wallet / local_bank / partner_bank / direct_deposit，其餘回 ErrInvalidParam
   （新增可帶空字串表示採預設；legacy 值 wallet / bank 會自動升級為 e-wallet / local_bank） */
   entryType?: string;
   /** 選填：稽核備註（僅寫入 admin_ops_log） */
   opsRemark?: string;
+  /** 選填。所屬通道群組。更新時：有帶則寫入；0 = 清空分組；未帶 = 沿用。
+   新增時：未帶或 0 = 未分組；>0 須為既有群組。 */
+  groupId?: string;
 }
 
 /**
@@ -2765,6 +3675,14 @@ export type PaymentEntryUpsertInputImages = {[key: string]: string};
 
 export interface PaymentEntryUpsertResult {
   id?: string;
+}
+
+/**
+ * PaymentEntryWeightItem 批次排序項目；陣列順序即為 BO 顯示順序（越前面 weight 越大）。
+ */
+export interface PaymentEntryWeightItem {
+  /** 必填。payment_entry.id；不可為虛擬 ADJUSTMENT 列的 "0" */
+  id: string;
 }
 
 /**
@@ -2820,6 +3738,22 @@ export interface PlayerAccountNoteChange {
   new?: string;
 }
 
+/**
+ * PlayerAccountNoteCreateInput creates a manual account note (opsAction=mgt PlayerAddNote).
+ */
+export interface PlayerAccountNoteCreateInput {
+  /** 玩家 ID（必填） */
+  playerId: string;
+  /** 備註內容（必填，最多 1000 字元） */
+  remark: string;
+  /** 選填：過期時間（RFC3339）；未設定表示永久有效 */
+  expireTime?: string;
+}
+
+export interface PlayerAccountNoteCreateResult {
+  id?: string;
+}
+
 export interface PlayerAccountNoteEntry {
   id?: string;
   crtTime?: string;
@@ -2830,6 +3764,8 @@ export interface PlayerAccountNoteEntry {
   verb?: string;
   opsAction?: string;
   changes?: PlayerAccountNoteChange[];
+  /** 選填：備註過期時間（RFC3339）；未設定表示永久有效 */
+  expireTime?: string;
 }
 
 /**
@@ -2857,7 +3793,7 @@ export interface PlayerAccountNoteListResult {
 
 export interface PlayerBetHistoryItem {
   id?: string;
-  /** 下注時間 */
+  /** 下注時間（txn_wager.bet_time，UTC+8，RFC3339） */
   dateTime?: string;
   /** 會話ID */
   sessionId?: string;
@@ -2903,9 +3839,9 @@ export interface PlayerBetHistoryListInput {
   page?: number;
   /** 每頁筆數（選填，0 或未傳則由後端預設；-1 表示不分頁回傳全部） */
   pageSize?: number;
-  /** 建立時間起（選填，篩選 txn_wager.crt_time，格式建議 RFC3339） */
+  /** 下注時間起（選填，篩選 txn_wager.bet_time，格式建議 RFC3339） */
   timeFrom?: string;
-  /** 建立時間迄（選填，篩選 txn_wager.crt_time，格式建議 RFC3339） */
+  /** 下注時間迄（選填，篩選 txn_wager.bet_time，格式建議 RFC3339） */
   timeTo?: string;
   /** 投注狀態（選填，篩選 txn_wager.bet_state；單一值或逗號分隔多值；可加 like: 前綴做模糊） */
   betState?: string;
@@ -2951,6 +3887,8 @@ export interface PlayerBonusRebateListInput {
   mobile?: string;
   /** ACSC Patron 號碼（精確比對）；僅在 acsc.enabled 的部署有作用 */
   patronNumber?: string;
+  /** 選填，玩家代碼（player.code） */
+  playerCode?: string;
 }
 
 export interface PlayerBonusRebateListResult {
@@ -2963,6 +3901,8 @@ export interface PlayerBonusRebateResult {
   playerId?: string;
   playerCode?: string;
   playerMobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  playerDialCode?: string;
   bonusId?: string;
   bonusName?: string;
   bonusCycle?: string;
@@ -3005,6 +3945,22 @@ export interface PlayerChangeMobileInput {
 export interface PlayerClearWithdrawalReviewInput {
   playerId: string;
   confirm: boolean;
+}
+
+/**
+ * 玩家每日累計出金上限（客服診斷；UTC+8 日曆日；單位：分）
+ */
+export interface PlayerDailyWithdrawLimitRow {
+  /** 全站開關（payment_amount_limit tenant 0 PHP 列）；false=不限制 */
+  enabled?: boolean;
+  /** 每日上限 */
+  limitMinor?: string;
+  /** 當日已用：pending＋成功的出金（含 BO 代操提款 mgt_withdraw，排除錢包調整 mgt_adjust） */
+  usedMinor?: string;
+  /** 剩餘 = max(limit − used, 0) */
+  remainingMinor?: string;
+  /** 統計的業務日（UTC+8，YYYY-MM-DD） */
+  businessDay?: string;
 }
 
 /**
@@ -3412,6 +4368,11 @@ export interface PlayerListResultItem {
   patronNumber?: string;
 }
 
+export interface PlayerMarketingAttributionGetResult {
+  /** 無快照時為空 */
+  data?: MarketingAttribution;
+}
+
 /**
  * 後台發送個人訊息
  */
@@ -3565,6 +4526,8 @@ export interface PlayerPromotion {
   promotionCode?: string;
   /** 手機號碼（對應 player.mobile；列表等情境由後端 JOIN 帶入） */
   mobile?: string;
+  /** 手機區號（對應 player.dial_code；列表由後端 JOIN 帶入，無則省略） */
+  dialCode?: string;
   /** 方案類型（對應 promotion.type；列表由後端 JOIN 帶入，無則省略） */
   promotionType?: string;
   /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串 */
@@ -3624,11 +4587,14 @@ export interface PlayerResult {
   bonus?: number;
   /** 積分值餘額 */
   point?: string;
-  /** 依幣別之存款週轉彙總（真錢入金 1x FIFO；後台 mgt 入金不計入 bucket） */
+  /** 已棄用：入金 1x 週轉於 2026-08-27 全面停用，恆回傳空陣列；請改讀 withdrawQuota。 */
   depositTurnover?: PlayerDepositTurnoverRow[];
+  /** 依幣別之提領額度彙總（累計有效投注 + 累計 Net Win − 已提領 − 預留） */
+  withdrawQuota?: PlayerWithdrawQuotaRow[];
   /** 該手機號碼是否被 mobile policy freeze */
   mobilePolicyFreezed?: boolean;
-  /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串 */
+  /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串
+   註：114 已由 base 分支的 withdrawQuota 占用，故此欄改用 116 */
   patronNumber?: string;
 }
 
@@ -3661,6 +4627,8 @@ export interface PlayerSelfLimitsResult {
   mobile?: string;
   /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串 */
   patronNumber?: string;
+  /** 玩家代碼（來自 player.code；無則空字串） */
+  playerCode?: string;
 }
 
 export interface PlayerSessionListInput {
@@ -3668,7 +4636,9 @@ export interface PlayerSessionListInput {
   pageSize?: number;
   /** 登入時段編號 */
   id?: string;
-  /** 登入時段狀態 (active, logout, revoke, revoke_other_device, expire, otp_fail, self_limit) */
+  /** 玩家 ID（精確） */
+  playerId?: string;
+  /** 登入時段狀態 (active, logout, revoke, revoke_other_device, expire, otp_fail, self_limit, ndrp_fail) */
   state?: string;
   /** 賬號名稱 */
   playerCode?: string;
@@ -3699,12 +4669,14 @@ export interface PlayerSessionResult {
   crtTime?: string;
   updTime?: string;
   tenantId?: string;
-  /** 登入時段狀態 (active, logout, revoke, revoke_other_device, expire, otp_fail, self_limit) */
+  /** 登入時段狀態 (active, logout, revoke, revoke_other_device, expire, otp_fail, self_limit, ndrp_fail) */
   state?: string;
   /** 賬號 */
   playerCode?: string;
   /** 手機碼 */
   mobile?: string;
+  /** 玩家 ID */
+  playerId?: string;
   /** 登入時段IP */
   ip?: string;
   /** 登入時段國家 */
@@ -3727,17 +4699,21 @@ export interface PlayerSessionRevokeInput {
 }
 
 /**
- * SP（Online Solaire Peso）提領額度（客服診斷；單位：分）
+ * 提領額度（客服診斷；單位：分）。訊息名的 Sp 為歷史名稱，實際適用所有幣別。
  */
 export interface PlayerSpWithdrawQuotaRow {
   /** 累計 SP 有效投注 */
   accruedMinor?: string;
-  /** 已成功提領 + pending 預留 */
+  /** 已成功提領 + pending 預留（SP 錢包另含 SP→PHP 換匯：MF-639 起換匯視同提領扣額度） */
   usedMinor?: string;
-  /** 剩餘可提領額度 = accrued − used */
+  /** 剩餘可提領額度 = accrued + accruedNetWin + granted − used */
   availableMinor?: string;
-  /** 實際可提 = min(SP 餘額, available) */
+  /** 實際可提 = min(餘額, available) */
   withdrawableMinor?: string;
+  /** 累計 Net Win（只計贏的部分；輸錢的注不倒扣） */
+  accruedNetWinMinor?: string;
+  /** 客服核發額度（BO override 人工發放） */
+  grantedMinor?: string;
 }
 
 export interface PlayerTxnPaymentItem {
@@ -3781,6 +4757,8 @@ export interface PlayerTxnPaymentItem {
   approvedAt?: string;
   /** 玩家付款/提款帳號（依 playerId + paymentEntryCode 對應 player_payment_account.account_number） */
   accountNumber?: string;
+  /** 支付入口名稱（DB payment_entry 名稱或 mgt entry fallback） */
+  paymentEntryName?: string;
 }
 
 export interface PlayerTxnPaymentListInput {
@@ -3821,7 +4799,9 @@ export interface PlayerUpdateInput {
 export interface PlayerVaultResult {
   vipGrade?: string;
   vipLevel?: number;
+  /** 升級進度-目前值：本月 1 日至昨日的有效流水（單位:分；與每日月升等判斷同一區間，不含今日）。0 時 JSON 會省略此 key */
   vipLevelVal?: string;
+  /** 升級進度-目標值：下一等級的月流水門檻（單位:分）；已是最高可升等級時為 0（JSON 省略此 key） */
   vipLevelNxt?: string;
   weeklyCashbackRate?: number;
   monthlyCashbackRate?: number;
@@ -3879,6 +4859,8 @@ export interface PlayerWithdrawDiagnosticsResult {
   spWithdrawQuota?: PlayerSpWithdrawQuotaRow;
   blockedBySpWithdrawQuota?: boolean;
   spWithdrawQuotaBlockedMessage?: string;
+  /** 玩家每日累計出金上限（SO-229；僅查詢 currency=PHP 時帶值） */
+  dailyWithdrawLimit?: PlayerDailyWithdrawLimitRow;
 }
 
 /**
@@ -3893,6 +4875,53 @@ export interface PlayerWithdrawInput {
   currency: string;
   /** 選填，備註；寫入 txn_payment.remark，並同步寫入 admin_ops_log.ops_values.remark（本 Input 無 opsRemark） */
   remark?: string;
+}
+
+/**
+ * PlayerWithdrawQuotaGrantInput 客服核發／回收提領額度。
+
+ 用途：額度規則是「沒投注就不能提」，未投注的入金無法自助退回；本介面是被擋玩家的
+ 唯一人工出口。核發量單獨記在 granted_minor，與玩家自己打出來的額度分開稽核。
+ */
+export interface PlayerWithdrawQuotaGrantInput {
+  /** 玩家 ID（必填） */
+  playerId: string;
+  /** 錢包幣別，如 PHP／SP（必填） */
+  currency: string;
+  /** 核發金額（單位：分，必填，不可為 0）。
+   送負數為回收先前的核發量；回收最多把 granted 歸零，不會侵蝕玩家打出來的額度。 */
+  amountMinor: string;
+  /** 核發原因（必填，寫入 admin_ops_log 稽核） */
+  reason: string;
+}
+
+export interface PlayerWithdrawQuotaGrantResult {
+  /** 核發後的額度明細 */
+  quota?: PlayerSpWithdrawQuotaRow;
+  /** 核發前的剩餘可提領額度（單位：分） */
+  availableBeforeMinor?: string;
+  /** 核發後的剩餘可提領額度（單位：分） */
+  availableAfterMinor?: string;
+}
+
+/**
+ * 依幣別之提領額度（玩家明細用；單位：分）
+ */
+export interface PlayerWithdrawQuotaRow {
+  /** 錢包幣別 */
+  currency?: string;
+  /** 累計有效投注 */
+  accruedMinor?: string;
+  /** 累計 Net Win（只計贏的部分；輸錢的注不倒扣） */
+  accruedNetWinMinor?: string;
+  /** 已成功提領 + pending 預留（SP 錢包另含 SP→PHP 換匯：MF-639 起換匯視同提領扣額度） */
+  usedMinor?: string;
+  /** 剩餘可提領額度 = accrued + accruedNetWin + granted − used */
+  availableMinor?: string;
+  /** 實際可提 = min(餘額, available) */
+  withdrawableMinor?: string;
+  /** 客服核發額度（BO override 人工發放） */
+  grantedMinor?: string;
 }
 
 export interface PlayersByLabelInput {
@@ -3953,6 +4982,8 @@ export interface Promotion {
   targetGameTypes?: string[];
   /** 促銷描述（單語系，對應 DB promotion_desc；僅用於簡化前端展示，非多語系） */
   promoDesc?: string;
+  /** 派發目標（僅 promoType=fasttrack 有意義）。允許值：cash | bonus；cash=FT /bonus/credit/funds 直入真錢（預設），bonus=進紅利錢包並套流水 */
+  creditTarget?: string;
 }
 
 export type PromotionDescriptions = {[key: string]: string};
@@ -4071,6 +5102,12 @@ export interface SelfLimitListInput {
   page?: number;
   /** 每頁筆數（選填） */
   pageSize?: number;
+  /** 選填，手機號碼（player.mobile，模糊／精確依 WithFilterInOrLike） */
+  mobile?: string;
+  /** 選填，玩家代碼（player.code） */
+  playerCode?: string;
+  /** ACSC Patron 號碼（精確比對）；僅在 acsc.enabled 的部署有作用 */
+  patronNumber?: string;
 }
 
 export interface SelfLimitListResult {
@@ -4122,6 +5159,8 @@ export interface TopWagerItem {
   anomalyFlags?: string[];
   /** ACSC Patron 號碼（Top Players） */
   patronNumber?: string;
+  /** 手機號（來自 player.mobile；Top Players；無則空字串） */
+  mobile?: string;
 }
 
 export type TopWagerItemGameName = {[key: string]: string};
@@ -4161,6 +5200,8 @@ export interface TopWagerListInput {
   minTotalBets?: string;
   /** ACSC Patron 號碼（選填，篩選 pap.patron_number） */
   patronNumber?: string;
+  /** 玩家手機號（選填，篩選 player.mobile，精確比對） */
+  mobile?: string;
 }
 
 /**
@@ -4221,9 +5262,11 @@ export interface TxnLedgerListInput {
   mobile?: string;
   /** ACSC Patron 號碼（精確比對）；僅在 acsc.enabled 的部署有作用 */
   patronNumber?: string;
-  /** tran type: deposit, withdraw, bonus, bet, settle */
+  /** tran type: deposit, withdraw, bet, settle, bet_cancel, promo_payout, bonus, fc_to_cash,
+   transfer_in, transfer_out, transfer_reversal (ACSC), sp_conversion_out, sp_conversion_in (SP 換匯),
+   game_wallet_deposit, game_wallet_deposit_refund, game_wallet_withdraw */
   txnType?: string;
-  /** tran state: completed, processing, failed, canceled */
+  /** tran state: pending, processing, rejected, normal, cancel, failed, expired, completed */
   state?: string;
   /** 交易單號 */
   txnId?: string;
@@ -4246,16 +5289,21 @@ export interface TxnLedgerResult {
   txnType?: string;
   /** 關聯編號 */
   txnRefId?: string;
-  /** tran state: completed, processing, failed, canceled */
+  /** tran state: pending, processing, rejected, normal, cancel, failed, expired, completed */
   state?: string;
   remark?: string;
   playerId?: string;
   playerCode?: string;
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   /** 幣別（txn_ledger.currency） */
   currency?: string;
   /** 精度（txn_ledger.precision） */
   precision?: number;
+  /** 換匯匯率（txn_ledger.rate；SP→PHP 換匯流水記 1.0；2026-09-30 前的舊單為 0.5）。
+   非換匯流水 DB 為 NULL → 本欄不回傳（optional 無值），不會誤呈現成 0。 */
+  rate?: number;
   /** 錢包相關（餘額；單位：分） */
   coinBalChange?: string;
   coinBalBefore?: string;
@@ -4298,6 +5346,9 @@ export interface TxnPaymentListInput {
   paymentProviderCode?: string;
   /** 提款審核狀態：not_required / required / approved / rejected */
   approvalStatus?: string;
+  /** true: 排除 payment_provider_code=mgt 的後台操作紀錄（Finance Payment Transaction 預設使用）
+   欄位 26 已被 patronNumber（SO 線）使用，此處跳號至 27。 */
+  excludeMgtProvider?: boolean;
 }
 
 export interface TxnPaymentListResult {
@@ -4323,9 +5374,19 @@ export interface TxnPaymentResult {
   txnType?: string;
   state?: string;
   remark?: string;
+  /** 失敗來源，標示異常發生在哪個節點：solairepay / dragonpay = 對應的第三方金流商；
+   platform = 我們自家平台（非第三方，例如派發前置檢查失敗、審核時餘額不足），
+   顯示名可由前端依租戶映射（如 FM 租戶顯示「FM API」）。
+   僅 失敗（failed）/逾期（expired）/取消（cancel）單有值，其餘為空字串 */
+  failSource?: string;
+  /** 失敗原因原文，不做解析、以純文字渲染直接顯示（第三方回傳的錯誤內容，或自家平台的錯誤訊息）。
+   僅 失敗/逾期/取消 單有值，其餘為空字串 */
+  failReason?: string;
   playerId?: string;
   playerCode?: string;
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   currency?: string;
   amount?: string;
   paymentEntryCode?: string;
@@ -4396,6 +5457,8 @@ export interface TxnPointResult {
   playerCode?: string;
   tenantCode?: string;
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   /** dailyEarn | redeem | credit | deduct | expiry */
   type?: string;
   /** pending | processing | rejected | normal | cancel | failed | expired | completed */
@@ -4416,6 +5479,56 @@ export interface TxnPointResult {
   approvedAt?: string;
 }
 
+export interface TxnSpConversionItem {
+  /** 換匯交易 ID（txn_sp_conversion.id） */
+  id?: string;
+  /** 建立時間（RFC3339，UTC+8） */
+  crtTime?: string;
+  /** 更新時間（RFC3339，UTC+8） */
+  updTime?: string;
+  playerId?: string;
+  playerCode?: string;
+  /** 玩家手機（查詢時即時取 player.mobile，非換匯當下快照；依權限遮罩） */
+  mobile?: string;
+  /** 手機區號（查詢時即時取 player.dial_code；無則空字串） */
+  dialCode?: string;
+  /** SP 錢包 player_balance.id */
+  spBalanceId?: string;
+  /** PHP 錢包 player_balance.id */
+  phpBalanceId?: string;
+  /** SP 扣款（單位：分） */
+  spAmount?: string;
+  /** PHP 入帳（單位：分，floor(spAmount × rate)） */
+  phpAmount?: string;
+  /** 換匯匯率（1.0；2026-09-30 前的舊單為 0.5） */
+  rate?: number;
+  /** 換匯後 SP 餘額（單位：分） */
+  spBalanceAfter?: string;
+  /** 換匯後 PHP 餘額（單位：分） */
+  phpBalanceAfter?: string;
+  /** 狀態（同步完成，恆 completed） */
+  state?: string;
+  /** 客戶端冪等鍵（去重範圍＝同一玩家） */
+  clientRef?: string;
+}
+
+export interface TxnSpConversionListInput {
+  page?: number;
+  pageSize?: number;
+  timeFrom?: string;
+  timeTo?: string;
+  playerCode?: string;
+  playerId?: string;
+  mobile?: string;
+  state?: string;
+  clientRef?: string;
+}
+
+export interface TxnSpConversionListResult {
+  data?: TxnSpConversionItem[];
+  total?: string;
+}
+
 export interface TxnVipLevelListInput {
   page?: number;
   pageSize?: number;
@@ -4424,6 +5537,7 @@ export interface TxnVipLevelListInput {
   timeFrom?: string;
   timeTo?: string;
   mobile?: string;
+  playerId?: string;
 }
 
 export interface TxnVipLevelListResult {
@@ -4456,6 +5570,8 @@ export interface TxnWagerListInput {
   mobile?: string;
   /** ACSC Patron 號碼（精確比對）；僅在 acsc.enabled 的部署有作用 */
   patronNumber?: string;
+  /** 玩家 ID（精確） */
+  playerId?: string;
   sessionCode?: string;
   /** 遊戲編號, 多過一個可用逗號分隔 */
   gameId?: string;
@@ -4478,36 +5594,36 @@ export interface TxnWagerListInput {
 }
 
 export interface TxnWagerListResult {
-  /** 交易總筆數（卡片「Total Transactions」）= 篩選後 COUNT(*)，含未結算與已取消注單 */
+  /** 分頁用總筆數（篩選後 COUNT(*)，含未結算與已取消注單）。彙總卡片總筆數請用 TxnWagerSummary.total。 */
   total?: number;
   /** 本頁注單列表 */
   data?: TxnWagerResult[];
-  /** === 本頁小計（只統計目前這一頁的 data；單位:分）===
-   本頁下注金額小計 = 本頁 SUM(bet_amt) */
+  /** === 本頁小計（MF-626 起一律回 0；FE 改不顯示，保留欄位相容）===
+   本頁下注金額小計（已停用，恒為 0） */
   subTotalBetAmt?: string;
-  /** 本頁有效投注小計 = 本頁 SUM(bet_adj_amt) */
+  /** 本頁有效投注小計（已停用，恒為 0） */
   subTotalBetAdjAmt?: string;
-  /** 本頁投注輸贏小計 = 本頁 SUM(bet_ret_amt) */
+  /** 本頁投注輸贏小計（已停用，恒為 0） */
   subTotalBetRetAmt?: string;
-  /** 本頁派彩小計 = 本頁 SUM(bet_amt + bet_ret_amt) */
+  /** 本頁派彩小計（已停用，恒為 0） */
   subTotalPayout?: string;
-  /** === 全部總計（對「整個篩選結果」聚合，非僅本頁；單位:分）===
-   總下注金額（卡片「Total Bet Amount」）= SUM(bet_amt) */
+  /** === 全部總計（MF-626 起一律回 0；全集合彙總改打 TxnWagerSummary）===
+   總下注金額（已停用，恒為 0；請用 /wagertxn/summary） */
   totalBetAmt?: string;
-  /** 總有效投注額（計佣用）= SUM(bet_adj_amt)；itam/itamfc 改用 provider_bet_adj_amt */
+  /** 總有效投注額（已停用，恒為 0；請用 /wagertxn/summary） */
   totalBetAdjAmt?: string;
-  /** 總投注輸贏（玩家視角、不含本金）= SUM(bet_ret_amt)；>0 玩家淨贏、<0 玩家淨輸 */
+  /** 總投注輸贏（已停用，恒為 0；請用 /wagertxn/summary） */
   totalBetRetAmt?: string;
-  /** 總派彩金額（卡片「Total Payout Amount」）= SUM(bet_amt + bet_ret_amt) */
+  /** 總派彩金額（已停用，恒為 0；請用 /wagertxn/summary） */
   totalPayoutAmt?: string;
-  /** 總輸贏 / GGR（卡片「Total W/L (GGR)」）= 總下注 − 總派彩 = totalBetAmt − totalPayoutAmt；正值=莊家贏 */
+  /** 總輸贏 / GGR（已停用，恒為 0；請用 /wagertxn/summary） */
   totalWl?: string;
-  /** === 注單結果計數（只計「已結算」注單 bet_state='result'，依輸贏金額 bet_ret_amt 判定；未結算/已取消不計入）===
-   贏注數（卡片「Win Count」）= 已結算且 bet_ret_amt > 0 的注單數 */
+  /** === 注單結果計數（MF-626 起一律回 0；請用 /wagertxn/summary）===
+   贏注數（已停用，恒為 0） */
   winCount?: string;
-  /** 輸注數（卡片「Loss Count」）= 已結算且 bet_ret_amt < 0 的注單數 */
+  /** 輸注數（已停用，恒為 0） */
   lossCount?: string;
-  /** 和局數（卡片「Tie Count」）= 已結算且 bet_ret_amt = 0 的注單數 */
+  /** 和局數（已停用，恒為 0） */
   tieCount?: string;
 }
 
@@ -4527,6 +5643,8 @@ export interface TxnWagerResult {
   /** external game providers' bet id */
   extTxnId?: string;
   extRoundId?: string;
+  /** 玩家 ID */
+  playerId?: string;
   playerCode?: string;
   playerType?: string;
   parentCode?: string;
@@ -4562,11 +5680,13 @@ export interface TxnWagerResult {
   /** 投注狀態(normal, result, cancel, error) */
   betState?: string;
   /** 投注結果(win, lose, tie)；標籤優先、金額補位：遊戲商有送 bet_result 就採標籤，
-   沒送才依 bet_ret_amt 正負推導（>0 win / <0 lose / =0 tie），與彙總卡片 Win/Loss/Tie Count
-   同口徑。僅已結算(betState=result)有值，未結算/取消為空。 */
+   沒送才依 bet_ret_amt 正負推導（>0 win / <0 lose / =0 tie），與 TxnWagerSummary 的
+   Win/Loss/Tie Count 同口徑。僅已結算(betState=result)有值，未結算/取消為空。 */
   betResult?: string;
   betRemark?: string;
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串 */
   patronNumber?: string;
 }
@@ -4668,6 +5788,8 @@ export interface TxnWagerStatsByPlayerResult {
   totalBetAdjAmt?: string;
   /** 手機號（來自 player.mobile；無則空字串） */
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   /** ACSC Patron 號碼（player_acsc_patron.patron_number）；未綁定 ACSC 或未啟用 acsc.enabled 時為空字串 */
   patronNumber?: string;
 }
@@ -4782,6 +5904,30 @@ export interface TxnWagerStatsQueryInput {
   mobile?: string;
   /** ACSC Patron 號碼（精確比對）；僅在 acsc.enabled 的部署有作用 */
   patronNumber?: string;
+}
+
+/**
+ * TxnWagerSummaryResult 注單報表彙總卡片（全篩選結果聚合；與 TxnWagerList 共用篩選口徑）。
+ */
+export interface TxnWagerSummaryResult {
+  /** 交易總筆數（篩選後 COUNT(*)，含未結算與已取消注單） */
+  total?: string;
+  /** 總下注金額（排除 bet_state='cancel'；單位:分） */
+  totalBetAmt?: string;
+  /** 總有效投注額（itam/itamfc 改用 provider_bet_adj_amt；單位:分） */
+  totalBetAdjAmt?: string;
+  /** 總投注輸贏（玩家視角、不含本金；單位:分） */
+  totalBetRetAmt?: string;
+  /** 總派彩金額（排除取消；單位:分；未結算依 WagerReportPayoutSQLExpr 計 0，與列上 Payout 同口徑） */
+  totalPayoutAmt?: string;
+  /** 總輸贏 / GGR = totalBetAmt − totalPayoutAmt（正值=莊家贏；單位:分） */
+  totalWl?: string;
+  /** 贏注數（已結算 bet_state='result'，與 BetResultBucketExpr 同口徑） */
+  winCount?: string;
+  /** 輸注數 */
+  lossCount?: string;
+  /** 和局數 */
+  tieCount?: string;
 }
 
 export interface UpdatePlayerPromotionInput {
@@ -4928,6 +6074,8 @@ export interface UpsertPromotionInput {
   promoType?: string;
   /** 選填。促銷描述（單語系，對應 DB promotion_desc；僅用於簡化前端展示，非多語系）。更新時有傳則覆寫 */
   promoDesc?: string;
+  /** 選填。派發目標。允許值：cash | bonus；新增未傳=cash，更新未傳表示不變 */
+  creditTarget?: string;
 }
 
 /**
@@ -5083,6 +6231,7 @@ export interface VipRebate {
   egameRate?: number;
   sportRate?: number;
   bingoRate?: number;
+  liveslotRate?: number;
   peryaHouseEdge?: number;
   slotHouseEdge?: number;
   casinoHouseEdge?: number;
@@ -5152,6 +6301,7 @@ export interface VipRebateUpsertInput {
   /** 選填：稽核備註（僅寫入 admin_ops_log） */
   opsRemark?: string;
   bingoRate?: number;
+  liveslotRate?: number;
   peryaHouseEdge?: number;
   slotHouseEdge?: number;
   casinoHouseEdge?: number;
@@ -5348,6 +6498,8 @@ export interface XpShopOrderDetail {
   playerCode?: string;
   /** 玩家手機號碼 */
   mobile?: string;
+  /** 手機區號（來自 player.dial_code；無則空字串） */
+  dialCode?: string;
   /** 品項 ID */
   itemId?: string;
   /** 品項代碼 */

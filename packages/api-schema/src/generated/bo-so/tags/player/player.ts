@@ -11,7 +11,27 @@ import type {
   GetOtpCodeInput,
   GetOtpCodeResult,
   IdInput,
+  MgtBalanceAdjustBatchCreateInput,
+  MgtBalanceAdjustBatchCreateResult,
+  MgtBalanceAdjustBatchExecuteInput,
+  MgtBalanceAdjustBatchExecuteResult,
+  MgtBalanceAdjustBatchListInput,
+  MgtBalanceAdjustBatchListResult,
+  MgtBalanceAdjustBatchPauseInput,
+  MgtBalanceAdjustBatchPauseResult,
+  MgtBalanceAdjustBatchResumeInput,
+  MgtBalanceAdjustBatchResumeResult,
+  MgtBalanceAdjustBatchRetryInput,
+  MgtBalanceAdjustBatchRetryResult,
+  MgtBalanceAdjustBatchRevertInput,
+  MgtBalanceAdjustBatchRevertResult,
+  MgtBalanceAdjustBatchRevertRetryInput,
+  MgtBalanceAdjustBatchRevertRetryResult,
+  MgtBalanceAdjustBatchStatusInput,
+  MgtBalanceAdjustBatchStatusResult,
   Noop,
+  PlayerAccountNoteCreateInput,
+  PlayerAccountNoteCreateResult,
   PlayerAccountNoteListInput,
   PlayerAccountNoteListResult,
   PlayerBetHistoryListInput,
@@ -30,6 +50,7 @@ import type {
   PlayerLabelsByPlayerInput,
   PlayerListInput,
   PlayerListResult,
+  PlayerMarketingAttributionGetResult,
   PlayerMessageSendInput,
   PlayerPointAdjustInput,
   PlayerPointAdjustResult,
@@ -43,6 +64,8 @@ import type {
   PlayerWithdrawDiagnosticsInput,
   PlayerWithdrawDiagnosticsResult,
   PlayerWithdrawInput,
+  PlayerWithdrawQuotaGrantInput,
+  PlayerWithdrawQuotaGrantResult,
   SelfLimitDeleteInput,
   SelfLimitListInput,
   SelfLimitListResult,
@@ -54,6 +77,39 @@ import type {
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
+
+export type mgtServicePlayerAccountNoteCreateResponse200 = {
+  data: PlayerAccountNoteCreateResult
+  status: 200
+}
+
+export type mgtServicePlayerAccountNoteCreateResponseSuccess = (mgtServicePlayerAccountNoteCreateResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePlayerAccountNoteCreateResponse = (mgtServicePlayerAccountNoteCreateResponseSuccess)
+
+export const getMgtServicePlayerAccountNoteCreateUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/accountnote/create`
+}
+
+export const mgtServicePlayerAccountNoteCreate = async (playerAccountNoteCreateInput: PlayerAccountNoteCreateInput, options?: RequestInit): Promise<mgtServicePlayerAccountNoteCreateResponse> => {
+
+  return customFetch<mgtServicePlayerAccountNoteCreateResponse>(getMgtServicePlayerAccountNoteCreateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      playerAccountNoteCreateInput,)
+  }
+);}
+
 
 export type mgtServicePlayerAccountNoteListResponse200 = {
   data: PlayerAccountNoteListResult
@@ -84,6 +140,330 @@ export const mgtServicePlayerAccountNoteList = async (playerAccountNoteListInput
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       playerAccountNoteListInput,)
+  }
+);}
+
+
+/**
+ * 建立批量餘額調整批次並入列背景執行（Cashback 名單；dryRun 預設開）
+ */
+export type mgtServiceBalanceAdjustBatchCreateResponse200 = {
+  data: MgtBalanceAdjustBatchCreateResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchCreateResponseSuccess = (mgtServiceBalanceAdjustBatchCreateResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchCreateResponse = (mgtServiceBalanceAdjustBatchCreateResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchCreateUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch`
+}
+
+export const mgtServiceBalanceAdjustBatchCreate = async (mgtBalanceAdjustBatchCreateInput: MgtBalanceAdjustBatchCreateInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchCreateResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchCreateResponse>(getMgtServiceBalanceAdjustBatchCreateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchCreateInput,)
+  }
+);}
+
+
+/**
+ * 依已完成的 dry-run 批次執行實跑（不重送 rows；同一 dry-run 只能執行一次）
+ */
+export type mgtServiceBalanceAdjustBatchExecuteResponse200 = {
+  data: MgtBalanceAdjustBatchExecuteResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchExecuteResponseSuccess = (mgtServiceBalanceAdjustBatchExecuteResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchExecuteResponse = (mgtServiceBalanceAdjustBatchExecuteResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchExecuteUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/execute`
+}
+
+export const mgtServiceBalanceAdjustBatchExecute = async (mgtBalanceAdjustBatchExecuteInput: MgtBalanceAdjustBatchExecuteInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchExecuteResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchExecuteResponse>(getMgtServiceBalanceAdjustBatchExecuteUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchExecuteInput,)
+  }
+);}
+
+
+/**
+ * 批量餘額調整批次列表
+ */
+export type mgtServiceBalanceAdjustBatchListResponse200 = {
+  data: MgtBalanceAdjustBatchListResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchListResponseSuccess = (mgtServiceBalanceAdjustBatchListResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchListResponse = (mgtServiceBalanceAdjustBatchListResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchListUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/list`
+}
+
+export const mgtServiceBalanceAdjustBatchList = async (mgtBalanceAdjustBatchListInput: MgtBalanceAdjustBatchListInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchListResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchListResponse>(getMgtServiceBalanceAdjustBatchListUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchListInput,)
+  }
+);}
+
+
+/**
+ * 暫停執行中的批量餘額調整批次（worker 於下一頁邊界優雅停止）
+ */
+export type mgtServiceBalanceAdjustBatchPauseResponse200 = {
+  data: MgtBalanceAdjustBatchPauseResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchPauseResponseSuccess = (mgtServiceBalanceAdjustBatchPauseResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchPauseResponse = (mgtServiceBalanceAdjustBatchPauseResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchPauseUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/pause`
+}
+
+export const mgtServiceBalanceAdjustBatchPause = async (mgtBalanceAdjustBatchPauseInput: MgtBalanceAdjustBatchPauseInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchPauseResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchPauseResponse>(getMgtServiceBalanceAdjustBatchPauseUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchPauseInput,)
+  }
+);}
+
+
+/**
+ * 恢復已暫停的批量餘額調整批次
+ */
+export type mgtServiceBalanceAdjustBatchResumeResponse200 = {
+  data: MgtBalanceAdjustBatchResumeResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchResumeResponseSuccess = (mgtServiceBalanceAdjustBatchResumeResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchResumeResponse = (mgtServiceBalanceAdjustBatchResumeResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchResumeUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/resume`
+}
+
+export const mgtServiceBalanceAdjustBatchResume = async (mgtBalanceAdjustBatchResumeInput: MgtBalanceAdjustBatchResumeInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchResumeResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchResumeResponse>(getMgtServiceBalanceAdjustBatchResumeUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchResumeInput,)
+  }
+);}
+
+
+/**
+ * 重跑批次內失敗的筆（已成功入帳的筆永不重跑）
+ */
+export type mgtServiceBalanceAdjustBatchRetryResponse200 = {
+  data: MgtBalanceAdjustBatchRetryResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchRetryResponseSuccess = (mgtServiceBalanceAdjustBatchRetryResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchRetryResponse = (mgtServiceBalanceAdjustBatchRetryResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchRetryUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/retry`
+}
+
+export const mgtServiceBalanceAdjustBatchRetry = async (mgtBalanceAdjustBatchRetryInput: MgtBalanceAdjustBatchRetryInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchRetryResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchRetryResponse>(getMgtServiceBalanceAdjustBatchRetryUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchRetryInput,)
+  }
+);}
+
+
+/**
+ * 扣回整個批量餘額調整批次（dryRun 預設開；餘額不足扣到 0）
+ */
+export type mgtServiceBalanceAdjustBatchRevertResponse200 = {
+  data: MgtBalanceAdjustBatchRevertResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchRevertResponseSuccess = (mgtServiceBalanceAdjustBatchRevertResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchRevertResponse = (mgtServiceBalanceAdjustBatchRevertResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchRevertUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/revert`
+}
+
+export const mgtServiceBalanceAdjustBatchRevert = async (mgtBalanceAdjustBatchRevertInput: MgtBalanceAdjustBatchRevertInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchRevertResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchRevertResponse>(getMgtServiceBalanceAdjustBatchRevertUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchRevertInput,)
+  }
+);}
+
+
+/**
+ * 對扣回後扣不足（short）／失敗（failed）的列再扣一次（會扣到玩家之後新進的錢，須營運決定）
+ */
+export type mgtServiceBalanceAdjustBatchRevertRetryResponse200 = {
+  data: MgtBalanceAdjustBatchRevertRetryResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchRevertRetryResponseSuccess = (mgtServiceBalanceAdjustBatchRevertRetryResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchRevertRetryResponse = (mgtServiceBalanceAdjustBatchRevertRetryResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchRevertRetryUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/revert/retry`
+}
+
+export const mgtServiceBalanceAdjustBatchRevertRetry = async (mgtBalanceAdjustBatchRevertRetryInput: MgtBalanceAdjustBatchRevertRetryInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchRevertRetryResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchRevertRetryResponse>(getMgtServiceBalanceAdjustBatchRevertRetryUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchRevertRetryInput,)
+  }
+);}
+
+
+/**
+ * 查批量餘額調整批次進度、對帳統計與明細
+ */
+export type mgtServiceBalanceAdjustBatchStatusResponse200 = {
+  data: MgtBalanceAdjustBatchStatusResult
+  status: 200
+}
+
+export type mgtServiceBalanceAdjustBatchStatusResponseSuccess = (mgtServiceBalanceAdjustBatchStatusResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceBalanceAdjustBatchStatusResponse = (mgtServiceBalanceAdjustBatchStatusResponseSuccess)
+
+export const getMgtServiceBalanceAdjustBatchStatusUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/balance/adjust/batch/status`
+}
+
+export const mgtServiceBalanceAdjustBatchStatus = async (mgtBalanceAdjustBatchStatusInput: MgtBalanceAdjustBatchStatusInput, options?: RequestInit): Promise<mgtServiceBalanceAdjustBatchStatusResponse> => {
+
+  return customFetch<mgtServiceBalanceAdjustBatchStatusResponse>(getMgtServiceBalanceAdjustBatchStatusUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtBalanceAdjustBatchStatusInput,)
   }
 );}
 
@@ -578,6 +958,42 @@ export const mgtServicePlayerList = async (playerListInput: PlayerListInput, opt
 
 
 /**
+ * 玩家行銷歸因（Player Details - Marketing Attribution；註冊當下快照，資料源 player_utm_event event=signup）
+ */
+export type mgtServicePlayerMarketingAttributionGetResponse200 = {
+  data: PlayerMarketingAttributionGetResult
+  status: 200
+}
+
+export type mgtServicePlayerMarketingAttributionGetResponseSuccess = (mgtServicePlayerMarketingAttributionGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePlayerMarketingAttributionGetResponse = (mgtServicePlayerMarketingAttributionGetResponseSuccess)
+
+export const getMgtServicePlayerMarketingAttributionGetUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/marketingattribution/get`
+}
+
+export const mgtServicePlayerMarketingAttributionGet = async (idInput: IdInput, options?: RequestInit): Promise<mgtServicePlayerMarketingAttributionGetResponse> => {
+
+  return customFetch<mgtServicePlayerMarketingAttributionGetResponse>(getMgtServicePlayerMarketingAttributionGetUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      idInput,)
+  }
+);}
+
+
+/**
  * 後台發送個人訊息
  */
 export type mgtServicePlayerMessageSendResponse200 = {
@@ -945,7 +1361,43 @@ export const mgtServicePlayerUpdate = async (playerUpdateInput: PlayerUpdateInpu
 
 
 /**
- * 客服：查詢玩家為何無法前台提款（KYC／進行中活動／存款週轉）
+ * 客服：核發／回收玩家提領額度（被額度擋住時的唯一人工出口；寫入 admin_ops_log）
+ */
+export type mgtServicePlayerWithdrawQuotaGrantResponse200 = {
+  data: PlayerWithdrawQuotaGrantResult
+  status: 200
+}
+
+export type mgtServicePlayerWithdrawQuotaGrantResponseSuccess = (mgtServicePlayerWithdrawQuotaGrantResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePlayerWithdrawQuotaGrantResponse = (mgtServicePlayerWithdrawQuotaGrantResponseSuccess)
+
+export const getMgtServicePlayerWithdrawQuotaGrantUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/withdraw-quota/grant`
+}
+
+export const mgtServicePlayerWithdrawQuotaGrant = async (playerWithdrawQuotaGrantInput: PlayerWithdrawQuotaGrantInput, options?: RequestInit): Promise<mgtServicePlayerWithdrawQuotaGrantResponse> => {
+
+  return customFetch<mgtServicePlayerWithdrawQuotaGrantResponse>(getMgtServicePlayerWithdrawQuotaGrantUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      playerWithdrawQuotaGrantInput,)
+  }
+);}
+
+
+/**
+ * 客服：查詢玩家為何無法前台提款（KYC／進行中活動／提領額度）
  */
 export type mgtServicePlayerWithdrawDiagnosticsResponse200 = {
   data: PlayerWithdrawDiagnosticsResult

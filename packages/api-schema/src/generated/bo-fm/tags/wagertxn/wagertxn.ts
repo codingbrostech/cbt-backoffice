@@ -18,7 +18,8 @@ import type {
   TxnWagerStatsByPlayerListResult,
   TxnWagerStatsByProviderGameListResult,
   TxnWagerStatsByProviderListResult,
-  TxnWagerStatsQueryInput
+  TxnWagerStatsQueryInput,
+  TxnWagerSummaryResult
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
@@ -301,6 +302,42 @@ export const mgtServiceResendWagerToGobis = async (resendWagerToGobisInput: Rese
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       resendWagerToGobisInput,)
+  }
+);}
+
+
+/**
+ * 注單報表彙總卡片（篩選條件同 TxnWagerList；翻頁時 FE 只打 list，篩選變更時打此端點）。
+ */
+export type mgtServiceTxnWagerSummaryResponse200 = {
+  data: TxnWagerSummaryResult
+  status: 200
+}
+
+export type mgtServiceTxnWagerSummaryResponseSuccess = (mgtServiceTxnWagerSummaryResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceTxnWagerSummaryResponse = (mgtServiceTxnWagerSummaryResponseSuccess)
+
+export const getMgtServiceTxnWagerSummaryUrl = () => {
+
+
+
+
+  return `/mgt/v1/wagertxn/summary`
+}
+
+export const mgtServiceTxnWagerSummary = async (txnWagerListInput: TxnWagerListInput, options?: RequestInit): Promise<mgtServiceTxnWagerSummaryResponse> => {
+
+  return customFetch<mgtServiceTxnWagerSummaryResponse>(getMgtServiceTxnWagerSummaryUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      txnWagerListInput,)
   }
 );}
 
