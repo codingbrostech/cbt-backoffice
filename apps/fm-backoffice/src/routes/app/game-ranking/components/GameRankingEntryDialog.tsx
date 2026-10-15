@@ -1,85 +1,85 @@
+import { openGameListQueryOptions } from '@cbt-bo/api/game/queries';
 import type { IGameRankingEntry } from '@cbt-bo/api/game-ranking/queries';
-import SubmitButton from '@cbt-bo/component-lib/components/forms/SubmitButton';
-import TextField from '@cbt-bo/component-lib/components/forms/TextField';
-import TextareaField from '@cbt-bo/component-lib/components/forms/TextareaField';
-import { Button } from '@cbt-bo/component-lib/components/ui/button';
+import type { GameResult } from '@cbt-bo/api-schema/bo/models';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle
 } from '@cbt-bo/component-lib/components/ui/dialog';
-import { FieldGroup } from '@cbt-bo/component-lib/components/ui/field';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { mapValues, objectify, shake } from 'radash';
-import { useForm } from 'react-hook-form';
+import GameRankingEntryForm, {
+  type IGameRankingEntryFormValues
+} from '@cbt-bo/component-lib/forms/GameRankingEntryForm';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { LANGUAGE_OPTIONS } from '#/constants/language-options';
-import type { IGameRankingEntryText } from '#/routes/app/game-ranking/hooks/use-game-ranking-editor';
+import ProviderGameFields from '#/components/forms/ProviderGameFields';
+import { CONTENT_LANGUAGE_OPTIONS } from '#/constants/language-options';
+import { buildGameName } from '#/routes/app/game-ranking/columns';
 
 export interface IGameRankingEntryDialogProps {
   isOpen: boolean;
+  /**
+   * Entry to edit. Absent when adding a new entry.
+   */
   entry?: IGameRankingEntry;
   /**
-   * Rank of `entry`, 1-based, and how many entries the ranking holds. Drive
-   * the position indicator and the step buttons.
+   * Games already in the ranking, which cannot be picked again.
+   */
+  rankedGameIds: readonly string[];
+  /**
+   * 1-based rank of `entry`.
    */
   position: number;
+  /**
+   * Number of entries in the ranking.
+   */
   total: number;
   onOpenChange: (isOpen: boolean) => void;
-  onSubmit: (gameId: string, text: IGameRankingEntryText) => void;
   /**
-   * Moves to the entry `offset` places away, after the current edits are
-   * applied to the draft.
+   * Receives the entry from the form and its 1-based rank.
+   */
+  onSubmit: (entry: IGameRankingEntry, rank: number) => void;
+  /**
+   * Moves `offset` entries away. Called after `onSubmit`.
    */
   onStep: (offset: number) => void;
 }
 
-/**
- * One text per supported locale. The field names nest under `titles` and
- * `descriptions`, which is the shape react-hook-form builds from a dotted
- * field name.
- */
-interface IEntryFormValues {
-  titles: Record<string, string>;
-  descriptions: Record<string, string>;
-}
+const EMPTY_GAMES: GameResult[] = [];
 
-const DESCRIPTION_ROWS = 3;
-
-const buildLocaleTexts = (texts: Record<string, string>): Record<string, string> =>
-  objectify(
-    LANGUAGE_OPTIONS,
-    ({ value }) => value,
-    ({ value }) => texts[value] ?? ''
-  );
-
-const buildFormValues = (entry?: IGameRankingEntry): IEntryFormValues => {
-  const { titles = {}, descriptions = {} } = entry ?? {};
-
-  return { titles: buildLocaleTexts(titles), descriptions: buildLocaleTexts(descriptions) };
-};
-
-const buildFilledTexts = (texts: Record<string, string>): Record<string, string> => {
-  const trimmedTexts = mapValues(texts, text => text.trim());
-
-  return shake(trimmedTexts, text => !text);
-};
-
-const buildText = ({ titles, descriptions }: IEntryFormValues): IGameRankingEntryText => ({
-  titles: buildFilledTexts(titles),
-  descriptions: buildFilledTexts(descriptions)
+const buildFormValues = ({
+  gameId,
+  game,
+  titles,
+  descriptions
+}: IGameRankingEntry): Partial<IGameRankingEntryFormValues> => ({
+  providerCode: game?.providerCode,
+  gameId,
+  titles,
+  descriptions
 });
 
+const buildEntry = (
+  values: IGameRankingEntryFormValues,
+  games: readonly GameResult[],
+  entry?: IGameRankingEntry
+): IGameRankingEntry => {
+  const { gameId, titles, descriptions } = values;
+  const game = entry?.gameId === gameId ? entry.game : games.find(({ id }) => id === gameId);
+
+  return { gameId, game, titles, descriptions };
+};
+
 /**
- * Edits the multi-language title and short description of one ranked game.
- * The change is handed to `onSubmit` and only reaches the API when the page
- * saves the whole ranking.
+ * Adds a ranked entry, or edits the rank, the game, the multi-language title
+ * and the short description of `entry`. The result is handed to `onSubmit`
+ * and only reaches the API when the page saves the whole ranking.
  */
 const GameRankingEntryDialog = ({
   isOpen,
   entry,
+  rankedGameIds,
   position,
   total,
   onOpenChange,
@@ -87,105 +87,73 @@ const GameRankingEntryDialog = ({
   onStep
 }: IGameRankingEntryDialogProps) => {
   const { t } = useTranslation();
-  const form = useForm<IEntryFormValues>({ values: buildFormValues(entry) });
+  const { data: games = EMPTY_GAMES } = useQuery({
+    ...openGameListQueryOptions(),
+    enabled: isOpen
+  });
 
-  const { gameId = '', game } = entry ?? {};
-  const { code = '' } = game ?? {};
-  const isPreviousAvailable = position > 1;
-  const isNextAvailable = position < total;
-
-  const applyEdits = (values: IEntryFormValues) => {
-    onSubmit(gameId, buildText(values));
+  const values = entry && buildFormValues(entry);
+  const title = entry
+    ? t('gameRanking.editEntry', { game: buildGameName(entry) })
+    : t('gameRanking.addGame');
+  const labels = {
+    rank: t('gameRanking.rank'),
+    title: t('gameRanking.title'),
+    description: t('gameRanking.description'),
+    previousGame: t('gameRanking.previousGame'),
+    nextGame: t('gameRanking.nextGame'),
+    position: t('gameRanking.position', { position, total }),
+    cancel: t('common.cancel'),
+    submit: t('common.confirm'),
+    noResults: t('common.noResultFound'),
+    gameRankedError: t('gameRanking.ranked')
   };
 
-  const handleSubmit = (values: IEntryFormValues) => {
-    applyEdits(values);
+  const applyEdits = (formValues: IGameRankingEntryFormValues) => {
+    onSubmit(buildEntry(formValues, games, entry), Number(formValues.rank));
+  };
+
+  const submit = (formValues: IGameRankingEntryFormValues) => {
+    applyEdits(formValues);
     onOpenChange(false);
   };
 
-  const step = (offset: number) => {
-    void form.handleSubmit(values => {
-      applyEdits(values);
-      onStep(offset);
-    })();
+  const step = (formValues: IGameRankingEntryFormValues, offset: number) => {
+    applyEdits(formValues);
+    onStep(offset);
+  };
+
+  const cancel = () => {
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent aria-describedby={undefined}>
+      <DialogContent aria-describedby={undefined} className="grid-cols-[minmax(0,1fr)]">
         <DialogHeader>
-          <DialogTitle className="truncate pr-6">
-            {t('gameRanking.editEntry', { game: code || gameId })}
+          <DialogTitle className="truncate pr-6" title={title}>
+            {title}
           </DialogTitle>
         </DialogHeader>
-        <form
-          noValidate
-          onSubmit={event => {
-            event.stopPropagation();
-            void form.handleSubmit(handleSubmit)(event);
-          }}
-        >
-          <FieldGroup>
-            {LANGUAGE_OPTIONS.map(({ value, label }) => (
-              <TextField
-                key={`titles.${value}`}
-                control={form.control}
-                name={`titles.${value}`}
-                label={t('gameRanking.titleForLanguage', { language: label })}
-                autoComplete="off"
-              />
-            ))}
-            {LANGUAGE_OPTIONS.map(({ value, label }) => (
-              <TextareaField
-                key={`descriptions.${value}`}
-                control={form.control}
-                name={`descriptions.${value}`}
-                label={t('gameRanking.descriptionForLanguage', { language: label })}
-                rows={DESCRIPTION_ROWS}
-              />
-            ))}
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant="muted"
-                size="icon-sm"
-                aria-label={t('gameRanking.previousGame')}
-                disabled={!isPreviousAvailable}
-                onClick={() => {
-                  step(-1);
-                }}
-              >
-                <ChevronLeftIcon />
-              </Button>
-              <span className="min-w-12 text-center text-xs text-muted-foreground tabular-nums">
-                {t('gameRanking.position', { position, total })}
-              </span>
-              <Button
-                type="button"
-                variant="muted"
-                size="icon-sm"
-                aria-label={t('gameRanking.nextGame')}
-                disabled={!isNextAvailable}
-                onClick={() => {
-                  step(1);
-                }}
-              >
-                <ChevronRightIcon />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="ml-auto"
-                onClick={() => {
-                  onOpenChange(false);
-                }}
-              >
-                {t('common.cancel')}
-              </Button>
-              <SubmitButton control={form.control} label={t('common.confirm')} />
-            </div>
-          </FieldGroup>
-        </form>
+        <GameRankingEntryForm
+          labels={labels}
+          languages={CONTENT_LANGUAGE_OPTIONS}
+          gameFields={
+            <ProviderGameFields
+              providerName="providerCode"
+              gameName="gameId"
+              currentGame={entry?.game}
+            />
+          }
+          isEdit={Boolean(entry)}
+          values={values}
+          rankedGameIds={rankedGameIds}
+          position={position}
+          total={total}
+          onSubmit={submit}
+          onStep={step}
+          onCancel={cancel}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -40,6 +40,7 @@
     "confirm": "Confirm",
     "add": "Add",
     "remove": "Remove",
+    "clear": "Clear",
     "dateRange": {
       "label": "Quick range",
       "from": "From",
@@ -165,22 +166,16 @@
   "gameRanking": {
     "rank": "Rank",
     "game": "Game",
-    "gameCode": "Game Code",
-    "gameName": "Game Name",
-    "gameType": "Type",
-    "gameState": "State",
     "providerCode": "Provider",
     "title": "Title",
     "description": "Description",
     "dragToReorder": "Drag to reorder",
     "addGame": "Add Game",
-    "ranked": "Ranked",
+    "ranked": "This game is already in the ranking",
     "editEntry": "Edit {{game}}",
     "previousGame": "Previous game",
     "nextGame": "Next game",
     "position": "{{position}} / {{total}}",
-    "titleForLanguage": "Title ({{language}})",
-    "descriptionForLanguage": "Description ({{language}})",
     "saved": "Ranking saved"
   },
   "state": {
@@ -232,6 +227,7 @@
   "game": {
     "provider": "Provider",
     "game": "Game",
+    "selectProviderFirst": "Select a provider first",
     "baccaratSide": {
       "player": "Player",
       "banker": "Banker",

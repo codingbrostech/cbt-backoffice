@@ -2,17 +2,8 @@ import {
   type IGameRankingEntry,
   gameRankingListQueryOptions
 } from '@cbt-bo/api/game-ranking/queries';
-import type { GameResult } from '@cbt-bo/api-schema/bo/models';
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
-
-/**
- * Multi-language title and short description of one ranked game.
- */
-export interface IGameRankingEntryText {
-  titles: Record<string, string>;
-  descriptions: Record<string, string>;
-}
 
 export interface IUseGameRankingEditorResult {
   entries: IGameRankingEntry[];
@@ -20,9 +11,10 @@ export interface IUseGameRankingEditorResult {
   isFetching: boolean;
   isError: boolean;
   isDirty: boolean;
-  addEntry: (game: GameResult) => void;
-  updateEntry: (gameId: string, text: IGameRankingEntryText) => void;
+  addEntry: (entry: IGameRankingEntry) => void;
+  updateEntry: (gameId: string, entry: IGameRankingEntry) => void;
   removeEntry: (gameId: string) => void;
+  moveEntry: (gameId: string, toIndex: number) => void;
   reorderEntries: (activeGameId: string, overGameId: string) => void;
   reset: () => void;
 }
@@ -76,29 +68,26 @@ export const useGameRankingEditor = (): IUseGameRankingEditorResult => {
   const rankedGameIds = entries.map(({ gameId }) => gameId);
   const isDirty = !isSameOrder(entries, savedEntries);
 
-  const addEntry = useCallback((game: GameResult) => {
-    const { id } = game;
-
-    if (!id) return;
-
-    setEntries(prev =>
-      prev.some(entry => entry.gameId === id)
-        ? prev
-        : [...prev, { gameId: id, titles: {}, descriptions: {}, game }]
-    );
+  const addEntry = useCallback((next: IGameRankingEntry) => {
+    setEntries(prev => (prev.some(entry => entry.gameId === next.gameId) ? prev : [...prev, next]));
   }, []);
 
-  const updateEntry = useCallback(
-    (gameId: string, { titles, descriptions }: IGameRankingEntryText) => {
-      setEntries(prev =>
-        prev.map(entry => (entry.gameId === gameId ? { ...entry, titles, descriptions } : entry))
-      );
-    },
-    []
-  );
+  const updateEntry = useCallback((gameId: string, next: IGameRankingEntry) => {
+    setEntries(prev => prev.map(entry => (entry.gameId === gameId ? next : entry)));
+  }, []);
 
   const removeEntry = useCallback((gameId: string) => {
     setEntries(prev => prev.filter(entry => entry.gameId !== gameId));
+  }, []);
+
+  const moveEntry = useCallback((gameId: string, toIndex: number) => {
+    setEntries(prev =>
+      moveTo(
+        prev,
+        prev.findIndex(entry => entry.gameId === gameId),
+        toIndex
+      )
+    );
   }, []);
 
   const reorderEntries = useCallback((activeGameId: string, overGameId: string) => {
@@ -124,6 +113,7 @@ export const useGameRankingEditor = (): IUseGameRankingEditorResult => {
     addEntry,
     updateEntry,
     removeEntry,
+    moveEntry,
     reorderEntries,
     reset
   };
