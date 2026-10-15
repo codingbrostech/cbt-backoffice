@@ -8,6 +8,8 @@ export { default as SubmitButton } from '@cbt-bo/component-lib/components/forms/
 export type { ISubmitButtonProps } from '@cbt-bo/component-lib/components/forms/SubmitButton';
 export { default as TextField } from '@cbt-bo/component-lib/components/forms/TextField';
 export type { ITextFieldProps } from '@cbt-bo/component-lib/components/forms/TextField';
+export { default as TextareaField } from '@cbt-bo/component-lib/components/forms/TextareaField';
+export type { ITextareaFieldProps } from '@cbt-bo/component-lib/components/forms/TextareaField';
 export { default as SelectField } from '@cbt-bo/component-lib/components/forms/SelectField';
 export type {
   ISelectFieldProps,
