@@ -9,6 +9,8 @@ import type {
   IdInput,
   MgtAcscBindBatchCreateInput,
   MgtAcscBindBatchCreateResult,
+  MgtAcscBindBatchItemListInput,
+  MgtAcscBindBatchItemListResult,
   MgtAcscBindBatchPauseInput,
   MgtAcscBindBatchPauseResult,
   MgtAcscBindBatchResumeInput,
@@ -21,12 +23,17 @@ import type {
   MgtAcscBindCheckResult,
   MgtAcscBindInput,
   MgtAcscBindResult,
+  MgtAcscCapacityResult,
   MgtAcscExclusionCodeListResult,
   MgtAcscExclusionCodeSetInput,
   MgtAcscKycWritebackInput,
   MgtAcscKycWritebackResult,
   MgtAcscPlayerOverviewInput,
   MgtAcscPlayerOverviewResult,
+  MgtAcscRebindCheckInput,
+  MgtAcscRebindCheckResult,
+  MgtAcscRebindInput,
+  MgtAcscRebindResult,
   MgtAcscRegisterFailedListInput,
   MgtAcscRegisterFailedListResult,
   MgtAcscRegisterRetryInput,
@@ -35,6 +42,10 @@ import type {
   MgtAcscRewardAccrualListResult,
   MgtAcscRewardPushLogListInput,
   MgtAcscRewardPushLogListResult,
+  MgtAcscRewardPushLogWagersInput,
+  MgtAcscRewardPushLogWagersResult,
+  MgtAcscRewardWagerTraceInput,
+  MgtAcscRewardWagerTraceResult,
   MgtAcscSnapshotRefreshInput,
   MgtAcscSnapshotRefreshResult,
   MgtAcscSyncConfigResult,
@@ -51,6 +62,42 @@ import type {
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
+
+/**
+ * ACSC 同步容量體檢：目前速率設定 vs 實際 pod/worker 數與實測延遲，算出可達速率與該調什麼（唯讀）
+ */
+export type mgtServiceAcscCapacityResponse200 = {
+  data: MgtAcscCapacityResult
+  status: 200
+}
+
+export type mgtServiceAcscCapacityResponseSuccess = (mgtServiceAcscCapacityResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscCapacityResponse = (mgtServiceAcscCapacityResponseSuccess)
+
+export const getMgtServiceAcscCapacityUrl = () => {
+
+
+
+
+  return `/mgt/v1/acsc/capacity`
+}
+
+export const mgtServiceAcscCapacity = async (noop: Noop, options?: RequestInit): Promise<mgtServiceAcscCapacityResponse> => {
+
+  return customFetch<mgtServiceAcscCapacityResponse>(getMgtServiceAcscCapacityUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      noop,)
+  }
+);}
+
 
 /**
  * ACSC exclusion_code 目錄 + player_label 對照：列出全部（含能力矩陣與對照）
@@ -156,6 +203,78 @@ export const mgtServiceAcscRewardPushLogList = async (mgtAcscRewardPushLogListIn
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       mgtAcscRewardPushLogListInput,)
+  }
+);}
+
+
+/**
+ * 一筆積分推送的注單明細(acsc_reward_push_wager;點開推送看算了哪些注單、當時 RTP/THEO)
+ */
+export type mgtServiceAcscRewardPushLogWagersResponse200 = {
+  data: MgtAcscRewardPushLogWagersResult
+  status: 200
+}
+
+export type mgtServiceAcscRewardPushLogWagersResponseSuccess = (mgtServiceAcscRewardPushLogWagersResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscRewardPushLogWagersResponse = (mgtServiceAcscRewardPushLogWagersResponseSuccess)
+
+export const getMgtServiceAcscRewardPushLogWagersUrl = () => {
+
+
+
+
+  return `/mgt/v1/acsc/reward/pushlog/wagers`
+}
+
+export const mgtServiceAcscRewardPushLogWagers = async (mgtAcscRewardPushLogWagersInput: MgtAcscRewardPushLogWagersInput, options?: RequestInit): Promise<mgtServiceAcscRewardPushLogWagersResponse> => {
+
+  return customFetch<mgtServiceAcscRewardPushLogWagersResponse>(getMgtServiceAcscRewardPushLogWagersUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtAcscRewardPushLogWagersInput,)
+  }
+);}
+
+
+/**
+ * 注單追蹤:這筆注單有沒有算到 Status Point、算在哪筆推送、沒算的原因
+ */
+export type mgtServiceAcscRewardWagerTraceResponse200 = {
+  data: MgtAcscRewardWagerTraceResult
+  status: 200
+}
+
+export type mgtServiceAcscRewardWagerTraceResponseSuccess = (mgtServiceAcscRewardWagerTraceResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscRewardWagerTraceResponse = (mgtServiceAcscRewardWagerTraceResponseSuccess)
+
+export const getMgtServiceAcscRewardWagerTraceUrl = () => {
+
+
+
+
+  return `/mgt/v1/acsc/reward/wager/trace`
+}
+
+export const mgtServiceAcscRewardWagerTrace = async (mgtAcscRewardWagerTraceInput: MgtAcscRewardWagerTraceInput, options?: RequestInit): Promise<mgtServiceAcscRewardWagerTraceResponse> => {
+
+  return customFetch<mgtServiceAcscRewardWagerTraceResponse>(getMgtServiceAcscRewardWagerTraceUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtAcscRewardWagerTraceInput,)
   }
 );}
 
@@ -336,6 +455,42 @@ export const mgtServiceAcscBindBatchCreate = async (mgtAcscBindBatchCreateInput:
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       mgtAcscBindBatchCreateInput,)
+  }
+);}
+
+
+/**
+ * 查批次明細（Status 的下鑽：同一份資料聚合之前的原始列）
+ */
+export type mgtServiceAcscBindBatchItemListResponse200 = {
+  data: MgtAcscBindBatchItemListResult
+  status: 200
+}
+
+export type mgtServiceAcscBindBatchItemListResponseSuccess = (mgtServiceAcscBindBatchItemListResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscBindBatchItemListResponse = (mgtServiceAcscBindBatchItemListResponseSuccess)
+
+export const getMgtServiceAcscBindBatchItemListUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/acsc/bind/batch/item/list`
+}
+
+export const mgtServiceAcscBindBatchItemList = async (mgtAcscBindBatchItemListInput: MgtAcscBindBatchItemListInput, options?: RequestInit): Promise<mgtServiceAcscBindBatchItemListResponse> => {
+
+  return customFetch<mgtServiceAcscBindBatchItemListResponse>(getMgtServiceAcscBindBatchItemListUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtAcscBindBatchItemListInput,)
   }
 );}
 
@@ -588,6 +743,78 @@ export const mgtServiceAcscPlayerOverview = async (mgtAcscPlayerOverviewInput: M
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       mgtAcscPlayerOverviewInput,)
+  }
+);}
+
+
+/**
+ * 執行換綁：同一筆 UPDATE 把 mapping 改指新 patron，全程無「未綁定」空窗（避免登入自動綁回舊 patron）
+ */
+export type mgtServiceAcscRebindResponse200 = {
+  data: MgtAcscRebindResult
+  status: 200
+}
+
+export type mgtServiceAcscRebindResponseSuccess = (mgtServiceAcscRebindResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscRebindResponse = (mgtServiceAcscRebindResponseSuccess)
+
+export const getMgtServiceAcscRebindUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/acsc/rebind`
+}
+
+export const mgtServiceAcscRebind = async (mgtAcscRebindInput: MgtAcscRebindInput, options?: RequestInit): Promise<mgtServiceAcscRebindResponse> => {
+
+  return customFetch<mgtServiceAcscRebindResponse>(getMgtServiceAcscRebindUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtAcscRebindInput,)
+  }
+);}
+
+
+/**
+ * 檢查已綁定玩家能否換綁到另一張既有 ACSC patron（同步探測新 patron；不寫入任何資料）
+ */
+export type mgtServiceAcscRebindCheckResponse200 = {
+  data: MgtAcscRebindCheckResult
+  status: 200
+}
+
+export type mgtServiceAcscRebindCheckResponseSuccess = (mgtServiceAcscRebindCheckResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceAcscRebindCheckResponse = (mgtServiceAcscRebindCheckResponseSuccess)
+
+export const getMgtServiceAcscRebindCheckUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/acsc/rebind/check`
+}
+
+export const mgtServiceAcscRebindCheck = async (mgtAcscRebindCheckInput: MgtAcscRebindCheckInput, options?: RequestInit): Promise<mgtServiceAcscRebindCheckResponse> => {
+
+  return customFetch<mgtServiceAcscRebindCheckResponse>(getMgtServiceAcscRebindCheckUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      mgtAcscRebindCheckInput,)
   }
 );}
 

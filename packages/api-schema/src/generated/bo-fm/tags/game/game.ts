@@ -6,6 +6,10 @@
  * OpenAPI spec version: 1.0.5
  */
 import type {
+  GameBatchUpdateInput,
+  GameBatchUpdateResult,
+  GameFlagInput,
+  GameFlagResult,
   GameHomeInput,
   GameHomeResult,
   GameHomeTabGetInput,
@@ -25,6 +29,42 @@ import type {
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
+
+/**
+ * 遊戲批次更新共用欄位（RTP / type / state / flags）
+ */
+export type mgtServiceGameBatchUpdateResponse200 = {
+  data: GameBatchUpdateResult
+  status: 200
+}
+
+export type mgtServiceGameBatchUpdateResponseSuccess = (mgtServiceGameBatchUpdateResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceGameBatchUpdateResponse = (mgtServiceGameBatchUpdateResponseSuccess)
+
+export const getMgtServiceGameBatchUpdateUrl = () => {
+
+
+
+
+  return `/mgt/v1/game/batch_update`
+}
+
+export const mgtServiceGameBatchUpdate = async (gameBatchUpdateInput: GameBatchUpdateInput, options?: RequestInit): Promise<mgtServiceGameBatchUpdateResponse> => {
+
+  return customFetch<mgtServiceGameBatchUpdateResponse>(getMgtServiceGameBatchUpdateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      gameBatchUpdateInput,)
+  }
+);}
+
 
 /**
  * 遊戲刪除
@@ -58,6 +98,42 @@ export const mgtServiceGameDelete = async (idInput: IdInput, options?: RequestIn
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       idInput,)
+  }
+);}
+
+
+/**
+ * 遊戲 staff 測試旗標（只改 staff_test_only；gameId 與 providerCode 擇一）
+ */
+export type mgtServiceGameFlagResponse200 = {
+  data: GameFlagResult
+  status: 200
+}
+
+export type mgtServiceGameFlagResponseSuccess = (mgtServiceGameFlagResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServiceGameFlagResponse = (mgtServiceGameFlagResponseSuccess)
+
+export const getMgtServiceGameFlagUrl = () => {
+
+
+
+
+  return `/mgt/v1/game/flag`
+}
+
+export const mgtServiceGameFlag = async (gameFlagInput: GameFlagInput, options?: RequestInit): Promise<mgtServiceGameFlagResponse> => {
+
+  return customFetch<mgtServiceGameFlagResponse>(getMgtServiceGameFlagUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      gameFlagInput,)
   }
 );}
 

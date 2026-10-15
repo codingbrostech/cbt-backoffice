@@ -11,11 +11,22 @@ import type {
   PaymentAmountLimitListResult,
   PaymentAmountLimitResult,
   PaymentAmountLimitUpsertInput,
+  PaymentChannelGroup,
+  PaymentChannelGroupDeleteInput,
+  PaymentChannelGroupGetInput,
+  PaymentChannelGroupListInput,
+  PaymentChannelGroupListResult,
+  PaymentChannelGroupUpsertInput,
+  PaymentChannelGroupUpsertResult,
   PaymentEntry,
   PaymentEntryDeleteInput,
   PaymentEntryGetInput,
   PaymentEntryListInput,
   PaymentEntryListResult,
+  PaymentEntryMutateInput,
+  PaymentEntrySyncNowInput,
+  PaymentEntrySyncNowResult,
+  PaymentEntryUpdateLabelsInput,
   PaymentEntryUpsertInput,
   PaymentEntryUpsertResult,
   PaymentProviderListInput,
@@ -98,6 +109,141 @@ export const mgtServicePaymentAmountLimitUpsert = async (paymentAmountLimitUpser
 );}
 
 
+export type mgtServicePaymentChannelGroupDeleteResponse200 = {
+  data: Noop
+  status: 200
+}
+
+export type mgtServicePaymentChannelGroupDeleteResponseSuccess = (mgtServicePaymentChannelGroupDeleteResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentChannelGroupDeleteResponse = (mgtServicePaymentChannelGroupDeleteResponseSuccess)
+
+export const getMgtServicePaymentChannelGroupDeleteUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/channelgroup/delete`
+}
+
+export const mgtServicePaymentChannelGroupDelete = async (paymentChannelGroupDeleteInput: PaymentChannelGroupDeleteInput, options?: RequestInit): Promise<mgtServicePaymentChannelGroupDeleteResponse> => {
+
+  return customFetch<mgtServicePaymentChannelGroupDeleteResponse>(getMgtServicePaymentChannelGroupDeleteUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentChannelGroupDeleteInput,)
+  }
+);}
+
+
+export type mgtServicePaymentChannelGroupGetResponse200 = {
+  data: PaymentChannelGroup
+  status: 200
+}
+
+export type mgtServicePaymentChannelGroupGetResponseSuccess = (mgtServicePaymentChannelGroupGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentChannelGroupGetResponse = (mgtServicePaymentChannelGroupGetResponseSuccess)
+
+export const getMgtServicePaymentChannelGroupGetUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/channelgroup/get`
+}
+
+export const mgtServicePaymentChannelGroupGet = async (paymentChannelGroupGetInput: PaymentChannelGroupGetInput, options?: RequestInit): Promise<mgtServicePaymentChannelGroupGetResponse> => {
+
+  return customFetch<mgtServicePaymentChannelGroupGetResponse>(getMgtServicePaymentChannelGroupGetUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentChannelGroupGetInput,)
+  }
+);}
+
+
+/**
+ * Payment Channel Group（支付通道群組，SO-113）
+ */
+export type mgtServicePaymentChannelGroupListResponse200 = {
+  data: PaymentChannelGroupListResult
+  status: 200
+}
+
+export type mgtServicePaymentChannelGroupListResponseSuccess = (mgtServicePaymentChannelGroupListResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentChannelGroupListResponse = (mgtServicePaymentChannelGroupListResponseSuccess)
+
+export const getMgtServicePaymentChannelGroupListUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/channelgroup/list`
+}
+
+export const mgtServicePaymentChannelGroupList = async (paymentChannelGroupListInput: PaymentChannelGroupListInput, options?: RequestInit): Promise<mgtServicePaymentChannelGroupListResponse> => {
+
+  return customFetch<mgtServicePaymentChannelGroupListResponse>(getMgtServicePaymentChannelGroupListUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentChannelGroupListInput,)
+  }
+);}
+
+
+export type mgtServicePaymentChannelGroupUpsertResponse200 = {
+  data: PaymentChannelGroupUpsertResult
+  status: 200
+}
+
+export type mgtServicePaymentChannelGroupUpsertResponseSuccess = (mgtServicePaymentChannelGroupUpsertResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentChannelGroupUpsertResponse = (mgtServicePaymentChannelGroupUpsertResponseSuccess)
+
+export const getMgtServicePaymentChannelGroupUpsertUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/channelgroup/upsert`
+}
+
+export const mgtServicePaymentChannelGroupUpsert = async (paymentChannelGroupUpsertInput: PaymentChannelGroupUpsertInput, options?: RequestInit): Promise<mgtServicePaymentChannelGroupUpsertResponse> => {
+
+  return customFetch<mgtServicePaymentChannelGroupUpsertResponse>(getMgtServicePaymentChannelGroupUpsertUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentChannelGroupUpsertInput,)
+  }
+);}
+
+
 export type mgtServicePaymentEntryDeleteResponse200 = {
   data: Noop
   status: 200
@@ -164,6 +310,42 @@ export const mgtServicePaymentEntryGet = async (paymentEntryGetInput: PaymentEnt
 );}
 
 
+/**
+ * PaymentEntryUpdateLabels 更新支付入口的可見玩家標籤（SO-117；空 labelIds = All）
+ */
+export type mgtServicePaymentEntryUpdateLabelsResponse200 = {
+  data: Noop
+  status: 200
+}
+
+export type mgtServicePaymentEntryUpdateLabelsResponseSuccess = (mgtServicePaymentEntryUpdateLabelsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentEntryUpdateLabelsResponse = (mgtServicePaymentEntryUpdateLabelsResponseSuccess)
+
+export const getMgtServicePaymentEntryUpdateLabelsUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/entry/labels/update`
+}
+
+export const mgtServicePaymentEntryUpdateLabels = async (paymentEntryUpdateLabelsInput: PaymentEntryUpdateLabelsInput, options?: RequestInit): Promise<mgtServicePaymentEntryUpdateLabelsResponse> => {
+
+  return customFetch<mgtServicePaymentEntryUpdateLabelsResponse>(getMgtServicePaymentEntryUpdateLabelsUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentEntryUpdateLabelsInput,)
+  }
+);}
+
+
 export type mgtServicePaymentEntryListResponse200 = {
   data: PaymentEntryListResult
   status: 200
@@ -193,6 +375,81 @@ export const mgtServicePaymentEntryList = async (paymentEntryListInput: PaymentE
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       paymentEntryListInput,)
+  }
+);}
+
+
+/**
+ * PaymentEntryMutate 批次更新支付入口排序（items 陣列順序 → weight 大到小）。
+ */
+export type mgtServicePaymentEntryMutateResponse200 = {
+  data: PaymentEntryListResult
+  status: 200
+}
+
+export type mgtServicePaymentEntryMutateResponseSuccess = (mgtServicePaymentEntryMutateResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentEntryMutateResponse = (mgtServicePaymentEntryMutateResponseSuccess)
+
+export const getMgtServicePaymentEntryMutateUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/entry/mutate`
+}
+
+export const mgtServicePaymentEntryMutate = async (paymentEntryMutateInput: PaymentEntryMutateInput, options?: RequestInit): Promise<mgtServicePaymentEntryMutateResponse> => {
+
+  return customFetch<mgtServicePaymentEntryMutateResponse>(getMgtServicePaymentEntryMutateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentEntryMutateInput,)
+  }
+);}
+
+
+/**
+ * PaymentEntrySyncNow 立即向 solairepayv2 廠商目錄同步一輪通道清單，不必等 10 分鐘的
+ 排程。與排程共用同一套規則（兩輪遲滯、熔斷、開關只關不開），等同「提前跑一輪」而非
+ 預覽——若某通道上一輪已被記為待下架，本次觸發就會真的把它下架。
+ 另一輪同步進行中時回 ErrInvalidState，稍後重試即可。
+ */
+export type mgtServicePaymentEntrySyncNowResponse200 = {
+  data: PaymentEntrySyncNowResult
+  status: 200
+}
+
+export type mgtServicePaymentEntrySyncNowResponseSuccess = (mgtServicePaymentEntrySyncNowResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePaymentEntrySyncNowResponse = (mgtServicePaymentEntrySyncNowResponseSuccess)
+
+export const getMgtServicePaymentEntrySyncNowUrl = () => {
+
+
+
+
+  return `/mgt/v1/payment/entry/syncnow`
+}
+
+export const mgtServicePaymentEntrySyncNow = async (paymentEntrySyncNowInput: PaymentEntrySyncNowInput, options?: RequestInit): Promise<mgtServicePaymentEntrySyncNowResponse> => {
+
+  return customFetch<mgtServicePaymentEntrySyncNowResponse>(getMgtServicePaymentEntrySyncNowUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      paymentEntrySyncNowInput,)
   }
 );}
 

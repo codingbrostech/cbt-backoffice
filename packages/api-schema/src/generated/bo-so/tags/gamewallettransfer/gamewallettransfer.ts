@@ -11,7 +11,7 @@ import type {
   GameWalletTransferListResult,
   GameWalletTransferResult,
   GameWalletTransferWithdrawInput,
-  Noop
+  GameWalletTransferWithdrawResult
 } from '../../models';
 
 import { customFetch } from '../../../../fetcher';
@@ -116,7 +116,7 @@ export const mgtServiceGameWalletTransferRetry = async (gameWalletTransferInput:
 
 
 export type mgtServiceGameWalletTransferWithdrawResponse200 = {
-  data: Noop
+  data: GameWalletTransferWithdrawResult
   status: 200
 }
 

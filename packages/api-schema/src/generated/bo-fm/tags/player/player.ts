@@ -32,6 +32,7 @@ import type {
   PlayerLabelsByPlayerInput,
   PlayerListInput,
   PlayerListResult,
+  PlayerMarketingAttributionGetResult,
   PlayerMessageSendInput,
   PlayerPointAdjustInput,
   PlayerPointAdjustResult,
@@ -608,6 +609,42 @@ export const mgtServicePlayerList = async (playerListInput: PlayerListInput, opt
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
       playerListInput,)
+  }
+);}
+
+
+/**
+ * 玩家行銷歸因（Player Details - Marketing Attribution；註冊當下快照，資料源 player_utm_event event=signup）
+ */
+export type mgtServicePlayerMarketingAttributionGetResponse200 = {
+  data: PlayerMarketingAttributionGetResult
+  status: 200
+}
+
+export type mgtServicePlayerMarketingAttributionGetResponseSuccess = (mgtServicePlayerMarketingAttributionGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type mgtServicePlayerMarketingAttributionGetResponse = (mgtServicePlayerMarketingAttributionGetResponseSuccess)
+
+export const getMgtServicePlayerMarketingAttributionGetUrl = () => {
+
+
+
+
+  return `/mgt/v1/player/marketingattribution/get`
+}
+
+export const mgtServicePlayerMarketingAttributionGet = async (idInput: IdInput, options?: RequestInit): Promise<mgtServicePlayerMarketingAttributionGetResponse> => {
+
+  return customFetch<mgtServicePlayerMarketingAttributionGetResponse>(getMgtServicePlayerMarketingAttributionGetUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      idInput,)
   }
 );}
 
