@@ -11,6 +11,8 @@ export const PATH = {
   LEDGER_TRANS: '/reports/ledger-trans',
   PAYMENT_TRANSACTION: '/reports/payment-transaction',
   WAGER_STATS: '/reports/wager-stats',
+  TOP_WAGER: '/reports/top-wager',
+  PATRON_BET_HISTORY: '/reports/patron-bet-history',
   ACSC_REWARD_PUSHLOG: '/reports/acsc-reward-pushlog',
   ACSC_TRANSFER: '/reports/acsc-transfer',
   GAMES: '/games',

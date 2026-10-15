@@ -58,19 +58,19 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
           {
             key: 'player-sessions',
             label: t('nav.playerSessions'),
-            pageKey: 'playerSessions',
+            pageKey: 'player-sessions',
             path: PATH.PLAYER_SESSIONS
           },
           {
             key: 'player-mobile-policy',
             label: t('nav.playerMobilePolicy'),
-            pageKey: 'playerMobilePolicy',
+            pageKey: 'player-mobile-policy',
             path: PATH.PLAYER_MOBILE_POLICY
           },
           {
             key: 'player-self-limits',
             label: t('nav.playerSelfLimits'),
-            pageKey: 'playerSelfLimits',
+            pageKey: 'player-self-limits',
             path: PATH.PLAYER_SELF_LIMITS
           }
         ]
@@ -79,14 +79,14 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         key: 'player-labels',
         label: t('nav.playerLabels'),
         icon: <Tag />,
-        pageKey: 'playerLabels',
+        pageKey: 'player-labels',
         path: PATH.PLAYER_LABELS
       },
       {
         key: 'player-groups',
         label: t('nav.playerGroups'),
         icon: <Boxes />,
-        pageKey: 'playerGroups',
+        pageKey: 'player-groups',
         path: PATH.PLAYER_GROUPS
       }
     ]
@@ -106,26 +106,38 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
           {
             key: 'bet-trans',
             label: t('nav.betTrans'),
-            pageKey: 'betTrans',
+            pageKey: 'bet-trans',
             path: PATH.BET_TRANS
           },
           {
             key: 'ledger-trans',
             label: t('nav.ledgerTrans'),
-            pageKey: 'ledgerTrans',
+            pageKey: 'ledger-trans',
             path: PATH.LEDGER_TRANS
           },
           {
             key: 'payment-transaction',
             label: t('nav.paymentTransaction'),
-            pageKey: 'paymentTransaction',
+            pageKey: 'payment-transaction',
             path: PATH.PAYMENT_TRANSACTION
           },
           {
             key: 'wager-stats',
             label: t('nav.wagerStats'),
-            pageKey: 'wagerStats',
+            pageKey: 'wager-stats',
             path: PATH.WAGER_STATS
+          },
+          {
+            key: 'top-wager',
+            label: t('nav.topWager'),
+            pageKey: 'top-wager',
+            path: PATH.TOP_WAGER
+          },
+          {
+            key: 'patron-bet-history',
+            label: t('nav.patronBetHistory'),
+            pageKey: 'patron-bet-history',
+            path: PATH.PATRON_BET_HISTORY
           }
         ]
       },
@@ -138,13 +150,13 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
           {
             key: 'acsc-reward-pushlog',
             label: t('nav.acscRewardPushLogs'),
-            pageKey: 'acscRewardPushLogs',
+            pageKey: 'acsc-reward-pushlog',
             path: PATH.ACSC_REWARD_PUSHLOG
           },
           {
             key: 'acsc-transfer',
             label: t('nav.acscTransfers'),
-            pageKey: 'acscTransfers',
+            pageKey: 'acsc-transfer',
             path: PATH.ACSC_TRANSFER
           }
         ]
@@ -168,14 +180,14 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         key: 'game-categories',
         label: t('nav.gameCategories'),
         icon: <LayoutGrid />,
-        pageKey: 'gameCategories',
+        pageKey: 'game-categories',
         path: PATH.GAME_CATEGORIES
       },
       {
         key: 'game-ranking',
         label: t('nav.gameRanking'),
         icon: <Trophy />,
-        pageKey: 'gameRanking',
+        pageKey: 'game-ranking',
         path: PATH.GAME_RANKING
       }
     ]
@@ -204,49 +216,49 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         key: 'rebate-setting',
         label: t('nav.rebateSetting'),
         icon: <Repeat />,
-        pageKey: 'rebateSetting',
+        pageKey: 'rebate-setting',
         path: PATH.REBATE_SETTING
       },
       {
         key: 'rebate-trans',
         label: t('nav.rebateTrans'),
         icon: <ArrowLeftRight />,
-        pageKey: 'rebateTrans',
+        pageKey: 'rebate-trans',
         path: PATH.REBATE_TRANS
       },
       {
         key: 'rewards-shop',
         label: t('nav.rewardsShop'),
         icon: <ShoppingBag />,
-        pageKey: 'rewardsShop',
+        pageKey: 'xp-shop',
         path: PATH.REWARDS_SHOP
       },
       {
         key: 'rewards-shop-categories',
         label: t('nav.rewardsShopCategories'),
         icon: <LayoutGrid />,
-        pageKey: 'rewardsShopCategories',
+        pageKey: 'xp-shop-categories',
         path: PATH.REWARDS_SHOP_CATEGORIES
       },
       {
         key: 'redemption-history',
         label: t('nav.redemptionHistory'),
         icon: <History />,
-        pageKey: 'redemptionHistory',
+        pageKey: 'xp-shop-history',
         path: PATH.REDEMPTION_HISTORY
       },
       {
         key: 'promos',
         label: t('nav.promos'),
         icon: <Megaphone />,
-        pageKey: 'promos',
+        pageKey: 'promotions',
         path: PATH.PROMOS
       },
       {
         key: 'promotion-transactions',
         label: t('nav.promotionTransactions'),
         icon: <Receipt />,
-        pageKey: 'promotionTransactions',
+        pageKey: 'promotion-transactions',
         path: PATH.PROMOTION_TRANSACTIONS
       },
       {
@@ -279,25 +291,25 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
           {
             key: 'admin-quota-configs',
             label: t('nav.adminQuotaConfigs'),
-            pageKey: 'adminQuotaConfigs',
+            pageKey: 'admin-quota-configs',
             path: PATH.ADMIN_QUOTA_CONFIGS
           },
           {
             key: 'admin-quotas',
             label: t('nav.adminQuotas'),
-            pageKey: 'adminQuotas',
+            pageKey: 'admin-quotas',
             path: PATH.ADMIN_QUOTAS
           },
           {
             key: 'admin-sessions',
             label: t('nav.adminSessions'),
-            pageKey: 'adminSessions',
+            pageKey: 'admin-sessions',
             path: PATH.ADMIN_SESSIONS
           },
           {
             key: 'admin-ops-logs',
             label: t('nav.adminOpsLogs'),
-            pageKey: 'adminOpsLogs',
+            pageKey: 'admin-ops-logs',
             path: PATH.ADMIN_OPS_LOGS
           }
         ]
@@ -317,7 +329,7 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
           {
             key: 'roles-permission',
             label: t('nav.rolesPermission'),
-            pageKey: 'rolesPermission',
+            pageKey: 'roles-permission',
             path: PATH.ROLES_PERMISSION
           }
         ]
@@ -326,7 +338,7 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         key: 'payment-channels',
         label: t('nav.paymentChannels'),
         icon: <CreditCard />,
-        pageKey: 'paymentChannelMgmt',
+        pageKey: 'payment-channels',
         path: PATH.PAYMENT_CHANNELS
       }
     ]

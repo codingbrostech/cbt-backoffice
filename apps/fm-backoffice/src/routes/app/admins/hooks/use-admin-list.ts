@@ -7,6 +7,7 @@ import {
 import type { AdminResult } from '@cbt-bo/api-schema/bo/models';
 import { DEFAULT_PAGE_SIZE, type IListParams } from '@cbt-bo/component-lib/components/table';
 import { useQuery } from '@tanstack/react-query';
+import { isEqual } from 'radash';
 import { useCallback, useState } from 'react';
 
 export interface IUseAdminListResult {
@@ -29,15 +30,26 @@ export const useAdminList = (): IUseAdminListResult => {
   const {
     data: list,
     isFetching,
-    isError
+    isError,
+    refetch
   } = useQuery(adminListQueryOptions(buildAdminListParams(pageParams, filter)));
 
   const { rows = [], total = 0 } = list ?? {};
 
-  const search = useCallback((next: TAdminListFilter) => {
-    setFilter(next);
-    setPageParams(prev => ({ ...prev, page: 1 }));
-  }, []);
+  const search = useCallback(
+    (next: TAdminListFilter) => {
+      const isSameSearch = pageParams.page === 1 && isEqual(next, filter);
+
+      if (isSameSearch) {
+        void refetch();
+        return;
+      }
+
+      setFilter(next);
+      setPageParams(prev => ({ ...prev, page: 1 }));
+    },
+    [filter, pageParams.page, refetch]
+  );
 
   return { filter, pageParams, rows, total, isFetching, isError, search, setPageParams };
 };

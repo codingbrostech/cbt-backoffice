@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { PATH } from '#/constants/path';
 import AppLayout from '#/routes/app/Layout';
 import AdminsPage from '#/routes/app/admins';
+import BetTransPage from '#/routes/app/bet-trans';
 import DashboardPage from '#/routes/app/dashboard';
 import NotFoundPage from '#/routes/app/not-found';
 import PlaceholderPage from '#/routes/app/placeholder';
@@ -16,11 +17,12 @@ const PLACEHOLDER_PATHS = [
   PATH.PLAYER_LABELS,
   PATH.PLAYER_GROUPS,
   PATH.VIP_LEVELS,
-  PATH.BET_TRANS,
   PATH.LEDGER_TRANS,
   PATH.PAYMENT_TRANSACTION,
   PATH.POINT_TRANSACTION,
   PATH.WAGER_STATS,
+  PATH.TOP_WAGER,
+  PATH.PATRON_BET_HISTORY,
   PATH.GAMES,
   PATH.GAME_CATEGORIES,
   PATH.GAME_RANKING,
@@ -56,6 +58,7 @@ const AppRoutes = () => (
     <Route element={<AppLayout />}>
       <Route path={PATH.DASHBOARD} element={<DashboardPage />} />
       <Route path={PATH.ADMINS} element={<AdminsPage />} />
+      <Route path={PATH.BET_TRANS} element={<BetTransPage />} />
       {PLACEHOLDER_PATHS.map(path => (
         <Route key={path} path={path} element={<PlaceholderPage />} />
       ))}

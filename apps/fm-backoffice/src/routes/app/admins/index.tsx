@@ -4,8 +4,9 @@ import { ACTIVATION_STATES } from '@cbt-bo/api/common/constants';
 import type { AdminResult, AdminRoleResult } from '@cbt-bo/api-schema/bo/models';
 import type { ISelectOption } from '@cbt-bo/component-lib/components/forms';
 import { SearchBar } from '@cbt-bo/component-lib/components/search';
-import { DataTable } from '@cbt-bo/component-lib/components/table';
+import { DataTable, type TColumnPinning } from '@cbt-bo/component-lib/components/table';
 import { Button } from '@cbt-bo/component-lib/components/ui/button';
+import { buildOptions } from '@cbt-bo/component-lib/lib/options';
 import { useQuery } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -13,8 +14,8 @@ import { useTranslation } from 'react-i18next';
 
 import { usePagePermission } from '#/hooks/use-page-permission';
 import { useTableLabels } from '#/hooks/use-table-labels';
+import { buildAdminColumns } from '#/routes/app/admins/columns';
 import AdminFormDialog from '#/routes/app/admins/components/AdminFormDialog';
-import { buildAdminColumns } from '#/routes/app/admins/data-type';
 import { useAdminList } from '#/routes/app/admins/hooks/use-admin-list';
 
 const buildRoleOptions = (roles: AdminRoleResult[]): ISelectOption[] =>
@@ -24,6 +25,7 @@ const AdminsPage = () => {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<AdminResult>();
+  const [columnPinning, setColumnPinning] = useState<TColumnPinning>({});
   const { filter, pageParams, rows, total, isFetching, isError, search, setPageParams } =
     useAdminList();
   const { data: roles = [] } = useQuery(adminRoleListQueryOptions());
@@ -31,10 +33,7 @@ const AdminsPage = () => {
   const { isCreateAllowed, isUpdateAllowed } = usePagePermission();
 
   const roleOptions = buildRoleOptions(roles);
-  const stateOptions = ACTIVATION_STATES.map(state => ({
-    value: state,
-    label: t(`state.${state}`)
-  }));
+  const stateOptions = buildOptions(ACTIVATION_STATES, state => t(`state.${state}`));
 
   const openCreate = () => {
     setEditingAdmin(undefined);
@@ -85,6 +84,8 @@ const AdminsPage = () => {
         labels={tableLabels}
         params={pageParams}
         onParamsChange={setPageParams}
+        columnPinning={columnPinning}
+        onColumnPinningChange={setColumnPinning}
         isLoading={isFetching}
         isError={isError}
       >
