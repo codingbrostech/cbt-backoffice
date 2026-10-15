@@ -13,6 +13,8 @@ export const PATH = {
   PAYMENT_TRANSACTION: '/reports/payment-transaction',
   POINT_TRANSACTION: '/reports/point-transaction',
   WAGER_STATS: '/reports/wager-stats',
+  TOP_WAGER: '/reports/top-wager',
+  PATRON_BET_HISTORY: '/reports/patron-bet-history',
   GAMES: '/games/games',
   GAME_CATEGORIES: '/games/categories',
   GAME_RANKING: '/games/ranking',

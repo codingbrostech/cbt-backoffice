@@ -13,6 +13,8 @@
     "scrollTabsRight": "Scroll tabs right",
     "openSidebar": "Open sidebar",
     "closeSidebar": "Close sidebar",
+    "copy": "Copy",
+    "copied": "Copied",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "CST(+8)"
@@ -23,10 +25,45 @@
     },
     "search": "Search",
     "reset": "Reset",
+    "export": "Export",
+    "exportError": {
+      "createFailed": "Create export job failed",
+      "failed": "Export failed",
+      "downloadUrlMissing": "Export completed but download URL is missing",
+      "timedOut": "Export timed out"
+    },
     "cancel": "Cancel",
     "all": "All",
     "action": "Action",
-    "edit": "Edit"
+    "edit": "Edit",
+    "dateRange": {
+      "label": "Quick range",
+      "from": "From",
+      "to": "To",
+      "clear": "Clear",
+      "confirm": "Confirm",
+      "previousYear": "Previous year",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "nextYear": "Next year",
+      "hour": "Hour",
+      "minute": "Minute",
+      "quick": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "thisWeek": "This week",
+        "lastWeek": "Last week",
+        "thisMonth": "This month",
+        "lastMonth": "Last month",
+        "custom": "Custom"
+      }
+    },
+    "nothingFound": "Nothing found",
+    "view": "View",
+    "viewOption": {
+      "simple": "Simple",
+      "detail": "Detail"
+    }
   },
   "login": {
     "title": "Backoffice",
@@ -70,6 +107,8 @@
     "ledgerTrans": "Ledger Trans",
     "paymentTransaction": "Payment Transaction",
     "wagerStats": "Wager Stats",
+    "topWager": "Top Wager",
+    "patronBetHistory": "Player Bet History",
     "acsc": "ACSC",
     "acscRewardPushLogs": "Status Points Trans",
     "acscTransfers": "ACSC Transfer",
@@ -158,5 +197,85 @@
     "noPin": "No Pin",
     "pinLeft": "Pin Left",
     "pinRight": "Pin Right"
+  },
+  "player": {
+    "playerId": "Player ID",
+    "patronNumber": "Patron ID",
+    "mobile": "Mobile No.",
+    "playerCode": "Player Nickname",
+    "playerType": "Player Type"
+  },
+  "game": {
+    "provider": "Provider",
+    "game": "Game",
+    "searchPlaceholder": "Search by name or ID",
+    "baccaratSide": {
+      "player": "Player",
+      "banker": "Banker",
+      "tie": "Tie"
+    }
+  },
+  "betTrans": {
+    "player": "Player",
+    "game": "Game Provider",
+    "gameName": "Game Name",
+    "gameId": "Provider Game ID",
+    "gameGpId": "Provider ID",
+    "gameGenre": "Game Type",
+    "gameType": "Game Type",
+    "extRoundId": "Round ID",
+    "transaction": "Transaction",
+    "id": "Txn ID",
+    "extTxnId": "Ext Txn ID",
+    "txnType": "Txn Type",
+    "currencyId": "Currency",
+    "gameResult": "Game Result",
+    "other": "Other",
+    "betCode": "Bet Code",
+    "sessionId": "Session ID",
+    "betRemark": "Bet Remark",
+    "amount": "Amount",
+    "betAmt": "Bet",
+    "betAdjAmt": "Valid Bet",
+    "betRetAmt": "Win/Loss",
+    "payout": "Payout",
+    "state": "State",
+    "betState": "Bet State",
+    "betResult": "Result",
+    "time": "Time",
+    "betTime": "Bet Time",
+    "settleTime": "Settle Time",
+    "betStateOption": {
+      "normal": "Unsettled",
+      "result": "Settled",
+      "cancel": "Cancelled",
+      "error": "Error"
+    },
+    "betResultOption": {
+      "win": "Win",
+      "lose": "Lose",
+      "tie": "Tie"
+    },
+    "txnTypeOption": {
+      "bet": "Bet",
+      "free_bet": "Free Bet",
+      "tip": "Tip"
+    },
+    "summary": {
+      "totalBetAmt": "Total Bet Amount",
+      "totalBetAmtTooltip": "Sum of bet amounts for all matching transactions.",
+      "totalPayoutAmt": "Total Payout Amount",
+      "totalPayoutAmtTooltip": "Sum of payout amounts for all matching transactions (Bet Amount + W/L Amount).",
+      "totalWl": "Total W/L (GGR)",
+      "totalWlTooltip": "Total Bet Amount minus Total Payout Amount. Positive means house win.",
+      "total": "Total Transactions",
+      "totalTooltip": "Total number of matching transactions.",
+      "winCount": "Win Count",
+      "winCountTooltip": "Number of settled bets where the player won (W/L Amount > 0).",
+      "lossCount": "Loss Count",
+      "lossCountTooltip": "Number of settled bets where the player lost (W/L Amount < 0).",
+      "tieCount": "Tie Count",
+      "tieCountTooltip": "Number of settled bets with no win or loss (W/L Amount = 0)."
+    }
   }
 }

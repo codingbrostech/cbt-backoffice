@@ -13,6 +13,8 @@
     "scrollTabsRight": "向右捲動分頁",
     "openSidebar": "開啟側邊欄",
     "closeSidebar": "關閉側邊欄",
+    "copy": "複製",
+    "copied": "已複製",
     "timezone": {
       "utc0": "UTC+0",
       "utc8": "亞洲時區(+8)"
@@ -23,10 +25,45 @@
     },
     "search": "搜尋",
     "reset": "重設",
+    "export": "匯出",
+    "exportError": {
+      "createFailed": "建立匯出任務失敗",
+      "failed": "匯出失敗",
+      "downloadUrlMissing": "匯出已完成，但下載連結不存在",
+      "timedOut": "匯出逾時"
+    },
     "cancel": "取消",
     "all": "全部",
     "action": "操作",
-    "edit": "編輯"
+    "edit": "編輯",
+    "dateRange": {
+      "label": "快捷范围",
+      "from": "开始",
+      "to": "结束",
+      "clear": "清除",
+      "confirm": "确定",
+      "previousYear": "上一年",
+      "previousMonth": "上个月",
+      "nextMonth": "下个月",
+      "nextYear": "下一年",
+      "hour": "时",
+      "minute": "分",
+      "quick": {
+        "today": "今天",
+        "yesterday": "昨天",
+        "thisWeek": "本周",
+        "lastWeek": "上周",
+        "thisMonth": "本月",
+        "lastMonth": "上月",
+        "custom": "自定义"
+      }
+    },
+    "nothingFound": "查無資料",
+    "view": "檢視",
+    "viewOption": {
+      "simple": "簡易",
+      "detail": "詳細"
+    }
   },
   "login": {
     "title": "後台",
@@ -70,6 +107,8 @@
     "ledgerTrans": "帳戶交易",
     "paymentTransaction": "支付記錄",
     "wagerStats": "投注統計",
+    "topWager": "最高投注",
+    "patronBetHistory": "玩家投注明細",
     "acsc": "ACSC",
     "acscRewardPushLogs": "積分回饋交易",
     "acscTransfers": "ACSC 轉帳交易",
@@ -158,5 +197,85 @@
     "noPin": "不固定",
     "pinLeft": "固定在左側",
     "pinRight": "固定在右側"
+  },
+  "player": {
+    "playerId": "玩家 ID",
+    "patronNumber": "Patron 號碼",
+    "mobile": "手機號碼",
+    "playerCode": "玩家暱稱",
+    "playerType": "玩家類型"
+  },
+  "game": {
+    "provider": "遊戲廠商",
+    "game": "遊戲",
+    "searchPlaceholder": "輸入名稱或編號搜尋",
+    "baccaratSide": {
+      "player": "閒",
+      "banker": "莊",
+      "tie": "和"
+    }
+  },
+  "betTrans": {
+    "player": "玩家",
+    "game": "遊戲廠商",
+    "gameName": "遊戲名稱",
+    "gameId": "廠商遊戲編號",
+    "gameGpId": "廠商編號",
+    "gameGenre": "遊戲類型",
+    "gameType": "遊戲類型",
+    "extRoundId": "局號",
+    "transaction": "交易",
+    "id": "交易編號",
+    "extTxnId": "外部交易編號",
+    "txnType": "交易類型",
+    "currencyId": "幣別",
+    "gameResult": "遊戲結果",
+    "other": "其他",
+    "betCode": "投注代碼",
+    "sessionId": "登入時段編號",
+    "betRemark": "投注備註",
+    "amount": "金額",
+    "betAmt": "下注金額",
+    "betAdjAmt": "有效投注",
+    "betRetAmt": "輸贏",
+    "payout": "派彩",
+    "state": "狀態",
+    "betState": "投注狀態",
+    "betResult": "結果",
+    "time": "時間",
+    "betTime": "投注時間",
+    "settleTime": "派彩時間",
+    "betStateOption": {
+      "normal": "未結算",
+      "result": "已結算",
+      "cancel": "取消",
+      "error": "錯誤"
+    },
+    "betResultOption": {
+      "win": "贏",
+      "lose": "輸",
+      "tie": "和"
+    },
+    "txnTypeOption": {
+      "bet": "下注",
+      "free_bet": "免費下注",
+      "tip": "打賞"
+    },
+    "summary": {
+      "totalBetAmt": "總投注金額",
+      "totalBetAmtTooltip": "符合條件的所有交易投注金額總和。",
+      "totalPayoutAmt": "總派彩金額",
+      "totalPayoutAmtTooltip": "符合條件的所有交易派彩金額總和（投注金額 + 輸贏金額）。",
+      "totalWl": "總輸贏 (GGR)",
+      "totalWlTooltip": "總投注金額減去總派彩金額，正值代表莊家贏。",
+      "total": "總交易筆數",
+      "totalTooltip": "符合條件的交易總筆數。",
+      "winCount": "贏注數",
+      "winCountTooltip": "已結算且玩家贏的注單數（輸贏金額 > 0）。",
+      "lossCount": "輸注數",
+      "lossCountTooltip": "已結算且玩家輸的注單數（輸贏金額 < 0）。",
+      "tieCount": "和局數",
+      "tieCountTooltip": "已結算且無輸贏的注單數（輸贏金額 = 0）。"
+    }
   }
 }
