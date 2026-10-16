@@ -19,6 +19,7 @@ import {
   Settings,
   ShoppingBag,
   Spade,
+  Store,
   Tag,
   TrendingUp,
   Trophy,
@@ -182,6 +183,13 @@ export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
         icon: <Trophy />,
         pageKey: 'game-ranking',
         path: PATH.GAME_RANKING
+      },
+      {
+        key: 'game-providers',
+        label: t('nav.gameProviders'),
+        icon: <Store />,
+        pageKey: 'game-providers',
+        path: PATH.GAME_PROVIDERS
       }
     ]
   },

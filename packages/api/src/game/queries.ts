@@ -1,10 +1,10 @@
-import type { GameListInput, GameResult } from '@cbt-bo/api-schema/bo/models';
-import { keepPreviousData, queryOptions } from '@tanstack/react-query';
+import type { GameFlagInput, GameListInput, GameResult } from '@cbt-bo/api-schema/bo/models';
+import { keepPreviousData, mutationOptions, queryOptions } from '@tanstack/react-query';
 import { objectify, shake } from 'radash';
 
 import { ALL_ROWS_PAGE_SIZE } from '@cbt-bo/api/common/constants';
 import { withIsLike } from '@cbt-bo/api/filter/with-is-like';
-import { getGameTypes, getGames } from '@cbt-bo/api/game/actions';
+import { getGameTypes, getGames, updateGameFlag } from '@cbt-bo/api/game/actions';
 
 /**
  * Page and filters of `/mgt/v1/game/list`.
@@ -45,6 +45,8 @@ export const openGameListQueryKey = () => [...GAME_QUERY_KEY, 'open-list'] as co
 
 export const gameListQueryKey = (params: IGameListParams) =>
   [...GAME_QUERY_KEY, 'list', params] as const;
+
+export const updateGameFlagMutationKey = () => [...GAME_QUERY_KEY, 'flag'] as const;
 
 const isBlank = (value: unknown): boolean => !value;
 
@@ -132,4 +134,15 @@ export const gameListQueryOptions = (params: IGameListParams) =>
     queryKey: gameListQueryKey(params),
     queryFn: () => fetchGameList(params),
     placeholderData: keepPreviousData
+  });
+
+/**
+ * Sets `staffTestOnly` through `/mgt/v1/game/flag`. The input targets either
+ * one game through `gameId` or every game of a provider through
+ * `providerCode`, and the result reports how many games changed.
+ */
+export const updateGameFlagMutationOptions = () =>
+  mutationOptions({
+    mutationKey: updateGameFlagMutationKey(),
+    mutationFn: (input: GameFlagInput) => updateGameFlag(input)
   });

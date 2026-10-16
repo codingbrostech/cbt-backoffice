@@ -18,6 +18,7 @@ export const PATH = {
   GAMES: '/games/games',
   GAME_CATEGORIES: '/games/categories',
   GAME_RANKING: '/games/ranking',
+  GAME_PROVIDERS: '/games/providers',
   BANNERS: '/promotions/banners',
   BONUSES: '/promotions/bonuses',
   REBATE_SETTING: '/promotions/rebate-setting',

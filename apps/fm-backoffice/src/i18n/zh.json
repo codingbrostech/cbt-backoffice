@@ -34,6 +34,8 @@
     },
     "cancel": "取消",
     "all": "全部",
+    "yes": "是",
+    "no": "否",
     "action": "操作",
     "edit": "編輯",
     "save": "儲存",
@@ -120,6 +122,7 @@
     "games": "遊戲",
     "gameCategories": "遊戲分類",
     "gameRanking": "遊戲排行榜",
+    "gameProviders": "遊戲商",
     "promotion": "推廣",
     "banners": "橫幅",
     "bonuses": "獎勵",
@@ -179,6 +182,28 @@
     "saved": "榜單已儲存",
     "unsavedHint": "有未儲存的變更，按儲存會覆蓋整個榜單。",
     "apply": "套用"
+  },
+  "gameProviders": {
+    "code": "遊戲商代碼",
+    "name": "遊戲商名稱",
+    "state": "狀態",
+    "isTest": "測試用",
+    "endpointCurrency": "端點幣別",
+    "staffTestOnly": {
+      "title": "僅限內部測試",
+      "description": "將此遊戲商底下所有遊戲設為僅限內部測試。設定後只有內部人員帳號看得到也玩得到這些遊戲。",
+      "provider": "遊戲商",
+      "setStaffOnly": "全部設為僅限內部",
+      "openToPublic": "全部開放給玩家",
+      "confirm": "「{{action}}」會影響遊戲商 {{provider}} 底下所有遊戲，確定要繼續嗎？",
+      "changed": "已變更 {{count}} 款遊戲",
+      "noChange": "沒有遊戲需要變更，都已經是目標值"
+    },
+    "retryLogout": {
+      "title": "補送登出",
+      "confirm": "要補送遊戲商 {{provider}} 失敗的登出 callback 嗎？",
+      "triggered": "已觸發補送登出"
+    }
   },
   "state": {
     "active": "活躍",
