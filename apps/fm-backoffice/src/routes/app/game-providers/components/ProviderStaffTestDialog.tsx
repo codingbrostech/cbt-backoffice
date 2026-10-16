@@ -9,16 +9,12 @@ import {
   DialogTitle
 } from '@cbt-bo/component-lib/components/ui/dialog';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { useUpdateProviderStaffTest } from '#/routes/app/game-providers/hooks/use-update-provider-staff-test';
 
 export interface IProviderStaffTestDialogProps {
   isOpen: boolean;
-  /**
-   * The provider whose games are flagged. The dialog renders nothing while
-   * it is absent.
-   */
   provider?: GameProviderResult;
   onOpenChange: (isOpen: boolean) => void;
 }
@@ -68,18 +64,25 @@ const ProviderStaffTestDialog = ({
         <DialogHeader>
           <DialogTitle>{t('gameProviders.staffTestOnly.title')}</DialogTitle>
           <DialogDescription>
-            {isConfirming
-              ? t('gameProviders.staffTestOnly.confirm', {
-                  action: actionLabel,
-                  provider: providerLabel
-                })
-              : t('gameProviders.staffTestOnly.description')}
+            {isConfirming ? (
+              <Trans
+                i18nKey="gameProviders.staffTestOnly.confirm"
+                values={{ action: actionLabel, provider: providerLabel }}
+                components={{ strong: <strong className="text-foreground" /> }}
+              />
+            ) : (
+              t('gameProviders.staffTestOnly.description')
+            )}
           </DialogDescription>
         </DialogHeader>
-        <p className="text-sm">
-          <span className="text-muted-foreground">{t('gameProviders.staffTestOnly.provider')}</span>{' '}
-          <span className="font-medium">{providerLabel}</span>
-        </p>
+        {!isConfirming && (
+          <p className="text-sm">
+            <span className="text-muted-foreground">
+              {t('gameProviders.staffTestOnly.provider')}:
+            </span>{' '}
+            <span className="font-medium">{providerLabel}</span>
+          </p>
+        )}
         <DialogFooter>
           {isConfirming ? (
             <>

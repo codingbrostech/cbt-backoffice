@@ -195,7 +195,7 @@
       "provider": "Provider",
       "setStaffOnly": "Set All to Staff Only",
       "openToPublic": "Open All to Public",
-      "confirm": "\"{{action}}\" will affect all games under provider {{provider}}. Continue?",
+      "confirm": "\"{{action}}\" will affect all games under provider <strong>{{provider}}</strong>. Continue?",
       "changed": "Changed {{count}} games",
       "noChange": "No games needed changing, they are already at the target value"
     },

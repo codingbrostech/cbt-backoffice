@@ -1,11 +1,17 @@
 import type { GameProviderResult } from '@cbt-bo/api-schema/bo/models';
 import { IconButton } from '@cbt-bo/component-lib/components/button';
 import type { IDataTableColumn } from '@cbt-bo/component-lib/components/table';
+import { Badge, type TBadgeVariant } from '@cbt-bo/component-lib/components/ui/badge';
 import type { TFunction } from 'i18next';
 import { FlaskConicalIcon, RotateCcwIcon } from 'lucide-react';
 
 const EMPTY_VALUE = '-';
 const ACTION_COLUMN_WIDTH_PX = 96;
+
+const STATE_BADGE_VARIANTS: Readonly<Record<string, TBadgeVariant>> = {
+  active: 'success',
+  inactive: 'muted'
+} as const;
 
 /**
  * The only provider whose logout callbacks the MGT API can replay.
@@ -20,9 +26,11 @@ export interface IGameProviderColumnActions {
 
 /**
  * Columns of the game providers list, labelled through `t`. A blank value
- * renders as EMPTY_VALUE, `state` translates through `state.<value>` with the
- * raw value as the fallback, and the last column holds the row actions. The
- * logout retry action is offered for RETRY_LOGOUT_PROVIDER_CODE alone.
+ * renders as EMPTY_VALUE. `state` renders as a badge toned by
+ * STATE_BADGE_VARIANTS and translates through `state.<value>` with the raw
+ * value as the fallback, `isTest` renders as a yes/no badge, and the last
+ * column holds the row actions. The logout retry action is offered for
+ * RETRY_LOGOUT_PROVIDER_CODE alone.
  */
 export const buildGameProviderColumns = (
   t: TFunction,
@@ -38,12 +46,21 @@ export const buildGameProviderColumns = (
   {
     key: 'state',
     title: t('gameProviders.state'),
-    render: ({ state }) => (state ? t(`state.${state}`, { defaultValue: state }) : EMPTY_VALUE)
+    render: ({ state }) =>
+      state ? (
+        <Badge variant={STATE_BADGE_VARIANTS[state] ?? 'muted'}>
+          {t(`state.${state}`, { defaultValue: state })}
+        </Badge>
+      ) : (
+        EMPTY_VALUE
+      )
   },
   {
     key: 'isTest',
     title: t('gameProviders.isTest'),
-    render: ({ isTest }) => t(`common.${isTest ? 'yes' : 'no'}`)
+    render: ({ isTest }) => (
+      <Badge variant={isTest ? 'warning' : 'muted'}>{t(`common.${isTest ? 'yes' : 'no'}`)}</Badge>
+    )
   },
   {
     key: 'endpointCurrency',

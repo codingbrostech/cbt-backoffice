@@ -195,7 +195,7 @@
       "provider": "遊戲商",
       "setStaffOnly": "全部設為僅限內部",
       "openToPublic": "全部開放給玩家",
-      "confirm": "「{{action}}」會影響遊戲商 {{provider}} 底下所有遊戲，確定要繼續嗎？",
+      "confirm": "「{{action}}」會影響遊戲商 <strong>{{provider}}</strong> 底下所有遊戲，確定要繼續嗎？",
       "changed": "已變更 {{count}} 款遊戲",
       "noChange": "沒有遊戲需要變更，都已經是目標值"
     },
