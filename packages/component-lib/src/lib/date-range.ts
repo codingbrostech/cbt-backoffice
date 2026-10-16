@@ -24,7 +24,9 @@ export type TQuickRange = (typeof QUICK_RANGES)[number];
  * Longest span in months a range may cover, and the length of the custom
  * range's starting window.
  */
-export const RANGE_MAX_MONTHS = 1;
+export const TIME_RANGE_MAX_ONE_MONTHS = 1;
+
+export const TIME_RANGE_MAX_THREE_MONTHS = 3;
 
 export const DAY_START_TIME = '00:00';
 export const DAY_END_TIME = '23:59';

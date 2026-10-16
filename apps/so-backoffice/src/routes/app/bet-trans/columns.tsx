@@ -3,7 +3,6 @@ import { BaccaratCards } from '@cbt-bo/component-lib/components/game';
 import { buildOffsetDateLabel } from '@cbt-bo/component-lib/components/header/TimezoneClock/utils';
 import {
   CellPairs,
-  CopyableValue,
   ETableView,
   type IDataTableColumn
 } from '@cbt-bo/component-lib/components/table';
@@ -11,6 +10,8 @@ import { formatMinorAmount } from '@cbt-bo/component-lib/lib/format';
 import { cn } from '@cbt-bo/component-lib/lib/utils';
 import type { TFunction } from 'i18next';
 import { sift } from 'radash';
+
+import { buildCopyableValue } from '#/components/table/cells';
 
 const BADGE_TONES: Readonly<Record<string, string>> = {
   normal: 'bg-amber-500/10 text-amber-700 dark:text-amber-400',
@@ -29,21 +30,12 @@ const buildBadge = (t: TFunction, group: 'betState' | 'betResult', value?: strin
   value ? (
     <span
       className={cn(
-        'inline-block rounded-sm px-1.5 py-0.5 text-sm font-medium',
+        'inline-block rounded-full px-2.5 py-0.5 text-sm font-medium',
         BADGE_TONES[value]
       )}
     >
       {t(`betTrans.${group}Option.${value}`, { defaultValue: value })}
     </span>
-  ) : undefined;
-
-const buildCopyableValue = (t: TFunction, value?: string, isShortened = false) =>
-  value ? (
-    <CopyableValue
-      value={value}
-      labels={{ copy: t('common.copy'), copied: t('common.copied') }}
-      isShortened={isShortened}
-    />
   ) : undefined;
 
 const buildBetTransDetailColumns = (t: TFunction): IDataTableColumn<TxnWagerResult>[] => {

@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import GameRankingEntryForm, {
   type IGameRankingEntryFormLabels,
   type IGameRankingEntryFormProps
-} from './GameRankingEntryForm';
+} from '@cbt-bo/component-lib/forms/GameRankingEntryForm';
 
 const LABELS = {
   rank: 'Rank',

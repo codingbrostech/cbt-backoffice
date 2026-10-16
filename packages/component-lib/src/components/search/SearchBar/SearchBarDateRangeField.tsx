@@ -10,7 +10,7 @@ import { Field, FieldLabel } from '@cbt-bo/component-lib/components/ui/field';
 import {
   type IDateTimeRange,
   QUICK_RANGES,
-  RANGE_MAX_MONTHS,
+  TIME_RANGE_MAX_ONE_MONTHS,
   type TQuickRange,
   buildCalendarDate,
   buildCustomRange,
@@ -53,7 +53,7 @@ export interface ISearchBarDateRangeFieldProps {
   quickRanges?: readonly TQuickRange[];
   /**
    * Longest span in months a picked range may cover, and the length of the
-   * custom button's starting window. Defaults to RANGE_MAX_MONTHS.
+   * custom button's starting window. Defaults to TIME_RANGE_MAX_ONE_MONTHS.
    */
   maxMonths?: number;
   className?: string;
@@ -82,7 +82,7 @@ const SearchBarDateRangeField = ({
   timezoneMinutes,
   labels,
   quickRanges = QUICK_RANGES,
-  maxMonths = RANGE_MAX_MONTHS,
+  maxMonths = TIME_RANGE_MAX_ONE_MONTHS,
   className
 }: ISearchBarDateRangeFieldProps) => {
   const id = useId();

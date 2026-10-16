@@ -146,10 +146,6 @@ const buildSubmittedValues = ({
   descriptions: buildFilledTexts(descriptions)
 });
 
-/**
- * Add or edit form for one game ranking entry. It holds the rank, the game
- * picked through `gameFields`, and a title plus description per language.
- */
 const GameRankingEntryForm = ({
   labels,
   languages,

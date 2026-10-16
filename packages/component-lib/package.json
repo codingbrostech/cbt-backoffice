@@ -7,7 +7,7 @@
     "./lib/*": "./src/lib/*.ts",
     "./hooks/*": "./src/hooks/*.ts",
     "./components/*": "./src/components/*.tsx",
-    "./forms/*": "./src/forms/*.tsx"
+    "./forms/*": "./src/forms/*/index.tsx"
   },
   "scripts": {
     "storybook": "storybook dev -p 6008",

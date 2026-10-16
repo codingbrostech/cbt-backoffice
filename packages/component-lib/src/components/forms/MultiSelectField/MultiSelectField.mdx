@@ -1,0 +1,44 @@
+import { Controls, Meta, Stories, Story, Title } from '@storybook/addon-docs/blocks';
+
+import * as MultiSelectFieldStories from './MultiSelectField.stories';
+
+<Meta of={MultiSelectFieldStories} />
+
+<Title />
+
+**MultiSelectField** is a searchable multi-value select bound to a react-hook-form field that holds a string array. It calls `useController` with the given `control` and `name`, so the picked values and the change and blur handlers all come from the form. The label sits above the box and is linked to its search input through `name`, which doubles as the input id. While nothing is picked the input shows `placeholder`, and while the field carries an error the box turns invalid and the message renders below it.
+
+Each picked value shows as a chip before the search input, with a remove button named `removeLabel` followed by the value's label. The box stays one line high. The last shown chip shrinks and truncates to fill the line, and chips that do not fit beside the search input fold into a badge, `+3` by default or whatever `formatHiddenCount` returns for their count, with the badge's tooltip listing their labels. The box re-measures whenever it is resized or the chips change. `maxChips` caps how many chips show whatever the room, for a filter that should stay compact. Clicking anywhere in the box opens the list, and typing narrows the options by label. Clicking the label only focuses the input and leaves the list closed. The arrow keys move through the list, Enter toggles the highlighted option, Backspace in an empty input removes the last chip, and Escape or leaving the field closes the list. Picking an option keeps the list open and clears the search, so several values can be picked in a row. The list renders at most `SELECT_OPTION_LIMIT` options at once, so a narrower search reaches the rest. `noResultsLabel` is the text the list shows when the search matches nothing. Without it the list hides instead.
+
+`clearLabel` names a clear button that takes the chevron's place while values are picked and empties them all at once. `options` is a list of `{ value, label }` pairs, rendered in the given order. A picked value with no option shows its raw value as the chip label. `size` picks the box height, `default` or `sm`, so the field can sit beside the compact inputs of a filter bar. The component carries no validation of its own. Rules and messages belong to the form's resolver.
+
+## Usage
+
+```tsx
+import { useForm } from 'react-hook-form';
+
+import { MultiSelectField } from '@cbt-bo/component-lib/components/forms';
+
+const form = useForm<TPlayerFormValues>({ defaultValues: { labelIds: [] } });
+
+<MultiSelectField
+  control={form.control}
+  name="labelIds"
+  label={labels.labels}
+  options={labelOptions}
+  removeLabel={labels.remove}
+  clearLabel={labels.clear}
+  noResultsLabel={labels.noResults}
+  formatHiddenCount={count => t('common.more', { count })}
+/>;
+```
+
+## Stories
+
+Each story creates its own form. `value` seeds the bound field, and `errorMessage`, when set, is written to the field with `setError`, so the invalid rendering shows without a resolver.
+
+<Story of={MultiSelectFieldStories.Default} />
+
+<Controls of={MultiSelectFieldStories.Default} />
+
+<Stories includePrimary={false} />

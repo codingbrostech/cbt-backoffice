@@ -161,7 +161,9 @@ const DataTableGrid = ({ className }: IDataTableGridProps) => {
     });
 
   return (
-    <div className={cn('relative flex flex-col', !isPageScroll && 'min-h-0 flex-1', className)}>
+    <div
+      className={cn('relative flex flex-col', isPageScroll ? 'grow' : 'min-h-0 flex-1', className)}
+    >
       {isLoading && (
         <div
           aria-busy="true"

@@ -207,7 +207,7 @@ const SelectField = <
           </PopoverAnchor>
           <PopoverContent
             align="start"
-            className="w-(--radix-popover-trigger-width) min-w-64 p-1"
+            className="w-max max-w-(--radix-popover-content-available-width) min-w-(--radix-popover-trigger-width) p-1"
             onOpenAutoFocus={event => {
               event.preventDefault();
             }}

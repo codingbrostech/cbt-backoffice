@@ -2,6 +2,8 @@ export { default as CheckboxField } from '@cbt-bo/component-lib/components/forms
 export type { ICheckboxFieldProps } from '@cbt-bo/component-lib/components/forms/CheckboxField';
 export { default as FieldClearButton } from '@cbt-bo/component-lib/components/forms/FieldClearButton';
 export type { IFieldClearButtonProps } from '@cbt-bo/component-lib/components/forms/FieldClearButton';
+export { default as MultiSelectField } from '@cbt-bo/component-lib/components/forms/MultiSelectField';
+export type { IMultiSelectFieldProps } from '@cbt-bo/component-lib/components/forms/MultiSelectField';
 export { default as LanguageTabs } from '@cbt-bo/component-lib/components/forms/LanguageTabs';
 export type {
   ILanguageTab,

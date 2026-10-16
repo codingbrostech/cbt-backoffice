@@ -2,6 +2,7 @@ import SearchBarActions from '@cbt-bo/component-lib/components/search/SearchBar/
 import SearchBarDateRangeField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarDateRangeField';
 import SearchBarFields from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarFields';
 import SearchBarHeader from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarHeader';
+import SearchBarMultiSelectField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarMultiSelectField';
 import SearchBarRoot from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarRoot';
 import SearchBarSelectField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarSelectField';
 import SearchBarTextField from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarTextField';
@@ -14,6 +15,10 @@ export type {
 } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarDateRangeField';
 export type { ISearchBarFieldsProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarFields';
 export type { ISearchBarHeaderProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarHeader';
+export type {
+  ISearchBarMultiSelectFieldProps,
+  TSearchBarFieldSpan
+} from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarMultiSelectField';
 export type { ISearchBarRootProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarRoot';
 export type { ISearchBarSelectFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarSelectField';
 export type { ISearchBarTextFieldProps } from '@cbt-bo/component-lib/components/search/SearchBar/SearchBarTextField';
@@ -35,6 +40,7 @@ export type {
  *   <SearchBar.Fields>
  *     <SearchBar.TextField name="code" label="Login" />
  *     <SearchBar.SelectField name="state" label="State" options={states} allLabel="All" />
+ *     <SearchBar.MultiSelectField name="labelIds" label="Labels" options={labels} removeLabel="Remove" />
  *     <SearchBar.Actions resetLabel="Reset" submitLabel="Search" />
  *   </SearchBar.Fields>
  * </SearchBar.Root>
@@ -45,6 +51,7 @@ const SearchBar = {
   Fields: SearchBarFields,
   TextField: SearchBarTextField,
   SelectField: SearchBarSelectField,
+  MultiSelectField: SearchBarMultiSelectField,
   DateRangeField: SearchBarDateRangeField,
   Actions: SearchBarActions,
   ViewToggle: SearchBarViewToggle

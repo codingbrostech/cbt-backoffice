@@ -5,9 +5,11 @@ export type {
   ISearchBarDateRangeFieldProps,
   ISearchBarFieldsProps,
   ISearchBarHeaderProps,
+  ISearchBarMultiSelectFieldProps,
   ISearchBarRootProps,
   ISearchBarSelectFieldProps,
   ISearchBarTextFieldProps,
   ISearchBarViewOption,
-  ISearchBarViewToggleProps
+  ISearchBarViewToggleProps,
+  TSearchBarFieldSpan
 } from '@cbt-bo/component-lib/components/search/SearchBar';
