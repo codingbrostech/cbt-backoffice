@@ -1,5 +1,5 @@
 import { DEFAULT_ADMIN_LIST_FILTER } from '@cbt-bo/api/admin/queries';
-import { adminRoleListQueryOptions } from '@cbt-bo/api/admin-role/queries';
+import { adminRoleListQueryOptions, buildRoleNameByCode } from '@cbt-bo/api/admin-role/queries';
 import { ACTIVATION_STATES } from '@cbt-bo/api/common/constants';
 import type { AdminResult, AdminRoleResult } from '@cbt-bo/api-schema/bo/models';
 import type { ISelectOption } from '@cbt-bo/component-lib/components/forms';
@@ -33,6 +33,7 @@ const AdminsPage = () => {
   const { isCreateAllowed, isUpdateAllowed } = usePagePermission();
 
   const roleOptions = buildRoleOptions(roles);
+  const roleNameByCode = buildRoleNameByCode(roles);
   const stateOptions = buildOptions(ACTIVATION_STATES, state => t(`state.${state}`));
 
   const openCreate = () => {
@@ -45,7 +46,7 @@ const AdminsPage = () => {
     setIsDialogOpen(true);
   };
 
-  const columns = buildAdminColumns(t, { onEdit: openEdit, isUpdateAllowed });
+  const columns = buildAdminColumns(t, { roleNameByCode, onEdit: openEdit, isUpdateAllowed });
 
   return (
     <main className="flex min-h-0 flex-1 flex-col gap-4">
