@@ -11,7 +11,7 @@ import {
 import type { TxnWagerResult } from '@cbt-bo/api-schema/bo/models';
 import { DEFAULT_PAGE_SIZE, type IListParams } from '@cbt-bo/component-lib/components/table';
 import {
-  RANGE_MAX_MONTHS,
+  TIME_RANGE_MAX_ONE_MONTHS,
   buildQuickRange,
   buildSearchRange
 } from '@cbt-bo/component-lib/lib/date-range';
@@ -55,7 +55,7 @@ export interface IUseBetTransListResult {
 /**
  * Bet transactions list state. The filter starts on today in the display
  * timezone, and its time bounds are sent at that timezone's offset. Each
- * search keeps the bet time within RANGE_MAX_MONTHS months ending no later
+ * search keeps the bet time within TIME_RANGE_MAX_ONE_MONTHS months ending no later
  * than today.
  */
 export const useBetTransList = (): IUseBetTransListResult => {
@@ -100,7 +100,7 @@ export const useBetTransList = (): IUseBetTransListResult => {
         { from: next.timeFrom, to: next.timeTo },
         new Date(),
         timezoneMinutes,
-        RANGE_MAX_MONTHS
+        TIME_RANGE_MAX_ONE_MONTHS
       );
 
       const nextFilter = { ...next, timeFrom: from, timeTo: to };

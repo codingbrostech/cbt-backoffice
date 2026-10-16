@@ -7,7 +7,8 @@ export interface IPageRootProps {
   /**
    * Sizes the page to its content so the content area scrolls both ways,
    * instead of filling the area's height and letting the table scroll inside
-   * its grid. Pass the same flag to `DataTable.Root`.
+   * its grid. A short page still fills the area's height. Pass the same flag
+   * to `DataTable.Root`.
    */
   isPageScroll?: boolean;
   /**
@@ -33,7 +34,7 @@ const PageRoot = ({ isPageScroll = false, children, className }: IPageRootProps)
       data-slot="page"
       className={cn(
         'flex flex-col gap-4',
-        isPageScroll ? 'min-w-min shrink-0' : 'min-h-0 flex-1',
+        isPageScroll ? 'min-w-min shrink-0 grow' : 'min-h-0 flex-1',
         className
       )}
     >

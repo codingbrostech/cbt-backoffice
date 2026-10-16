@@ -43,6 +43,8 @@
     "add": "Add",
     "remove": "Remove",
     "clear": "Clear",
+    "notSet": "Not set",
+    "more": "+{{count}} more",
     "dateRange": {
       "label": "Quick range",
       "from": "From",
@@ -243,7 +245,7 @@
   "player": {
     "playerId": "Player ID",
     "mobile": "Mobile No.",
-    "playerCode": "Player Nickname",
+    "playerCode": "Nickname",
     "playerType": "Player Type"
   },
   "game": {
@@ -317,6 +319,46 @@
       "lossCountTooltip": "Number of settled bets where the player lost (W/L Amount < 0).",
       "tieCount": "Tie Count",
       "tieCountTooltip": "Number of settled bets with no win or loss (W/L Amount = 0)."
+    }
+  },
+  "players": {
+    "player": "Player",
+    "profile": "Profile",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "applicantId": "Applicant ID",
+    "state": "State",
+    "playerState": "Player State",
+    "kycState": "KYC State",
+    "kyc": "KYC",
+    "labels": "Player Labels",
+    "time": "Time",
+    "crtTime": "Created Time",
+    "lastAccessTime": "Last Access Time",
+    "opsRemark": "Remarks",
+    "stateUpdated": "Player state updated",
+    "kycStateUpdated": "KYC state updated",
+    "stateChange": {
+      "title": "Change Player State",
+      "confirm": "Change the player’s state from <strong>{{from}}</strong> to <strong>{{to}}</strong>?"
+    },
+    "kycStateChange": {
+      "title": "Change KYC State",
+      "confirm": "Change the player’s KYC state from <strong>{{from}}</strong> to <strong>{{to}}</strong>?",
+      "set": "Set the player’s KYC state to <strong>{{to}}</strong>?"
+    },
+    "typeOption": {
+      "player": "Player",
+      "guest": "Guest",
+      "agent": "Agent",
+      "staff": "Staff"
+    },
+    "kycStateOption": {
+      "reminder": "Reminder",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
     }
   }
 }

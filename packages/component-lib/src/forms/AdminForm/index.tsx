@@ -52,10 +52,6 @@ const buildSchema = (labels: IAdminFormLabels, isEdit: boolean) =>
     state: z.string()
   });
 
-/**
- * Create or edit form for an admin. While editing, the login is read-only and
- * the password may stay blank.
- */
 const AdminForm = ({
   labels,
   roleOptions,

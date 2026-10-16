@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import LoginForm, { type ILoginFormLabels } from './LoginForm';
+import LoginForm, { type ILoginFormLabels } from '@cbt-bo/component-lib/forms/LoginForm';
 
 const LABELS = {
   account: 'Admin ID',

@@ -8,10 +8,10 @@ import GameProvidersPage from '#/routes/app/game-providers';
 import GameRankingPage from '#/routes/app/game-ranking';
 import NotFoundPage from '#/routes/app/not-found';
 import PlaceholderPage from '#/routes/app/placeholder';
+import PlayersPage from '#/routes/app/players';
 import LoginPage from '#/routes/login';
 
 const PLACEHOLDER_PATHS = [
-  PATH.PLAYERS,
   PATH.PLAYER_SESSIONS,
   PATH.PLAYER_MOBILE_POLICY,
   PATH.PLAYER_SELF_LIMITS,
@@ -56,10 +56,11 @@ const AppRoutes = () => (
     <Route index element={<Navigate to={PATH.PLAYERS} replace />} />
     <Route path={PATH.LOGIN} element={<LoginPage />} />
     <Route element={<AppLayout />}>
-      <Route path={PATH.ADMINS} element={<AdminsPage />} />
+      <Route path={PATH.PLAYERS} element={<PlayersPage />} />
       <Route path={PATH.BET_TRANS} element={<BetTransPage />} />
       <Route path={PATH.GAME_RANKING} element={<GameRankingPage />} />
       <Route path={PATH.GAME_PROVIDERS} element={<GameProvidersPage />} />
+      <Route path={PATH.ADMINS} element={<AdminsPage />} />
       {PLACEHOLDER_PATHS.map(path => (
         <Route key={path} path={path} element={<PlaceholderPage />} />
       ))}

@@ -19,6 +19,7 @@ const meta = {
     label: 'Admin ID',
     placeholder: 'Admin ID',
     autoComplete: 'username',
+    clearLabel: '',
     disabled: false,
     value: '',
     errorMessage: ''
@@ -74,6 +75,10 @@ export const WithPrefix: TStory = {
 
 export const WithSuffix: TStory = {
   args: { suffix: <SearchIcon className="size-4 text-muted-foreground" /> }
+};
+
+export const Clearable: TStory = {
+  args: { value: 'admin', clearLabel: 'Clear' }
 };
 
 export const Invalid: TStory = {

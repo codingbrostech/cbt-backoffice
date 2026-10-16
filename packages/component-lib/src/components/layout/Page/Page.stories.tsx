@@ -32,6 +32,7 @@ interface IFilterValues {
 
 interface IStoryArgs {
   isPageScroll: boolean;
+  rowCount: number;
   className?: string;
   onSubmit: (values: IFilterValues) => void;
 }
@@ -82,12 +83,13 @@ const COLUMNS: IDataTableColumn<IBetRow>[] = [
   { key: 'round', title: 'Round ID', width: 180, render: ({ round }) => round }
 ];
 
-const Render = ({ isPageScroll, className, onSubmit }: IStoryArgs) => {
+const Render = ({ isPageScroll, rowCount, className, onSubmit }: IStoryArgs) => {
   const [params, setParams] = useState<IListParams>({ page: 1, pageSize: DEFAULT_PAGE_SIZE });
   const [columnPinning, setColumnPinning] = useState<TColumnPinning>({});
 
+  const rows = ROWS.slice(0, rowCount);
   const start = (params.page - 1) * params.pageSize;
-  const data = ROWS.slice(start, start + params.pageSize);
+  const data = rows.slice(start, start + params.pageSize);
 
   return (
     <Page.Root isPageScroll={isPageScroll} className={className}>
@@ -104,7 +106,7 @@ const Render = ({ isPageScroll, className, onSubmit }: IStoryArgs) => {
       <DataTable.Root
         columns={COLUMNS}
         data={data}
-        total={ROWS.length}
+        total={rows.length}
         labels={LABELS}
         params={params}
         onParamsChange={setParams}
@@ -126,11 +128,19 @@ const findContentArea = (canvasElement: HTMLElement): HTMLElement => {
   return content;
 };
 
+const buildContentBottom = (content: HTMLElement): number => {
+  const { paddingBottom, borderBottomWidth } = getComputedStyle(content);
+  const { bottom } = content.getBoundingClientRect();
+
+  return bottom - Number.parseFloat(paddingBottom) - Number.parseFloat(borderBottomWidth);
+};
+
 const meta = {
   title: 'Layout/Page',
   tags: ['!autodocs'],
   args: {
     isPageScroll: false,
+    rowCount: ROWS.length,
     onSubmit: fn()
   },
   argTypes: {
@@ -143,6 +153,7 @@ const meta = {
       description: 'Classes on `Root`.',
       table: { category: 'Root' }
     },
+    rowCount: { table: { disable: true } },
     onSubmit: { table: { disable: true } }
   },
   decorators: [
@@ -186,6 +197,24 @@ export const PageScroll: TStory = {
     await waitFor(async () => {
       await expect(content.scrollHeight).toBeGreaterThan(content.clientHeight);
       await expect(content.scrollWidth).toBeGreaterThan(content.clientWidth);
+    });
+  }
+};
+
+export const PageScrollEmpty: TStory = {
+  args: { isPageScroll: true, rowCount: 0 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const content = findContentArea(canvasElement);
+
+    const pagination = (await canvas.findByText('Showing 0-0 out of 0')).parentElement;
+    if (!pagination) throw new Error('The pagination is missing');
+
+    await waitFor(async () => {
+      await expect(content.scrollHeight).toBe(content.clientHeight);
+      await expect(Math.round(pagination.getBoundingClientRect().bottom)).toBe(
+        Math.round(buildContentBottom(content))
+      );
     });
   }
 };

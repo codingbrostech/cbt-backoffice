@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import SelectField, {
   type ISelectOption
 } from '@cbt-bo/component-lib/components/forms/SelectField';
+import { useSearchBar } from '@cbt-bo/component-lib/components/search/SearchBar/search-bar-context';
 import { cn } from '@cbt-bo/component-lib/lib/utils';
 
 export interface ISearchBarSelectFieldProps {
@@ -29,6 +30,7 @@ const SearchBarSelectField = ({
   className
 }: ISearchBarSelectFieldProps) => {
   const { control } = useFormContext();
+  const { clearLabel: defaultClearLabel } = useSearchBar();
 
   return (
     <div data-slot="search-bar-select-field" className={cn('min-w-0', className)}>
@@ -38,7 +40,7 @@ const SearchBarSelectField = ({
         label={label}
         options={options}
         emptyLabel={allLabel}
-        clearLabel={clearLabel}
+        clearLabel={clearLabel ?? defaultClearLabel}
         noResultsLabel={noResultsLabel}
         size="sm"
       />

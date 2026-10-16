@@ -74,6 +74,10 @@ With `isPageScroll` on both `Root` and `DataTable.Root`, the table grows with it
 
 <Canvas of={PageStories.PageScroll} />
 
+A short or empty list still fills the content area, so the pagination stays at its bottom instead of sitting right under the last row.
+
+<Canvas of={PageStories.PageScrollEmpty} />
+
 Sideways scrolling needs the scrolling element to be a size container (`@container`) that reserves its scrollbar space (`[scrollbar-gutter:stable]`), so `100cqw` is the visible width without the scrollbar. The content area of the authenticated shell already does both.
 
 ## Usage in the app

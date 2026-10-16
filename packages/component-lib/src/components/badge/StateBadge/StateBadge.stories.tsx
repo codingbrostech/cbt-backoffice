@@ -13,7 +13,7 @@ const meta = {
   argTypes: {
     state: {
       control: 'select',
-      options: ['active', 'inactive', 'pending']
+      options: ['active', 'inactive', 'freeze', 'delete', 'pending']
     }
   },
   parameters: {
@@ -42,11 +42,42 @@ export const Inactive: TStory = {
   }
 };
 
+export const Freeze: TStory = {
+  args: { state: 'freeze', children: 'Freeze' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Freeze')).toHaveAttribute('data-variant', 'warning');
+  }
+};
+
+export const Delete: TStory = {
+  args: { state: 'delete', children: 'Delete' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Delete')).toHaveAttribute('data-variant', 'destructive-muted');
+  }
+};
+
 export const UnknownState: TStory = {
   args: { state: 'pending', children: 'Pending' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByText('Pending')).toHaveAttribute('data-variant', 'muted');
+  }
+};
+
+export const CustomVariants: TStory = {
+  args: {
+    state: 'approved',
+    children: 'Approved',
+    variants: { pending: 'info', approved: 'success' }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Approved')).toHaveAttribute('data-variant', 'success');
   }
 };

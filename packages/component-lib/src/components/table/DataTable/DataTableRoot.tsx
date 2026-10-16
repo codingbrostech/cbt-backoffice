@@ -51,7 +51,9 @@ export interface IDataTableRootProps<TRow> {
   isError?: boolean;
   /**
    * Lets the page scroll as a whole instead of the rows scrolling inside the
-   * grid. Pass the same flag to `Page.Root`.
+   * grid. The table still fills the height left under the page header, so a
+   * short list keeps the pagination at the bottom. Pass the same flag to
+   * `Page.Root`.
    */
   isPageScroll?: boolean;
   /**
@@ -134,7 +136,7 @@ const DataTableRoot = <TRow,>({
     >
       <div
         data-slot="data-table"
-        className={cn('flex flex-col', !isPageScroll && 'min-h-0 flex-1', className)}
+        className={cn('flex flex-col', isPageScroll ? 'grow' : 'min-h-0 flex-1', className)}
       >
         {children}
       </div>

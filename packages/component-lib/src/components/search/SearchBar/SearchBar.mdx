@@ -25,6 +25,13 @@ The filter bar above a list page. It shows the page title with an optional actio
     <SearchBar.TextField name="code" label="Login" />
     <SearchBar.SelectField name="state" label="State" options={stateOptions} allLabel="All" />
     <SearchBar.SelectField name="role" label="Role" options={roleOptions} allLabel="All" />
+    <SearchBar.MultiSelectField
+      name="labelIds"
+      label="Labels"
+      options={labelOptions}
+      removeLabel="Remove"
+      allLabel="All"
+    />
     <SearchBar.Actions resetLabel="Reset" submitLabel="Search">
       <SearchBar.ViewToggle
         label="View"
@@ -50,10 +57,14 @@ The filter bar above a list page. It shows the page title with an optional actio
       <td>
         <code>Root</code>
       </td>
-      <td>The form that owns the draft values and shares them with the fields</td>
       <td>
-        <code>defaultValues</code>, <code>onSubmit</code>, optionally <code>values</code> and{' '}
-        <code>className</code>, then the parts as children
+        The form that owns the draft values and shares them with the fields. <code>clearLabel</code>{' '}
+        names the clear button every field shows while it holds a value, <code>Clear</code> when
+        left out, and a field can override it with its own
+      </td>
+      <td>
+        <code>defaultValues</code>, <code>onSubmit</code>, optionally <code>values</code>,{' '}
+        <code>clearLabel</code> and <code>className</code>, then the parts as children
       </td>
     </tr>
     <tr>
@@ -78,10 +89,13 @@ The filter bar above a list page. It shows the page title with an optional actio
       <td>
         <code>TextField</code>
       </td>
-      <td>A text filter</td>
       <td>
-        <code>name</code>, <code>label</code>, optionally <code>placeholder</code> and{' '}
-        <code>className</code>
+        A text filter, with a clear button at the input's end that empties the field while it holds
+        a value
+      </td>
+      <td>
+        <code>name</code>, <code>label</code>, optionally <code>placeholder</code>,{' '}
+        <code>clearLabel</code> and <code>className</code>
       </td>
     </tr>
     <tr>
@@ -91,14 +105,33 @@ The filter bar above a list page. It shows the page title with an optional actio
       <td>
         A searchable single-value filter. Typing in it narrows the options by label.{' '}
         <code>allLabel</code> adds a first option that clears the filter, and an empty value is left
-        out of the query by the page. <code>clearLabel</code> names a clear button that takes the
-        chevron's place while a value is picked, and <code>noResultsLabel</code> is the text the
-        list shows when the search matches nothing
+        out of the query by the page. A clear button takes the chevron's place while a value is
+        picked, and <code>noResultsLabel</code> is the text the list shows when the search matches
+        nothing
       </td>
       <td>
         <code>name</code>, <code>label</code>, <code>options</code>, optionally{' '}
         <code>allLabel</code>, <code>clearLabel</code>, <code>noResultsLabel</code> and{' '}
         <code>className</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>MultiSelectField</code>
+      </td>
+      <td>
+        A searchable multi-value filter, two columns wide once the panel has at least two. Each
+        picked value shows as a chip with a remove button on one line, chips that do not fit fold
+        into a badge formatted by <code>formatHiddenCount</code>, and the list stays open while
+        values are toggled. The field holds a string array, empty while the filter is not applied.{' '}
+        <code>allLabel</code> is the placeholder while nothing is picked, a clear button empties
+        every value at once, and <code>noResultsLabel</code> is the text the list shows when the
+        search matches nothing
+      </td>
+      <td>
+        <code>name</code>, <code>label</code>, <code>options</code>, <code>removeLabel</code>,
+        optionally <code>allLabel</code>, <code>clearLabel</code>, <code>noResultsLabel</code>,{' '}
+        <code>formatHiddenCount</code>, <code>maxChips</code> and <code>className</code>
       </td>
     </tr>
     <tr>
@@ -147,7 +180,7 @@ The filter bar above a list page. It shows the page title with an optional actio
 
 ## Values format
 
-`defaultValues` and `values` share one shape, an object with a string per field. An empty string means the field is not applied. The page strips blank fields before building its query.
+`defaultValues` and `values` share one shape, an object with a string per field, or a string array for a `MultiSelectField`. An empty string or an empty array means the field is not applied. The page strips blank fields before building its query.
 
 ```tsx
 export interface IAdminListFilter {

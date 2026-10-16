@@ -12,11 +12,13 @@ interface IFilterValues {
   code: string;
   state: string;
   role: string;
+  labelIds: readonly string[];
 }
 
 interface IStoryArgs {
   onSubmit: (values: IFilterValues) => void;
   className?: string;
+  clearLabel: string;
   title: string;
   isCreateShown: boolean;
   createLabel: string;
@@ -25,6 +27,8 @@ interface IStoryArgs {
   roleLabel: string;
   allLabel: string;
   noResultsLabel: string;
+  labelsLabel: string;
+  removeLabel: string;
   resetLabel: string;
   submitLabel: string;
   viewLabel: string;
@@ -47,15 +51,21 @@ interface IPartControls {
  * The args grouped by the `SearchBar` part that takes them.
  */
 export const PART_CONTROLS = [
-  { part: 'Root', include: ['onSubmit', 'className'] },
+  { part: 'Root', include: ['onSubmit', 'className', 'clearLabel'] },
   { part: 'Header', include: ['title', 'isCreateShown', 'createLabel'] },
   { part: 'TextField', include: ['codeLabel'] },
   { part: 'SelectField', include: ['stateLabel', 'roleLabel', 'allLabel', 'noResultsLabel'] },
+  { part: 'MultiSelectField', include: ['labelsLabel', 'removeLabel'] },
   { part: 'Actions', include: ['resetLabel', 'submitLabel'] },
   { part: 'ViewToggle', include: ['viewLabel', 'simpleLabel', 'detailLabel'] }
 ] as const satisfies readonly IPartControls[];
 
-const DEFAULT_FILTER = { code: '', state: '', role: '' } as const satisfies IFilterValues;
+const DEFAULT_FILTER = {
+  code: '',
+  state: '',
+  role: '',
+  labelIds: []
+} as const satisfies IFilterValues;
 const STATE_OPTIONS = [
   { value: 'active', label: 'Active' },
   { value: 'inactive', label: 'Inactive' }
@@ -63,6 +73,10 @@ const STATE_OPTIONS = [
 const ROLE_OPTIONS = [
   { value: 'super', label: 'Super' },
   { value: 'admin', label: 'Admin' }
+];
+const LABEL_OPTIONS = [
+  { value: 'vip', label: 'VIP' },
+  { value: 'new', label: 'New' }
 ];
 
 const StoryViewToggle = ({ label, simpleLabel, detailLabel }: IStoryViewToggleProps) => {
@@ -89,6 +103,7 @@ const meta = {
   excludeStories: ['PART_CONTROLS'],
   args: {
     onSubmit: fn(),
+    clearLabel: 'Clear',
     title: 'Admins',
     isCreateShown: true,
     createLabel: 'Create Admin',
@@ -97,6 +112,8 @@ const meta = {
     roleLabel: 'Role',
     allLabel: 'All',
     noResultsLabel: 'Nothing found',
+    labelsLabel: 'Labels',
+    removeLabel: 'Remove',
     resetLabel: 'Reset',
     submitLabel: 'Search',
     viewLabel: 'View',
@@ -110,6 +127,12 @@ const meta = {
     },
     className: {
       description: 'Classes on `Root`.',
+      table: { category: 'Root' }
+    },
+    clearLabel: {
+      type: { name: 'string' },
+      description:
+        'Accessible name of the clear button every field shows while it holds a value. `Clear` when left out.',
       table: { category: 'Root' }
     },
     title: {
@@ -152,6 +175,16 @@ const meta = {
       description: 'Text each `SelectField` list shows when the search matches nothing.',
       table: { category: 'SelectField' }
     },
+    labelsLabel: {
+      type: { name: 'string', required: true },
+      description: 'Label of the `MultiSelectField` bound to `labelIds`.',
+      table: { category: 'MultiSelectField' }
+    },
+    removeLabel: {
+      type: { name: 'string', required: true },
+      description: "Start of each picked value's remove button name in `MultiSelectField`.",
+      table: { category: 'MultiSelectField' }
+    },
     resetLabel: {
       type: { name: 'string', required: true },
       description: 'Label of the reset button in `Actions`.',
@@ -181,6 +214,7 @@ const meta = {
   render: ({
     onSubmit,
     className,
+    clearLabel,
     title,
     isCreateShown,
     createLabel,
@@ -189,13 +223,20 @@ const meta = {
     roleLabel,
     allLabel,
     noResultsLabel,
+    labelsLabel,
+    removeLabel,
     resetLabel,
     submitLabel,
     viewLabel,
     simpleLabel,
     detailLabel
   }) => (
-    <SearchBar.Root defaultValues={DEFAULT_FILTER} onSubmit={onSubmit} className={className}>
+    <SearchBar.Root
+      defaultValues={DEFAULT_FILTER}
+      onSubmit={onSubmit}
+      clearLabel={clearLabel}
+      className={className}
+    >
       <SearchBar.Header title={title}>
         {isCreateShown && (
           <Button type="button">
@@ -220,6 +261,14 @@ const meta = {
           allLabel={allLabel}
           noResultsLabel={noResultsLabel}
         />
+        <SearchBar.MultiSelectField
+          name="labelIds"
+          label={labelsLabel}
+          options={LABEL_OPTIONS}
+          removeLabel={removeLabel}
+          allLabel={allLabel}
+          noResultsLabel={noResultsLabel}
+        />
         <SearchBar.Actions resetLabel={resetLabel} submitLabel={submitLabel}>
           <StoryViewToggle label={viewLabel} simpleLabel={simpleLabel} detailLabel={detailLabel} />
         </SearchBar.Actions>
@@ -237,21 +286,31 @@ export const Default: TStory = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
+    await userEvent.type(canvas.getByLabelText('Login'), 'lovelace');
+    await userEvent.click(canvas.getByRole('button', { name: 'Clear' }));
+
+    await expect(canvas.getByLabelText('Login')).toHaveValue('');
+    await expect(canvas.queryByRole('button', { name: 'Clear' })).not.toBeInTheDocument();
+
     await userEvent.type(canvas.getByLabelText('Login'), 'ada');
     await userEvent.click(canvas.getByRole('combobox', { name: 'State' }));
     await userEvent.click(await screen.findByRole('option', { name: 'Active' }));
+    await userEvent.click(canvas.getByRole('combobox', { name: 'Labels' }));
+    await userEvent.click(await screen.findByRole('option', { name: 'VIP' }));
     await userEvent.click(await canvas.findByRole('button', { name: 'Search' }));
 
     await expect(args.onSubmit).toHaveBeenLastCalledWith({
       code: 'ada',
       state: 'active',
-      role: ''
+      role: '',
+      labelIds: ['vip']
     });
 
     await userEvent.click(await canvas.findByRole('button', { name: 'Reset' }));
 
     await expect(args.onSubmit).toHaveBeenLastCalledWith(DEFAULT_FILTER);
     await expect(canvas.getByLabelText('Login')).toHaveValue('');
+    await expect(canvas.queryByRole('button', { name: 'Remove VIP' })).not.toBeInTheDocument();
 
     await userEvent.click(canvas.getByRole('radio', { name: 'Detail' }));
 
