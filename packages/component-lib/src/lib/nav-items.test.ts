@@ -3,6 +3,7 @@ import {
   buildActiveGroupKey,
   buildActiveNavItem,
   buildActiveNavKey,
+  buildFirstNavPath,
   buildVisibleNavItems,
   containsActiveKey
 } from '@cbt-bo/component-lib/lib/nav-items';
@@ -141,6 +142,26 @@ describe('buildActiveNavKey', () => {
   describe('when the path matches nothing', () => {
     it('should return undefined', () => {
       expect(buildActiveNavKey(ITEMS, '/unknown')).toBeUndefined();
+    });
+  });
+});
+
+describe('buildFirstNavPath', () => {
+  describe('when the first item is a leaf', () => {
+    it('should return its path', () => {
+      expect(buildFirstNavPath(ITEMS)).toBe('/dashboard');
+    });
+  });
+
+  describe('when the first item is a group', () => {
+    it('should return the path of its first nested leaf', () => {
+      expect(buildFirstNavPath([ITEMS[1]])).toBe('/games');
+    });
+  });
+
+  describe('when there are no items', () => {
+    it('should return undefined', () => {
+      expect(buildFirstNavPath([])).toBeUndefined();
     });
   });
 });

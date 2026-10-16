@@ -11,7 +11,6 @@ import {
   Gift,
   History,
   Images,
-  LayoutDashboard,
   LayoutGrid,
   Logs,
   Megaphone,
@@ -31,13 +30,6 @@ import {
 import { PATH } from '#/constants/path';
 
 export const buildNavItems = (t: (key: string) => string): TNavItem[] => [
-  {
-    key: 'dashboard',
-    label: t('nav.dashboard'),
-    icon: <LayoutDashboard />,
-    pageKey: 'dashboard',
-    path: PATH.DASHBOARD
-  },
   {
     key: 'player',
     label: t('nav.player'),

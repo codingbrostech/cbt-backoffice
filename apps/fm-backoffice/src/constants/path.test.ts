@@ -8,16 +8,16 @@ describe('buildPostLoginHref', () => {
   });
 
   describe('when the redirect is missing', () => {
-    it('should fall back to the dashboard', () => {
-      expect(buildPostLoginHref(undefined)).toBe(PATH.DASHBOARD);
-      expect(buildPostLoginHref('')).toBe(PATH.DASHBOARD);
+    it('should fall back to the players page', () => {
+      expect(buildPostLoginHref(undefined)).toBe(PATH.PLAYERS);
+      expect(buildPostLoginHref('')).toBe(PATH.PLAYERS);
     });
   });
 
   describe('when the redirect points outside the app', () => {
-    it('should fall back to the dashboard', () => {
-      expect(buildPostLoginHref('//evil.example')).toBe(PATH.DASHBOARD);
-      expect(buildPostLoginHref('https://evil.example')).toBe(PATH.DASHBOARD);
+    it('should fall back to the players page', () => {
+      expect(buildPostLoginHref('//evil.example')).toBe(PATH.PLAYERS);
+      expect(buildPostLoginHref('https://evil.example')).toBe(PATH.PLAYERS);
     });
   });
 });
