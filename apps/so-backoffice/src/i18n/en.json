@@ -91,16 +91,11 @@
       }
     }
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Welcome, {{name}}"
-  },
   "notFound": {
     "title": "Page not found",
     "description": "There is no page at this address."
   },
   "nav": {
-    "dashboard": "Dashboard",
     "player": "Player",
     "playerMgmt": "Player Management",
     "players": "Players",

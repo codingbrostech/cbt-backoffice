@@ -18,7 +18,7 @@ src/
 ├── routes/
 │   ├── index.tsx    AppRoutes, the <Routes> tree
 │   ├── login/       index.tsx is the login page, hooks/ beside it
-│   └── app/         Layout.tsx is the session guard + shell, components/ holds Header, NavSide and Content, one folder per page (dashboard, placeholder, not-found)
+│   └── app/         Layout.tsx is the session guard + shell, components/ holds Header, NavSide and Content, one folder per page, plus placeholder and not-found
 ├── api/             actions for endpoints only this brand has (empty until one is needed)
 ├── hooks/           use-page-tabs, use-session-expiry
 ├── i18n/            i18next setup and the en/zh resources

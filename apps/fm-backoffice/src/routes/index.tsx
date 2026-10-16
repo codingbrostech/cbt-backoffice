@@ -4,7 +4,6 @@ import { PATH } from '#/constants/path';
 import AppLayout from '#/routes/app/Layout';
 import AdminsPage from '#/routes/app/admins';
 import BetTransPage from '#/routes/app/bet-trans';
-import DashboardPage from '#/routes/app/dashboard';
 import GameProvidersPage from '#/routes/app/game-providers';
 import GameRankingPage from '#/routes/app/game-ranking';
 import NotFoundPage from '#/routes/app/not-found';
@@ -48,16 +47,15 @@ const PLACEHOLDER_PATHS = [
 ] as const satisfies readonly string[];
 
 /**
- * Route tree of the app. The index redirects to PATH.DASHBOARD, PATH.LOGIN
+ * Route tree of the app. The index redirects to PATH.PLAYERS, PATH.LOGIN
  * renders LoginPage, and every other path renders inside AppLayout, with an
  * unknown one falling through to NotFoundPage.
  */
 const AppRoutes = () => (
   <Routes>
-    <Route index element={<Navigate to={PATH.DASHBOARD} replace />} />
+    <Route index element={<Navigate to={PATH.PLAYERS} replace />} />
     <Route path={PATH.LOGIN} element={<LoginPage />} />
     <Route element={<AppLayout />}>
-      <Route path={PATH.DASHBOARD} element={<DashboardPage />} />
       <Route path={PATH.ADMINS} element={<AdminsPage />} />
       <Route path={PATH.BET_TRANS} element={<BetTransPage />} />
       <Route path={PATH.GAME_RANKING} element={<GameRankingPage />} />

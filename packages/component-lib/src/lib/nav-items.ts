@@ -76,6 +76,21 @@ export const buildActiveNavKey = (items: TNavItem[], pathname: string): string |
   buildActiveNavItem(items, pathname)?.key;
 
 /**
+ * The `path` of the first leaf in `items`, searching nested group children
+ * at any depth.
+ */
+export const buildFirstNavPath = (items: TNavItem[]): string | undefined => {
+  for (const item of items) {
+    if (!isNavGroupItem(item)) return item.path;
+
+    const childPath = buildFirstNavPath(item.children);
+    if (childPath) return childPath;
+  }
+
+  return undefined;
+};
+
+/**
  * Copy of `items` keeping the leaves that pass `isVisible`, searching nested
  * group children at any depth. A group without a visible child is dropped.
  *
