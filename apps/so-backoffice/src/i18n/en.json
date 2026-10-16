@@ -34,6 +34,8 @@
     },
     "cancel": "Cancel",
     "all": "All",
+    "yes": "Yes",
+    "no": "No",
     "action": "Action",
     "edit": "Edit",
     "save": "Save",
@@ -121,6 +123,7 @@
     "games": "Games",
     "gameCategories": "Game Categories",
     "gameRanking": "Game Ranking",
+    "gameProviders": "Game Providers",
     "promotion": "Promotion",
     "banners": "Banners",
     "bonuses": "Bonuses",
@@ -179,6 +182,28 @@
     "saved": "Ranking saved",
     "unsavedHint": "Unsaved changes. Save to overwrite the whole ranking.",
     "apply": "Apply"
+  },
+  "gameProviders": {
+    "code": "Provider Code",
+    "name": "Provider Name",
+    "state": "State",
+    "isTest": "Is Test",
+    "endpointCurrency": "Endpoint Currency",
+    "staffTestOnly": {
+      "title": "Staff Test Only",
+      "description": "Applies the staff test only flag to every game under this provider. Staff only games are visible and playable to staff players only.",
+      "provider": "Provider",
+      "setStaffOnly": "Set All to Staff Only",
+      "openToPublic": "Open All to Public",
+      "confirm": "\"{{action}}\" will affect all games under provider <strong>{{provider}}</strong>. Continue?",
+      "changed": "Changed {{count}} games",
+      "noChange": "No games needed changing, they are already at the target value"
+    },
+    "retryLogout": {
+      "title": "Retry Logout",
+      "confirm": "Replay the failed logout callbacks of provider {{provider}}?",
+      "triggered": "Logout retry triggered"
+    }
   },
   "state": {
     "active": "Active",

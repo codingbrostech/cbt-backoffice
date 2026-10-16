@@ -5,6 +5,7 @@ import AppLayout from '#/routes/app/Layout';
 import AdminsPage from '#/routes/app/admins';
 import BetTransPage from '#/routes/app/bet-trans';
 import DashboardPage from '#/routes/app/dashboard';
+import GameProvidersPage from '#/routes/app/game-providers';
 import GameRankingPage from '#/routes/app/game-ranking';
 import NotFoundPage from '#/routes/app/not-found';
 import PlaceholderPage from '#/routes/app/placeholder';
@@ -60,6 +61,7 @@ const AppRoutes = () => (
       <Route path={PATH.ADMINS} element={<AdminsPage />} />
       <Route path={PATH.BET_TRANS} element={<BetTransPage />} />
       <Route path={PATH.GAME_RANKING} element={<GameRankingPage />} />
+      <Route path={PATH.GAME_PROVIDERS} element={<GameProvidersPage />} />
       {PLACEHOLDER_PATHS.map(path => (
         <Route key={path} path={path} element={<PlaceholderPage />} />
       ))}
