@@ -56,7 +56,7 @@ const DataTableColumnMenu = ({ columnKey, title, pin }: IDataTableColumnMenuProp
         <Button
           variant="ghost"
           size="icon"
-          aria-label={`${labels.columnMenu} ${title}`}
+          aria-label={`${labels.columnMenu} ${title}`.trim()}
           className={cn(
             'size-6 shrink-0 text-muted-foreground data-[state=open]:bg-accent',
             pin && 'text-foreground'
